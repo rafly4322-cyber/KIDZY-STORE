@@ -33,9 +33,10 @@
       <div class="page-head">
         <div class="row" style="margin-bottom: 12px;">
           <span class="badge badge-accent" id="order-eyebrow">Saweria &middot; Lifetime</span>
+          <span class="badge badge-live">Akses Permanen</span>
         </div>
         <h1 class="h1">Pembayaran via SeaBank</h1>
-        <p class="lead">Silakan transfer pembayaran ke rekening resmi SeaBank di bawah ini, lalu kirim bukti transfer & DM Discord ke <b>kidddzyyaj</b> untuk menerima token aktivasi resmi.</p>
+        <p class="lead">Silakan transfer pembayaran ke rekening resmi SeaBank di bawah ini, lalu kirim bukti transfer &amp; DM Discord ke <b>kidddzyyaj</b> untuk menerima token aktivasi resmi.</p>
       </div>
 
       <div class="split">
@@ -65,8 +66,8 @@
             </div>
 
             <div class="field">
-              <label>Total Nominal Tagihan</label>
-              <input class="input mono" id="order-amount" readonly value="Rp 300.000" style="font-size: 22px; font-weight: 700; color: #A7F3D0;" />
+              <label>Total Nominal Tagihan (Paket Lifetime)</label>
+              <input class="input mono" id="order-amount" readonly value="Rp 450.000" style="font-size: 22px; font-weight: 700; color: #A7F3D0;" />
             </div>
           </div>
 
@@ -129,17 +130,14 @@
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const platform = (urlParams.get('platform') || 'saweria').toLowerCase();
-      const plan = (urlParams.get('plan') || 'lifetime').toLowerCase();
 
       const platformNames = { saweria: 'Saweria', bagibagi: 'BagiBagi', sociabuzz: 'SociaBuzz' };
       const platformTitle = platformNames[platform] || 'Saweria';
-      const planTitle = plan === 'lifetime' ? 'Lifetime (Permanen)' : '30 Hari';
-      const price = plan === 'lifetime' ? 'Rp 300.000' : 'Rp 100.000';
 
-      document.getElementById('order-eyebrow').textContent = `${platformTitle} · ${planTitle}`;
-      document.getElementById('order-amount').value = price;
+      document.getElementById('order-eyebrow').textContent = `${platformTitle} · Lifetime`;
+      document.getElementById('order-amount').value = 'Rp 450.000';
       document.getElementById('summary-platform').textContent = platformTitle;
-      document.getElementById('summary-plan').textContent = planTitle;
+      document.getElementById('summary-plan').textContent = 'Lifetime (Permanen)';
     });
 
     function copyText(val, btn) {

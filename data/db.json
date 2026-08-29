@@ -190,16 +190,13 @@
     "qrisImage": "/assets/qris.png",
     "prices": {
       "saweria": {
-        "plan30d": 100000,
-        "lifetime": 300000
+        "lifetime": 450000
       },
       "bagibagi": {
-        "plan30d": 100000,
-        "lifetime": 300000
+        "lifetime": 450000
       },
       "sociabuzz": {
-        "plan30d": 100000,
-        "lifetime": 300000
+        "lifetime": 450000
       }
     },
     "robloxApiKey": "",

@@ -15,17 +15,57 @@ const {
 const app = express();
 
 // ============================================
-// MIDDLEWARE & SECURITY HEADERS
+// ENTERPRISE SECURITY & RATE LIMITING SHIELDS
 // ============================================
 app.use(cors());
-app.use(bodyParser.json({ limit: '2mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '2mb' }));
+app.use(bodyParser.json({ limit: '1mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
 
-// Global Security & Performance Headers
+// In-Memory Rate Limiter & IP Tracking Map
+const rateLimitMap = new Map();
+const loginFailMap = new Map();
+
+// Periodic cleanup every 5 minutes to prevent memory leak
+setInterval(() => {
+    const now = Date.now();
+    for (const [ip, data] of rateLimitMap.entries()) {
+        if (now - data.startTime > 60000) rateLimitMap.delete(ip);
+    }
+    for (const [ip, data] of loginFailMap.entries()) {
+        if (now - data.startTime > 300000) loginFailMap.delete(ip);
+    }
+}, 300000);
+
+// Global Rate Limiting & DDoS Shield Middleware
 app.use((req, res, next) => {
+    const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+    const now = Date.now();
+
+    // 1. Prototype Pollution Defense
+    if (req.body && typeof req.body === 'object') {
+        const bodyStr = JSON.stringify(req.body);
+        if (bodyStr.includes('__proto__') || bodyStr.includes('constructor') || bodyStr.includes('prototype')) {
+            return res.status(400).json({ success: false, message: 'Invalid payload attributes (Security Blocked).' });
+        }
+    }
+
+    // 2. Global Rate Limiter (Max 200 reqs/min per IP)
+    let rateData = rateLimitMap.get(clientIp);
+    if (!rateData || now - rateData.startTime > 60000) {
+        rateData = { count: 1, startTime: now };
+        rateLimitMap.set(clientIp, rateData);
+    } else {
+        rateData.count++;
+        if (rateData.count > 200) {
+            return res.status(429).json({ success: false, message: 'Too many requests. Please slow down.' });
+        }
+    }
+
+    // 3. Security Headers (OWASP Recommended)
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
     res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     
     // Prevent caching for dynamic API responses
