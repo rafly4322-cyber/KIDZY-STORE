@@ -6,7 +6,7 @@
   <title>Pembayaran Order — KIDZY Store</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
@@ -21,10 +21,9 @@
         <a class="nav-link" href="/p/saweria.html">Saweria</a>
         <a class="nav-link" href="/p/bagibagi.html">BagiBagi</a>
         <a class="nav-link" href="/p/sociabuzz.html">SociaBuzz</a>
-        <a class="nav-link" href="/register-service.html">Aktivasi Token</a>
+        <a class="nav-link" href="/activation.html">Aktivasi Token</a>
         <span class="nav-sep"></span>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
-        <div id="nav-auth" class="row"></div>
+        <a class="btn btn-sm btn-ghost" href="/login.html">Login Admin</a>
       </nav>
     </div>
   </header>
@@ -32,95 +31,76 @@
   <main>
     <div class="container page">
       <div class="page-head">
-        <p class="eyebrow" id="order-eyebrow">Saweria &middot; Lifetime</p>
-        <h1 class="h1">Pembayaran via SeaBank (Only)</h1>
-        <p class="lead">Silakan transfer pembayaran ke rekening resmi SeaBank di bawah ini, lalu kirim bukti transfer lewat Discord untuk menerima token aktivasi resmi.</p>
+        <div class="row" style="margin-bottom: 12px;">
+          <span class="badge badge-accent" id="order-eyebrow">Saweria &middot; Lifetime</span>
+        </div>
+        <h1 class="h1">Pembayaran via SeaBank</h1>
+        <p class="lead">Silakan transfer pembayaran ke rekening resmi SeaBank di bawah ini untuk menerima token aktivasi resmi.</p>
       </div>
 
       <div class="split">
-        <div>
-          <!-- SeaBank Official Card -->
-          <div class="card" style="border: 2px solid var(--accent); position: relative; overflow: hidden;">
-            <div class="row between" style="margin-bottom: 12px;">
-              <span class="pill accent" style="font-size: 13px; font-weight: 700;">🏦 METODE RESMI: SEABANK ONLY</span>
-              <span class="pill ok">Online 24 Jam</span>
+        <div class="card">
+          <div class="card-head">
+            <h2 class="h2" style="font-size: 20px;">Instruksi Transfer Bank</h2>
+            <span class="badge badge-live">Online 24 Jam</span>
+          </div>
+
+          <div class="stack" style="gap: 16px;">
+            <div class="field">
+              <label>Nama Bank Tujuan</label>
+              <input class="input" readonly value="SeaBank (Kode Bank: 535)" />
             </div>
-            
-            <h2 class="h2" id="bank-title" style="font-size: 24px; margin-bottom: 4px;">Transfer Bank SeaBank</h2>
-            <p class="small" style="margin-bottom: 18px;">Bisa transfer dari rekening SeaBank, seluruh Bank di Indonesia (BCA, BRI, Mandiri, BNI), maupun e-wallet (DANA, GoPay, OVO, ShopeePay).</p>
-            
-            <div style="margin-top: 16px;">
-              <dl class="dl">
-                <div class="dl-row" style="background: var(--surface-3);">
-                  <dt>Nama Bank</dt>
-                  <dd id="bank-name" style="font-size: 16px; font-weight: 700; color: var(--accent);">SeaBank (Kode: 535)</dd>
-                </div>
-                <div class="dl-row" style="background: var(--surface-3);">
-                  <dt>Nama Pemilik Rekening</dt>
-                  <dd id="bank-holder" style="font-size: 16px; font-weight: 700; color: #fff;">MUHAMMAD RAFLI FIRDAUS</dd>
-                </div>
-                <div class="dl-row" style="background: rgba(250, 192, 45, 0.08); border: 1px solid var(--glass-border-gold);">
-                  <dt style="color: var(--accent); font-weight: 700;">Nomor Rekening</dt>
-                  <dd class="token" id="bank-account" style="cursor: pointer; font-size: 20px; font-weight: 800; color: var(--accent);" onclick="copyText(this.innerText, this)" title="Klik untuk salin">901506323909</dd>
-                </div>
-                <div class="dl-row">
-                  <dt>Total Tagihan Pembayaran</dt>
-                  <dd id="order-amount" style="color: var(--ok); font-size: 20px; font-weight: 800;">Rp 300.000</dd>
-                </div>
-              </dl>
-              
-              <div class="row" style="margin-top: 18px; gap: 12px;">
-                <button class="btn btn-primary btn-lg btn-block" onclick="copyText(document.getElementById('bank-account').innerText, this)">
-                  📋 Salin Nomor Rekening SeaBank
-                </button>
+
+            <div class="field">
+              <label>Nama Pemilik Rekening</label>
+              <input class="input" readonly value="MUHAMMAD RAFLI FIRDAUS" />
+            </div>
+
+            <div class="field">
+              <label>Nomor Rekening SeaBank</label>
+              <div class="row" style="gap: 8px;">
+                <input class="input mono" id="bank-acc-input" readonly value="901506323909" style="font-size: 17px; font-weight: 700; color: #A5B4FC;" />
+                <button class="btn btn-cyan btn-sm" onclick="copyAcc(this)">Salin No. Rek</button>
               </div>
             </div>
-            
-            <div class="sep" style="margin: 20px 0;"></div>
-            
-            <div class="card soft" style="border: 1px solid var(--border); padding: 16px;">
-              <h3 class="h3" style="margin-bottom: 8px;">💡 Cara Transfer ke SeaBank:</h3>
-              <ol class="steps" style="margin-top: 8px; font-size: 13px;">
-                <li><span><b>Dari Aplikasi SeaBank / ShopeePay:</b> Masuk menu Transfer &gt; No. Rekening SeaBank <b>901506323909</b> (Gratis Biaya Admin).</span></li>
-                <li><span><b>Dari Bank Lain (BCA, BRI, Mandiri, dll):</b> Pilih Transfer Antar Bank &gt; Bank Tujuan: <b>SeaBank (Kode 535)</b> &gt; Masukkan No. Rek <b>901506323909</b>.</span></li>
-                <li><span><b>Simpan Bukti:</b> Screenshot bukti transfer dan kirimkan ke Discord Owner (Rafly) untuk konfirmasi instan!</span></li>
-              </ol>
+
+            <div class="field">
+              <label>Total Nominal Tagihan</label>
+              <input class="input mono" id="order-amount" readonly value="Rp 90.000" style="font-size: 20px; font-weight: 700; color: #A7F3D0;" />
             </div>
+          </div>
+
+          <div class="card-foot" style="flex-direction: column; align-items: flex-start; gap: 14px;">
+            <h3 class="h3" style="font-size: 15px;">Konfirmasi Pembayaran:</h3>
+            <p class="small faint">Setelah melakukan transfer, silakan kirimkan bukti transfer melalui Discord kami untuk mendapatkan token aktivasi secara instan.</p>
+            <a class="btn btn-primary btn-lg btn-block" href="https://discord.gg/tqnreKW6D8" target="_blank">
+              Kirim Bukti via Discord Support &rarr;
+            </a>
           </div>
         </div>
 
-        <!-- Aside Summary -->
         <aside class="aside">
-          <div class="card">
-            <div class="card-head">
-              <div>
-                <p class="small">Total Tagihan</p>
-                <div class="price" id="summary-price">Rp 300.000</div>
+          <div class="card soft">
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">Ringkasan Pesanan</h2>
+            
+            <div class="stack" style="gap: 12px; margin-bottom: 20px;">
+              <div class="row" style="justify-content: space-between;">
+                <span class="small faint">Platform:</span>
+                <span class="small" id="summary-platform" style="font-weight: 600;">Saweria</span>
               </div>
-              <span class="pill accent" id="summary-pill">Lifetime</span>
+              <div class="row" style="justify-content: space-between;">
+                <span class="small faint">Paket Durasi:</span>
+                <span class="badge badge-accent" id="summary-plan">Lifetime (Permanen)</span>
+              </div>
+              <div class="row" style="justify-content: space-between;">
+                <span class="small faint">Metode Bayar:</span>
+                <span class="small" style="font-weight: 600;">SeaBank ONLY</span>
+              </div>
             </div>
 
-            <div class="sep"></div>
+            <div class="sep" style="height: 1px; background: var(--border); margin: 16px 0;"></div>
 
-            <dl class="dl">
-              <div class="dl-row"><dt>Platform</dt><dd id="summary-platform">Saweria</dd></div>
-              <div class="dl-row"><dt>Paket</dt><dd id="summary-plan">Lifetime (Selamanya)</dd></div>
-              <div class="dl-row"><dt>Roblox Open Cloud</dt><dd style="color: var(--ok);">Tersedia</dd></div>
-            </dl>
-
-            <div class="sep"></div>
-
-            <div class="stack tight">
-              <a class="btn btn-primary btn-block" id="discord-btn" href="https://discord.gg/tqnreKW6D8" target="_blank" rel="noreferrer">
-                💬 Kirim Bukti via Discord
-              </a>
-              <a class="btn btn-block" href="/register-service.html">Sudah punya token</a>
-              <a class="btn btn-ghost btn-block" href="/">Kembali ke Home</a>
-            </div>
-
-            <p class="hint" style="margin-top: 14px;">
-              Setelah bukti dicek oleh Owner (Rafly), token aktivasi akan dikirimkan untuk langsung dimasukkan di menu Aktivasi Token.
-            </p>
+            <a class="btn btn-ghost btn-block" href="/activation.html">Sudah punya token? Aktivasi &rarr;</a>
           </div>
         </aside>
       </div>
@@ -130,57 +110,36 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <span>&copy; 2026 KIDZY Store</span>
-      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">Support via Discord</a>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small faint">Support via Discord</a>
     </div>
   </footer>
 
   <script src="/assets/app.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      const params = new URLSearchParams(window.location.search);
-      const platform = (params.get('platform') || 'saweria').toLowerCase();
-      const plan = (params.get('plan') || 'lifetime').toLowerCase();
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const platform = (urlParams.get('platform') || 'saweria').toLowerCase();
+      const plan = (urlParams.get('plan') || 'lifetime').toLowerCase();
 
-      // Platform names formatting
-      const platformNames = {
-        saweria: 'Saweria',
-        bagibagi: 'BagiBagi',
-        sociabuzz: 'SociaBuzz'
-      };
+      const platformNames = { saweria: 'Saweria', bagibagi: 'BagiBagi', sociabuzz: 'SociaBuzz' };
+      const platformTitle = platformNames[platform] || 'Saweria';
+      const planTitle = plan === 'lifetime' ? 'Lifetime (Permanen)' : '30 Hari';
+      const price = plan === 'lifetime' ? 'Rp 90.000' : 'Rp 35.000';
 
-      const platTitle = platformNames[platform] || 'Saweria';
-      const isLifetime = plan === 'lifetime';
-
-      document.getElementById('order-eyebrow').innerText = `${platTitle} · ${isLifetime ? 'Lifetime' : '30 Hari'}`;
-      document.getElementById('summary-platform').innerText = platTitle;
-      document.getElementById('summary-plan').innerText = isLifetime ? 'Lifetime (Selamanya)' : '30 Hari';
-      document.getElementById('summary-pill').innerText = isLifetime ? 'Lifetime' : '30 Hari';
-
-      try {
-        const info = await apiFetch('/api/store-info');
-        if (info.bankName) {
-          document.getElementById('bank-title').innerText = `Transfer Bank ${info.bankName}`;
-          document.getElementById('bank-name').innerText = info.bankName;
-        }
-        if (info.bankAccount) document.getElementById('bank-account').innerText = info.bankAccount;
-        if (info.bankHolder) document.getElementById('bank-holder').innerText = info.bankHolder;
-        if (info.discordUrl) document.getElementById('discord-btn').href = info.discordUrl;
-        if (info.qrisImage) document.getElementById('qris-img').src = info.qrisImage;
-
-        // Pricing
-        let price = isLifetime ? 300000 : 90000;
-        if (info.prices && info.prices[platform]) {
-          price = isLifetime ? info.prices[platform].lifetime : info.prices[platform].plan30d;
-        }
-
-        const formatted = formatRupiah(price);
-        document.getElementById('order-amount').innerText = formatted;
-        document.getElementById('summary-price').innerText = formatted;
-      } catch (e) {
-        console.warn('Using default store info:', e);
-      }
+      document.getElementById('order-eyebrow').textContent = `${platformTitle} · ${planTitle}`;
+      document.getElementById('order-amount').value = price;
+      document.getElementById('summary-platform').textContent = platformTitle;
+      document.getElementById('summary-plan').textContent = planTitle;
     });
+
+    function copyAcc(btn) {
+      const val = document.getElementById('bank-acc-input').value;
+      navigator.clipboard.writeText(val).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Tersalin!';
+        setTimeout(() => { btn.textContent = orig; }, 2000);
+      });
+    }
   </script>
 </body>
 </html>
-

@@ -6,7 +6,7 @@
   <title>Paket BagiBagi — KIDZY Store</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
@@ -21,10 +21,9 @@
         <a class="nav-link" href="/p/saweria.html">Saweria</a>
         <a class="nav-link is-active" href="/p/bagibagi.html">BagiBagi</a>
         <a class="nav-link" href="/p/sociabuzz.html">SociaBuzz</a>
-        <a class="nav-link" href="/register-service.html">Aktivasi Token</a>
+        <a class="nav-link" href="/activation.html">Aktivasi Token</a>
         <span class="nav-sep"></span>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
-        <div id="nav-auth" class="row"></div>
+        <a class="btn btn-sm btn-ghost" href="/login.html">Login Admin</a>
       </nav>
     </div>
   </header>
@@ -32,75 +31,109 @@
   <main>
     <div class="container page">
       <div class="page-head">
-        <p class="eyebrow">Platform BagiBagi</p>
-        <h1 class="h1">Pilih Paket Subscription BagiBagi</h1>
-        <p class="lead">Dukungan penuh webhook donasi BagiBagi untuk server game Roblox kamu.</p>
+        <div class="row" style="margin-bottom: 12px;">
+          <span class="badge badge-accent">Platform BagiBagi (QRIS)</span>
+        </div>
+        <h1 class="h1">Pilihan Paket BagiBagi</h1>
+        <p class="lead">Integrasi webhook donasi BagiBagi QRIS otomatis terhubung ke game Roblox kamu.</p>
       </div>
 
-      <div class="grid pricing">
-        <div class="card">
-          <div class="card-head">
-            <div>
-              <h2 class="h2">30 Hari</h2>
-              <p class="small">Akses aktif selama 30 hari.</p>
+      <div class="grid three" style="margin-bottom: 40px;">
+        <div class="card pricing-card">
+          <div>
+            <div class="card-head">
+              <span class="badge">Paket Reguler</span>
             </div>
-            <span class="pill">Fleksibel</span>
+            <h3 class="h2">30 Hari</h3>
+            <p class="small faint">Akses aktif selama 30 hari penuh.</p>
+
+            <div class="price-box">
+              <span class="price-currency">Rp</span>
+              <span class="price-amount">35.000</span>
+              <span class="price-period">/ 30 Hari</span>
+            </div>
+
+            <ul class="feature-list" style="margin-bottom: 28px;">
+              <li class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Webhook BagiBagi Aktif 30 Hari
+              </li>
+              <li class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Support QRIS & E-Wallet
+              </li>
+              <li class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                In-Game Alert & VFX
+              </li>
+            </ul>
           </div>
-          <div class="price">Rp 90.000</div>
-          <p class="price-note">Sekali bayar untuk 30 hari penuh.</p>
-          <div class="sep"></div>
-          <ul class="features">
-            <li class="on">Webhook BagiBagi aktif 30 hari</li>
-            <li class="on">Free 2 visual effects script</li>
-            <li class="on">Unlimited donasi & transaksi</li>
-            <li class="on">Support via Discord</li>
-          </ul>
-          <div class="card-foot">
-            <a class="btn btn-block" href="/order/index.html?platform=bagibagi&plan=30d">Order 30 Hari &rarr;</a>
-          </div>
+
+          <a class="btn btn-block" href="/order/index.html?platform=bagibagi&plan=30d">Order 30 Hari</a>
         </div>
 
-        <div class="card" style="border-color: var(--ok); border-width: 2px;">
-          <div class="card-head">
-            <div>
-              <h2 class="h2">Lifetime</h2>
-              <p class="small">Akses permanen selamanya.</p>
+        <div class="card pricing-card featured">
+          <div>
+            <div class="card-head">
+              <span class="badge badge-accent">Best Value</span>
             </div>
-            <span class="pill ok">Paling Hemat</span>
+            <h3 class="h2">Lifetime</h3>
+            <p class="small faint">Akses permanen seumur hidup tanpa biaya perpanjangan.</p>
+
+            <div class="price-box">
+              <span class="price-currency">Rp</span>
+              <span class="price-amount">90.000</span>
+              <span class="price-period">/ Selamanya</span>
+            </div>
+
+            <ul class="feature-list" style="margin-bottom: 28px;">
+              <li class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Akses Webhook Lifetime Permanen
+              </li>
+              <li class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Support QRIS & E-Wallet Lengkap
+              </li>
+              <li class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                5 Level Efek Partikel & Orbit VFX
+              </li>
+              <li class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Leaderboard 3D Realtime
+              </li>
+            </ul>
           </div>
-          <div class="price">Rp 300.000</div>
-          <p class="price-note">Bayar sekali, tanpa biaya langganan lagi.</p>
-          <div class="sep"></div>
-          <ul class="features">
-            <li class="on">Webhook BagiBagi aktif selamanya (Lifetime)</li>
-            <li class="on">Free 5 visual effects script + leaderboard</li>
-            <li class="on">Unlimited donasi & Roblox Open Cloud</li>
-            <li class="on">Priority support langsung dari Owner</li>
-            <li class="on">Free update script selamanya</li>
-          </ul>
-          <div class="card-foot">
-            <a class="btn btn-primary btn-block" href="/order/index.html?platform=bagibagi&plan=lifetime">Order Lifetime &rarr;</a>
-          </div>
+
+          <a class="btn btn-primary btn-block" href="/order/index.html?platform=bagibagi&plan=lifetime">Order Lifetime</a>
         </div>
 
-        <aside class="card soft">
-          <h2 class="h2">Sebelum Order</h2>
-          <p class="small">Alur singkat pembayaran hingga webhook aktif.</p>
-          <div class="sep"></div>
-          <ol class="steps">
-            <li><span><b>Pilih paket</b>Klik tombol order di sebelah kiri.</span></li>
-            <li><span><b>Bayar</b>Transfer via SeaBank (Rek: 901506323909).</span></li>
-            <li><span><b>Kirim bukti</b>Owner akan mengirimkan token aktivasi.</span></li>
-            <li><span><b>Redeem token</b>Masukkan Universe ID dan API Key.</span></li>
-          </ol>
-          <div class="card-foot">
-            <a class="btn btn-block" href="/register-service.html?platform=bagibagi">Sudah punya token</a>
+        <div class="card soft">
+          <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">Pembayaran SeaBank</h2>
+          <p class="small faint" style="margin-bottom: 20px;">Transfer langsung ke rekening resmi owner:</p>
+
+          <div class="field" style="margin-bottom: 16px;">
+            <label>Bank:</label>
+            <input class="input" readonly value="SeaBank (Kode 535)" />
           </div>
-        </aside>
+
+          <div class="field" style="margin-bottom: 16px;">
+            <label>Nomor Rekening:</label>
+            <input class="input mono" readonly value="901506323909" />
+          </div>
+
+          <div class="field" style="margin-bottom: 24px;">
+            <label>Atas Nama:</label>
+            <input class="input" readonly value="MUHAMMAD RAFLI FIRDAUS" />
+          </div>
+
+          <a class="btn btn-ghost btn-block" href="/activation.html">Sudah Punya Token? Aktivasi &rarr;</a>
+        </div>
       </div>
 
-      <div style="margin-top: 28px;">
-        <a class="btn btn-ghost" href="/">&larr; Kembali ke daftar platform</a>
+      <div>
+        <a class="btn btn-ghost" href="/">&larr; Kembali ke Beranda</a>
       </div>
     </div>
   </main>
@@ -108,11 +141,10 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <span>&copy; 2026 KIDZY Store</span>
-      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">Support via Discord</a>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small faint">Support via Discord</a>
     </div>
   </footer>
 
   <script src="/assets/app.js"></script>
 </body>
 </html>
-
