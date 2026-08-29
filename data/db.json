@@ -30,6 +30,19 @@
   },
   "tokens": [
     {
+      "id": "tok_1788016787959_284",
+      "code": "KIDZY-SAWERIA-LIFETIME-VIP",
+      "slug": "VJON7CCA9soIpdNA5jZgtU8SeJNwsmlF",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "unused",
+      "note": "Token Aktivasi Lifetime Resmi untuk Muhammad Rafly Firdaus",
+      "createdAt": "2026-08-29T15:19:47.960Z",
+      "usedAt": null,
+      "usedBy": null,
+      "serviceId": null
+    },
+    {
       "id": "tok_1788015463746_445",
       "code": "KZ-SAW-3FF3-EF69-CCC6",
       "slug": "eOYOMjMNwClXbHVx4MTYF1B7rgnqIFLg",
