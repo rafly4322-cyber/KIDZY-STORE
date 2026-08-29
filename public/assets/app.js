@@ -1,4 +1,4 @@
-﻿/**
+/**
  * KIDZY / Rafly Store — Core Client Logic
  */
 
@@ -46,21 +46,51 @@ function showToast(message, type = 'info') {
     }, 3500);
 }
 
-// Copy to Clipboard
+// Copy to Clipboard (with fallback for all browsers)
 function copyText(text, btn) {
-    if (!text) return;
-    navigator.clipboard.writeText(text).then(() => {
+    if (!text || text.includes('Loading')) return;
+    
+    function onSuccess() {
         showToast('Tersalin ke clipboard!', 'success');
         if (btn) {
             const original = btn.innerHTML;
-            btn.innerHTML = '✓ Tersalin';
+            btn.innerHTML = '✨ Tersalin!';
+            btn.style.background = 'linear-gradient(135deg, #4ade80, #22c55e)';
+            btn.style.color = '#0f172a';
+            btn.style.borderColor = 'transparent';
             setTimeout(() => {
                 btn.innerHTML = original;
-            }, 1800);
+                btn.style.background = '';
+                btn.style.color = '';
+                btn.style.borderColor = '';
+            }, 2000);
         }
-    }).catch(err => {
-        showToast('Gagal menyalin: ' + err.message, 'error');
-    });
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
+            fallbackCopy(text, onSuccess);
+        });
+    } else {
+        fallbackCopy(text, onSuccess);
+    }
+}
+
+function fallbackCopy(text, cb) {
+    try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.top = '-9999px';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (cb) cb();
+    } catch (e) {
+        showToast('Gagal menyalin otomatis. Silakan salin manual.', 'warn');
+    }
 }
 
 // Format Rupiah

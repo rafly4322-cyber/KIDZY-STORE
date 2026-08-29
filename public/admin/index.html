@@ -121,21 +121,21 @@
             <div class="stack" style="gap: 16px;">
               <!-- Webhook Box -->
               <div class="card soft" style="border: 1px solid var(--border);">
-                <div class="row between" style="margin-bottom: 6px;">
-                  <b>Webhook masuk</b>
-                  <button class="btn btn-sm" onclick="copyText(document.getElementById('ep-webhook').innerText, this)">📋 Salin</button>
+                <div class="row between" style="margin-bottom: 8px;">
+                  <b style="color: var(--accent);">⚡ Webhook Masuk (Saweria / BagiBagi)</b>
+                  <button class="btn btn-sm btn-accent" onclick="copyText(document.getElementById('ep-webhook').innerText, this)">📋 Salin URL</button>
                 </div>
-                <p class="small faint" style="margin-bottom: 8px;">Tempel URL ini di dashboard Saweria.</p>
+                <p class="small faint" style="margin-bottom: 8px;">Tempel URL ini di webhook dashboard platform donasi kamu.</p>
                 <pre class="code" id="ep-webhook">Loading webhook URL...</pre>
               </div>
 
               <!-- Polling Box -->
               <div class="card soft" style="border: 1px solid var(--border);">
-                <div class="row between" style="margin-bottom: 6px;">
-                  <b>Polling URL</b>
-                  <button class="btn btn-sm" onclick="copyText(document.getElementById('ep-poll').innerText, this)">📋 Salin</button>
+                <div class="row between" style="margin-bottom: 8px;">
+                  <b style="color: var(--ok);">📡 Polling URL (Roblox Studio HttpService)</b>
+                  <button class="btn btn-sm btn-accent" onclick="copyText(document.getElementById('ep-poll').innerText, this)">📋 Salin URL</button>
                 </div>
-                <p class="small faint" style="margin-bottom: 8px;">Gunakan URL ini pada HttpService di Roblox Studio.</p>
+                <p class="small faint" style="margin-bottom: 8px;">Gunakan URL ini pada script HttpService di Roblox Studio game kamu.</p>
                 <pre class="code" id="ep-poll">Loading polling URL...</pre>
               </div>
             </div>
