@@ -57,6 +57,60 @@
             <p class="muted">Ringkasan subscription, statistik, dan endpoint kamu.</p>
           </div>
 
+          <!-- Quick Generate Token Card -->
+          <div class="card" style="margin-bottom: 24px; border: 1px solid var(--glass-border-gold); background: rgba(250, 192, 45, 0.04);">
+            <div class="card-head">
+              <div>
+                <h2 class="h2">✨ Buat Token Aktivasi Pembeli</h2>
+                <p class="small">Generate token baru dalam 1-klik untuk dikirimkan ke pembeli di Discord/WhatsApp.</p>
+              </div>
+              <a class="btn btn-sm btn-accent" href="/admin/tokens.html">🔑 Lihat Semua Token &rarr;</a>
+            </div>
+
+            <form id="quick-token-form" onsubmit="handleQuickCreateToken(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) auto; gap: 12px; align-items: end;">
+              <div class="field">
+                <label for="qtok-platform">Platform</label>
+                <select class="input" id="qtok-platform">
+                  <option value="saweria">Saweria</option>
+                  <option value="bagibagi">BagiBagi</option>
+                  <option value="sociabuzz">SociaBuzz</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="qtok-plan">Paket Layanan</label>
+                <select class="input" id="qtok-plan">
+                  <option value="lifetime">Lifetime (Selamanya)</option>
+                  <option value="30d">30 Hari</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="qtok-note">Nama Pembeli (Catatan)</label>
+                <input class="input" id="qtok-note" placeholder="Contoh: Pembeli @User123" required />
+              </div>
+
+              <div>
+                <button class="btn btn-primary" type="submit" style="height: 44px; white-space: nowrap;">
+                  ⚡ Buat Token Instan
+                </button>
+              </div>
+            </form>
+
+            <div id="quick-token-result" style="display: none; margin-top: 16px; padding: 14px; background: var(--surface-2); border-radius: var(--r-sm); border: 1px solid var(--ok);">
+              <div class="row between">
+                <div>
+                  <span class="pill ok">✓ Token Berhasil Dibuat!</span>
+                  <div style="margin-top: 6px; font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--accent);" id="qtok-code-display"></div>
+                </div>
+                <div class="row" style="gap: 8px;">
+                  <button class="btn btn-sm btn-primary" id="qtok-copy-btn">📋 Salin Kode</button>
+                  <button class="btn btn-sm btn-accent" id="qtok-copy-link">🔗 Salin Link Aktivasi</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- 1. Subscription Card -->
           <div class="card" style="margin-bottom: 24px;">
             <div class="card-head">
@@ -188,6 +242,42 @@
         }
       } catch (err) {
         console.warn('Failed loading stats:', err);
+      }
+    }
+
+    async function handleQuickCreateToken(e) {
+      e.preventDefault();
+      const platform = document.getElementById('qtok-platform').value;
+      const plan = document.getElementById('qtok-plan').value;
+      const note = document.getElementById('qtok-note').value.trim();
+
+      try {
+        const res = await apiFetch('/api/admin/tokens', {
+          method: 'POST',
+          body: JSON.stringify({ platform, plan, note })
+        });
+        
+        if (res.success && res.token) {
+          const t = res.token;
+          const origin = window.location.origin;
+          const redeemLink = `${origin}/register-service.html?token=${t.code}`;
+
+          document.getElementById('qtok-code-display').innerText = `Kode: ${t.code} (${t.platform.toUpperCase()} - ${t.plan.toUpperCase()})`;
+          
+          document.getElementById('qtok-copy-btn').onclick = function() {
+            copyText(t.code, this);
+          };
+          
+          document.getElementById('qtok-copy-link').onclick = function() {
+            copyText(redeemLink, this);
+          };
+
+          document.getElementById('quick-token-result').style.display = 'block';
+          showToast(`Token ${t.code} berhasil dibuat!`, 'success');
+          document.getElementById('quick-token-form').reset();
+        }
+      } catch (err) {
+        showToast(err.message || 'Gagal membuat token', 'error');
       }
     }
   </script>
