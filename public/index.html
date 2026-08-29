@@ -1,12 +1,12 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>KIDZY Store — Sistem Webhook Donasi Roblox</title>
+  <title>KIDZY Store — Sistem Webhook & Polling Donasi Roblox</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
@@ -33,83 +33,122 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <p class="eyebrow">Roblox Donation Gateway</p>
-          <h1 class="h1">Hubungkan donasi Saweria ke game Roblox kamu secara realtime.</h1>
-          <p class="lead">Pilih platform donasi kesukaanmu (Saweria, BagiBagi, SociaBuzz), dapatkan paket subscription, lalu hubungkan langsung ke Roblox DataStore melalui Roblox Open Cloud.</p>
-          <div class="row mt-24" style="margin-top: 24px;">
-            <a class="btn btn-primary btn-lg" href="/p/saweria.html">Lihat Paket Saweria</a>
-            <a class="btn btn-lg" href="/register-service.html">Sudah punya token</a>
+          <span class="eyebrow">⚡ Roblox Donation Gateway V3.0</span>
+          <h1 class="h1 gradient" style="margin-bottom: 16px;">Hubungkan Donasi Saweria ke Game Roblox Real-Time.</h1>
+          <p class="lead">Sistem otomatis Webhook Saweria, BagiBagi, dan SociaBuzz terintegrasi penuh ke Roblox Open Cloud DataStore & In-Game Orbit VFX Alert.</p>
+          
+          <div class="row" style="margin: 20px 0 28px; gap: 10px;">
+            <span class="pill ok">● Realtime Sync</span>
+            <span class="pill accent">💫 Orbit VFX Support</span>
+            <span class="pill">🛡️ Open Cloud DataStore</span>
+          </div>
+
+          <div class="row" style="gap: 14px;">
+            <a class="btn btn-primary btn-lg" href="/p/saweria.html">
+              🔥 Lihat Paket Saweria
+            </a>
+            <a class="btn btn-lg" href="/register-service.html">
+              🔑 Aktivasi Token Klien
+            </a>
           </div>
         </div>
 
-        <aside class="card hero-aside">
-          <h2 class="h2">Cara Kerjanya</h2>
-          <p class="small">Tiga langkah mudah sampai donasi tampil di dalam game.</p>
-          <div class="sep"></div>
+        <aside class="card">
+          <div class="card-head">
+            <h2 class="h2" style="margin: 0;">Cara Kerja Sistem</h2>
+            <span class="pill accent">3 Langkah</span>
+          </div>
+          <p class="small faint">Cepat, otomatis, dan langsung aktif dalam hitungan detik.</p>
+          <div class="sep" style="margin: 16px 0;"></div>
           <ol class="steps">
-            <li><span><b>Pilih paket</b>Tentukan 30 hari atau lifetime sesuai kebutuhan server kamu.</span></li>
-            <li><span><b>Bayar &amp; Dapatkan Token</b>Gunakan QRIS atau transfer bank, token langsung terbit.</span></li>
-            <li><span><b>Aktifkan Layanan</b>Masukkan Token, Universe ID, dan Roblox API Key. Selesai!</span></li>
+            <li><span><b>1. Pilih Paket &amp; Token</b>Dapatkan lisensi (30 Hari / Lifetime) melalui sistem checkout instan.</span></li>
+            <li><span><b>2. Aktifkan Universe ID</b>Masukkan Universe ID game Roblox dan Roblox Open Cloud API Key.</span></li>
+            <li><span><b>3. Pasang Link Webhook</b>Tempel URL ke Saweria &amp; pasang script di Studio. Donasi langsung live!</span></li>
           </ol>
         </aside>
       </div>
     </section>
 
     <div class="container page flush">
-      <div class="card-head">
+      <div class="card-head" style="margin-bottom: 24px;">
         <div>
-          <h2 class="h1" style="font-size: 24px;">Pilih Platform Donasi</h2>
-          <p class="small">Tiga platform terpercaya didukung penuh dengan sistem otomatis dan aman.</p>
+          <h2 class="h1" style="font-size: 26px;">Pilihan Platform Donasi</h2>
+          <p class="small">Dukungan penuh untuk seluruh platform donasi karya kreator Indonesia.</p>
         </div>
       </div>
 
-      <div class="grid three">
-        <div class="card">
+      <div class="grid three" style="margin-bottom: 48px;">
+        <!-- Saweria Card -->
+        <div class="card" style="border-top: 3px solid var(--accent);">
           <span class="pill accent" style="align-self: flex-start; margin-bottom: 12px;">Populer #1</span>
-          <h3 class="h2">Saweria</h3>
-          <p class="small">Webhook otomatis untuk Saweria dengan integrasi penuh ke Roblox DataStore.</p>
+          <h3 class="h2" style="font-size: 22px;">Saweria</h3>
+          <p class="small" style="margin-bottom: 20px;">Webhook otomatis untuk Saweria dengan integrasi penuh ke Roblox DataStore &amp; efek orbit server.</p>
+          
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; margin-bottom: 24px; color: var(--muted);">
+            <li>✓ Auto Polling &amp; Push Webhook</li>
+            <li>✓ Live In-Game Notification</li>
+            <li>✓ Server Orbit VFX Aura</li>
+          </ul>
+
           <div class="card-foot">
             <a class="btn btn-primary btn-block" href="/p/saweria.html">Lihat Paket Saweria &rarr;</a>
           </div>
         </div>
 
-        <div class="card">
+        <!-- BagiBagi Card -->
+        <div class="card" style="border-top: 3px solid var(--ok);">
           <span class="pill ok" style="align-self: flex-start; margin-bottom: 12px;">Support QRIS</span>
-          <h3 class="h2">BagiBagi</h3>
-          <p class="small">Subscription webhook untuk platform BagiBagi dengan response cepat & aman.</p>
+          <h3 class="h2" style="font-size: 22px;">BagiBagi</h3>
+          <p class="small" style="margin-bottom: 20px;">Subscription webhook untuk platform BagiBagi dengan respon cepat, stabil, dan aman.</p>
+          
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; margin-bottom: 24px; color: var(--muted);">
+            <li>✓ Support All E-Wallet QRIS</li>
+            <li>✓ 100% Uptime Guaranteed</li>
+            <li>✓ TopbarPlus Admin Integration</li>
+          </ul>
+
           <div class="card-foot">
             <a class="btn btn-primary btn-block" href="/p/bagibagi.html">Lihat Paket BagiBagi &rarr;</a>
           </div>
         </div>
 
-        <div class="card">
+        <!-- SociaBuzz Card -->
+        <div class="card" style="border-top: 3px solid var(--warn);">
           <span class="pill warn" style="align-self: flex-start; margin-bottom: 12px;">Multi Payment</span>
-          <h3 class="h2">SociaBuzz</h3>
-          <p class="small">Integrasi lengkap untuk SociaBuzz TRIBE & webhook donasi game Roblox.</p>
+          <h3 class="h2" style="font-size: 22px;">SociaBuzz</h3>
+          <p class="small" style="margin-bottom: 20px;">Integrasi lengkap untuk SociaBuzz TRIBE &amp; webhook donasi game Roblox dengan sistem ranking.</p>
+          
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; margin-bottom: 24px; color: var(--muted);">
+            <li>✓ Multi Currency &amp; Paypal</li>
+            <li>✓ Auto Update Leaderboard 3D</li>
+            <li>✓ Lifetime &amp; 30-Day Plan</li>
+          </ul>
+
           <div class="card-foot">
             <a class="btn btn-primary btn-block" href="/p/sociabuzz.html">Lihat Paket SociaBuzz &rarr;</a>
           </div>
         </div>
       </div>
 
-      <div class="sep"></div>
-
-      <div class="grid four" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
-        <div>
-          <h3 class="h3">⚡ Webhook Realtime</h3>
-          <p class="small">Donasi langsung tercatat dan diperbarui ke DataStore game tanpa delay.</p>
-        </div>
-        <div>
-          <h3 class="h3">♾️ Unlimited Donasi</h3>
-          <p class="small">Tidak ada batasan jumlah transaksi per bulan ataupun biaya potongan tambahan.</p>
-        </div>
-        <div>
-          <h3 class="h3">📦 Script Siap Pakai</h3>
-          <p class="small">File model Roblox (.rbxm) dan script leaderboard siap pasang di Roblox Studio.</p>
-        </div>
-        <div>
-          <h3 class="h3">🛡️ Roblox Open Cloud</h3>
-          <p class="small">Menggunakan API resmi Roblox Open Cloud DataStores V1 yang aman dan stabil.</p>
+      <div class="card soft" style="padding: 32px; border: 1px solid var(--border);">
+        <h3 class="h2" style="margin-bottom: 16px;">💎 Keunggulan Sistem KIDZY Store</h3>
+        <div class="grid four" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+          <div>
+            <h4 class="h3">⚡ Instant Webhook</h4>
+            <p class="small">Donasi langsung tercatat dan diperbarui ke DataStore in-game dalam hitungan milidetik.</p>
+          </div>
+          <div>
+            <h4 class="h3">💫 Server Orbit VFX</h4>
+            <p class="small">Efek spektakuler bola emas dan bintang berputar mengitari avatar pemain saat donasi.</p>
+          </div>
+          <div>
+            <h4 class="h3">📦 Model Roblox Siap Pasang</h4>
+            <p class="small">File model (.rbxm) dan script UI CanvasGroup Glassmorphism siap pasang 1-klik di Studio.</p>
+          </div>
+          <div>
+            <h4 class="h3">🛡️ Roblox Open Cloud</h4>
+            <p class="small">Menggunakan API resmi Roblox Open Cloud DataStores V1 yang aman, terverifikasi, dan stabil.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -118,11 +157,10 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <span>&copy; 2026 KIDZY Store &middot; Dikelola oleh Muhammad Rafly</span>
-      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">Support via Discord</a>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">💬 Support via Discord</a>
     </div>
   </footer>
 
   <script src="/assets/app.js"></script>
 </body>
 </html>
-
