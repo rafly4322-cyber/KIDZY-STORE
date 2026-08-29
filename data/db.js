@@ -111,9 +111,9 @@ function getInitialData() {
             storeName: 'KIDZY Store',
             logoText: 'KZ',
             discordUrl: 'https://discord.gg/tqnreKW6D8',
-            bankName: 'BNI',
-            bankAccount: '1788342779',
-            bankHolder: 'Ahmad Taufik',
+            bankName: 'SeaBank',
+            bankAccount: '901506323909',
+            bankHolder: 'MUHAMMAD RAFLI FIRDAUS',
             qrisImage: '/assets/qris.png',
             prices: {
                 saweria: { plan30d: 90000, lifetime: 300000 },

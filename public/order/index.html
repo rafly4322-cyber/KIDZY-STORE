@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
@@ -33,50 +33,59 @@
     <div class="container page">
       <div class="page-head">
         <p class="eyebrow" id="order-eyebrow">Saweria &middot; Lifetime</p>
-        <h1 class="h1">Pembayaran Subscription</h1>
-        <p class="lead">Bayar dengan QRIS atau transfer Bank, lalu kirim bukti pembayaran lewat Discord untuk menerima token aktivasi resmi.</p>
+        <h1 class="h1">Pembayaran via SeaBank (Only)</h1>
+        <p class="lead">Silakan transfer pembayaran ke rekening resmi SeaBank di bawah ini, lalu kirim bukti transfer lewat Discord untuk menerima token aktivasi resmi.</p>
       </div>
 
       <div class="split">
-        <div class="grid two auto">
-          <!-- QRIS Card -->
-          <div class="card">
-            <h2 class="h2">QRIS Semua Pembayaran</h2>
-            <p class="small">Scan kode berikut dari GoPay, OVO, DANA, ShopeePay, BCA Mobile, atau e-wallet lainnya.</p>
-            <div style="margin-top: 16px; display: flex; justify-content: center; background: var(--surface-2); padding: 16px; border-radius: var(--r);">
-              <img id="qris-img" src="/assets/qris.png" class="qr" alt="QRIS Pembayaran" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=SaweriaRobloxStorePayment'" />
+        <div>
+          <!-- SeaBank Official Card -->
+          <div class="card" style="border: 2px solid var(--accent); position: relative; overflow: hidden;">
+            <div class="row between" style="margin-bottom: 12px;">
+              <span class="pill accent" style="font-size: 13px; font-weight: 700;">🏦 METODE RESMI: SEABANK ONLY</span>
+              <span class="pill ok">Online 24 Jam</span>
             </div>
-            <p class="hint" style="text-align: center;">Scan kode di atas lalu masukkan nominal sesuai tagihan.</p>
-          </div>
-
-          <!-- Bank Transfer Card -->
-          <div class="card">
-            <h2 class="h2" id="bank-title">Transfer Bank BNI</h2>
-            <p class="small">Transfer manual langsung ke rekening di bawah ini.</p>
+            
+            <h2 class="h2" id="bank-title" style="font-size: 24px; margin-bottom: 4px;">Transfer Bank SeaBank</h2>
+            <p class="small" style="margin-bottom: 18px;">Bisa transfer dari rekening SeaBank, seluruh Bank di Indonesia (BCA, BRI, Mandiri, BNI), maupun e-wallet (DANA, GoPay, OVO, ShopeePay).</p>
+            
             <div style="margin-top: 16px;">
               <dl class="dl">
-                <div class="dl-row">
-                  <dt>Bank Penerima</dt>
-                  <dd id="bank-name">BNI</dd>
+                <div class="dl-row" style="background: var(--surface-3);">
+                  <dt>Nama Bank</dt>
+                  <dd id="bank-name" style="font-size: 16px; font-weight: 700; color: var(--accent);">SeaBank (Kode: 535)</dd>
+                </div>
+                <div class="dl-row" style="background: var(--surface-3);">
+                  <dt>Nama Pemilik Rekening</dt>
+                  <dd id="bank-holder" style="font-size: 16px; font-weight: 700; color: #fff;">MUHAMMAD RAFLI FIRDAUS</dd>
+                </div>
+                <div class="dl-row" style="background: rgba(250, 192, 45, 0.08); border: 1px solid var(--glass-border-gold);">
+                  <dt style="color: var(--accent); font-weight: 700;">Nomor Rekening</dt>
+                  <dd class="token" id="bank-account" style="cursor: pointer; font-size: 20px; font-weight: 800; color: var(--accent);" onclick="copyText(this.innerText, this)" title="Klik untuk salin">901506323909</dd>
                 </div>
                 <div class="dl-row">
-                  <dt>Nama Rekening</dt>
-                  <dd id="bank-holder">Ahmad Taufik</dd>
-                </div>
-                <div class="dl-row">
-                  <dt>Nomor Rekening</dt>
-                  <dd class="token" id="bank-account" style="cursor: pointer;" onclick="copyText(this.innerText, this)" title="Klik untuk salin">1788342779</dd>
-                </div>
-                <div class="dl-row">
-                  <dt>Total Tagihan</dt>
-                  <dd id="order-amount" style="color: var(--ok); font-size: 16px;">Rp 300.000</dd>
+                  <dt>Total Tagihan Pembayaran</dt>
+                  <dd id="order-amount" style="color: var(--ok); font-size: 20px; font-weight: 800;">Rp 300.000</dd>
                 </div>
               </dl>
-              <button class="btn btn-sm btn-block" style="margin-top: 12px;" onclick="copyText(document.getElementById('bank-account').innerText, this)">
-                📋 Salin Nomor Rekening
-              </button>
+              
+              <div class="row" style="margin-top: 18px; gap: 12px;">
+                <button class="btn btn-primary btn-lg btn-block" onclick="copyText(document.getElementById('bank-account').innerText, this)">
+                  📋 Salin Nomor Rekening SeaBank
+                </button>
+              </div>
             </div>
-            <p class="hint">Pastikan nama penerima sesuai sebelum mengirim, lalu simpan struk bukti transfer.</p>
+            
+            <div class="sep" style="margin: 20px 0;"></div>
+            
+            <div class="card soft" style="border: 1px solid var(--border); padding: 16px;">
+              <h3 class="h3" style="margin-bottom: 8px;">💡 Cara Transfer ke SeaBank:</h3>
+              <ol class="steps" style="margin-top: 8px; font-size: 13px;">
+                <li><span><b>Dari Aplikasi SeaBank / ShopeePay:</b> Masuk menu Transfer &gt; No. Rekening SeaBank <b>901506323909</b> (Gratis Biaya Admin).</span></li>
+                <li><span><b>Dari Bank Lain (BCA, BRI, Mandiri, dll):</b> Pilih Transfer Antar Bank &gt; Bank Tujuan: <b>SeaBank (Kode 535)</b> &gt; Masukkan No. Rek <b>901506323909</b>.</span></li>
+                <li><span><b>Simpan Bukti:</b> Screenshot bukti transfer dan kirimkan ke Discord Owner (Rafly) untuk konfirmasi instan!</span></li>
+              </ol>
+            </div>
           </div>
         </div>
 
