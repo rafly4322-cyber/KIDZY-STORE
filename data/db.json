@@ -69,7 +69,24 @@
       "expiresAt": null
     }
   ],
-  "services": [],
+  "services": [
+    {
+      "id": "svc_rafly_main",
+      "tokenCode": "KZ-SAW-453D-40AD-1D6D",
+      "slug": "qddqfoBXKQBT3ytew1o7urevCUE9Lxdl",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "10764300084",
+      "robloxApiKey": "87AcmNz6AEGQiST5T5bVNvgw/0JKfEL5Fa3U/5iDLzUGFthmZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SWpnM1FXTnRUbm8yUVVWSFVXbFRWRFZVTldKV1RuWm5keTh3U2t0bVJVdzFSbUV6VlM4MWFVUk1lbFZIUm5Sb2JTSXNJbTkzYm1WeVNXUWlPaUk1T0RrME9UQTBNRE0zSWl3aVpYaHdJam94TnpnM09UZzVOelUzTENKcFlYUWlPakUzT0RjNU9EWXhOVGNzSW01aVppSTZNVGM0TnprNE5qRTFOMzAuWXpwMW9UNmtlVkNRc3JfOVVSenFLb1Vad2xOcHlmRVA0V1JKSDlrWHFyWE12a0k4OGJaV2k0YmhmSnNuZnpXZDFPZll1T2tQSFNPMUZaRUxoX0RWalJKYnNwVUpNUWFNd0o4LW1rQUV5ZjlDNXp0cndoVjl6NF9VT3V3OXFza1hXb0l0WG1kNEN5cEFmejFlMTFGOTFJcFBna0VHakJBbGx1SXduLTlGcml6bXB4QXVuYVFaSlJMakxqSHBHOXlkQlh0cHVLSkNsX25ZTzI1LXdSRWhTNHhFelhRVmhMLS1uamZFMXJoMFVTRWZtOG1nV0ZiUWVPZWs1dGRaaGRmVUh6dUo3V0pDeXk2TUMzVDBsRVRuSnhJNEd3YzRkSm9KUENBZWtvQVdpaXctZnhPc21XSzNiRjRzTzRQNmFkcVBLUnM0bDduZS1XamlMNFgydk5Ebmhn",
+      "clientName": "Muhammad Rafly (Owner)",
+      "status": "active",
+      "activatedAt": "2026-08-29T06:50:00.000Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0
+    }
+  ],
   "donations": [
     {
       "id": "sim_1787982653048",
