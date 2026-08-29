@@ -183,26 +183,27 @@
   "settings": {
     "storeName": "KIDZY Store",
     "logoText": "KZ",
-    "discordUrl": "https://discord.gg/tqnreKW6D8",
+    "discordUrl": "https://discord.com/users/kidddzyyaj",
     "bankName": "SeaBank",
     "bankAccount": "901506323909",
     "bankHolder": "MUHAMMAD RAFLI FIRDAUS",
     "qrisImage": "/assets/qris.png",
     "prices": {
       "saweria": {
-        "plan30d": 35000,
-        "lifetime": 90000
+        "plan30d": 100000,
+        "lifetime": 300000
       },
       "bagibagi": {
-        "plan30d": 35000,
-        "lifetime": 90000
+        "plan30d": 100000,
+        "lifetime": 300000
       },
       "sociabuzz": {
-        "plan30d": 35000,
-        "lifetime": 90000
+        "plan30d": 100000,
+        "lifetime": 300000
       }
     },
     "robloxApiKey": "",
-    "universeIds": []
+    "universeIds": [],
+    "discordUsername": "kidddzyyaj"
   }
 }
