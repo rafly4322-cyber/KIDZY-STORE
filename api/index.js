@@ -15,11 +15,27 @@ const {
 const app = express();
 
 // ============================================
-// MIDDLEWARE
+// MIDDLEWARE & SECURITY HEADERS
 // ============================================
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '2mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '2mb' }));
+
+// Global Security & Performance Headers
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    // Prevent caching for dynamic API responses
+    if (req.url.startsWith('/api') || req.url.startsWith('/poll') || req.url.startsWith('/webhook')) {
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+    }
+    next();
+});
 
 // Normalize URL on Vercel so both /api/xxx and /xxx match Express routes
 app.use((req, res, next) => {
@@ -29,10 +45,24 @@ app.use((req, res, next) => {
     next();
 });
 
+// HTML Entity Sanitizer Helper (XSS Protection)
+function sanitizeText(str) {
+    if (typeof str !== 'string') return '';
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
 // Serve static assets from public folder
 const PUBLIC_DIR = path.join(__dirname, '../public');
 if (fs.existsSync(PUBLIC_DIR)) {
-    app.use(express.static(PUBLIC_DIR));
+    app.use(express.static(PUBLIC_DIR, {
+        maxAge: '1d',
+        etag: true
+    }));
 }
 
 // Memory queue for in-game polling
