@@ -1,0 +1,118 @@
+﻿<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Paket SociaBuzz — KIDZY Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark">KZ</span>
+        <span>KIDZY Store</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/p/saweria.html">Saweria</a>
+        <a class="nav-link" href="/p/bagibagi.html">BagiBagi</a>
+        <a class="nav-link is-active" href="/p/sociabuzz.html">SociaBuzz</a>
+        <a class="nav-link" href="/register-service.html">Aktivasi Token</a>
+        <span class="nav-sep"></span>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <div id="nav-auth" class="row"></div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container page">
+      <div class="page-head">
+        <p class="eyebrow">Platform SociaBuzz</p>
+        <h1 class="h1">Pilih Paket Subscription SociaBuzz</h1>
+        <p class="lead">Integrasi webhook SociaBuzz TRIBE & Donasi ke Roblox DataStore secara otomatis.</p>
+      </div>
+
+      <div class="grid pricing">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="h2">30 Hari</h2>
+              <p class="small">Akses aktif selama 30 hari.</p>
+            </div>
+            <span class="pill">Fleksibel</span>
+          </div>
+          <div class="price">Rp 90.000</div>
+          <p class="price-note">Sekali bayar untuk 30 hari penuh.</p>
+          <div class="sep"></div>
+          <ul class="features">
+            <li class="on">Webhook SociaBuzz aktif 30 hari</li>
+            <li class="on">Free 2 visual effects script</li>
+            <li class="on">Unlimited donasi & transaksi</li>
+            <li class="on">Support via Discord</li>
+          </ul>
+          <div class="card-foot">
+            <a class="btn btn-block" href="/order/index.html?platform=sociabuzz&plan=30d">Order 30 Hari &rarr;</a>
+          </div>
+        </div>
+
+        <div class="card" style="border-color: var(--warn); border-width: 2px;">
+          <div class="card-head">
+            <div>
+              <h2 class="h2">Lifetime</h2>
+              <p class="small">Akses permanen selamanya.</p>
+            </div>
+            <span class="pill warn">Paling Hemat</span>
+          </div>
+          <div class="price">Rp 300.000</div>
+          <p class="price-note">Bayar sekali, tanpa biaya langganan lagi.</p>
+          <div class="sep"></div>
+          <ul class="features">
+            <li class="on">Webhook SociaBuzz aktif selamanya (Lifetime)</li>
+            <li class="on">Free 5 visual effects script + leaderboard</li>
+            <li class="on">Unlimited donasi & Roblox Open Cloud</li>
+            <li class="on">Priority support langsung dari Owner</li>
+            <li class="on">Free update script selamanya</li>
+          </ul>
+          <div class="card-foot">
+            <a class="btn btn-primary btn-block" href="/order/index.html?platform=sociabuzz&plan=lifetime">Order Lifetime &rarr;</a>
+          </div>
+        </div>
+
+        <aside class="card soft">
+          <h2 class="h2">Sebelum Order</h2>
+          <p class="small">Alur singkat pembayaran hingga webhook aktif.</p>
+          <div class="sep"></div>
+          <ol class="steps">
+            <li><span><b>Pilih paket</b>Tentukan 30 hari atau lifetime.</span></li>
+            <li><span><b>Bayar</b>Gunakan QRIS atau transfer Bank.</span></li>
+            <li><span><b>Kirim bukti</b>Terima token aktivasi dari owner.</span></li>
+            <li><span><b>Redeem token</b>Masukkan Universe ID dan API Key.</span></li>
+          </ol>
+          <div class="card-foot">
+            <a class="btn btn-block" href="/register-service.html?platform=sociabuzz">Sudah punya token</a>
+          </div>
+        </aside>
+      </div>
+
+      <div style="margin-top: 28px;">
+        <a class="btn btn-ghost" href="/">&larr; Kembali ke daftar platform</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 KIDZY Store</span>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">Support via Discord</a>
+    </div>
+  </footer>
+
+  <script src="/assets/app.js"></script>
+</body>
+</html>
+

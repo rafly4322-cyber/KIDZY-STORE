@@ -1,0 +1,205 @@
+﻿<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roblox DataStore Inspector — KIDZY Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/admin/index.html">
+        <span class="brand-mark">KZ</span>
+        <span>KIDZY Admin</span>
+      </a>
+      <nav class="nav">
+        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko ↗</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Keluar</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <div class="shell">
+        <aside class="side">
+          <div class="side-title">Menu Utama</div>
+          <nav class="side-nav">
+            <a class="side-link" href="/admin/index.html">📊 Overview</a>
+            <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
+            <a class="side-link" href="/admin/services.html">🎮 Layanan & Game</a>
+            <a class="side-link" href="/admin/donations.html">📜 Riwayat Donasi</a>
+            <a class="side-link" href="/admin/simulator.html">🧪 Simulator Donasi</a>
+            <a class="side-link is-active" href="/admin/roblox.html">☁️ Roblox DataStore</a>
+            <a class="side-link" href="/admin/downloads.html">📥 Download Script</a>
+            <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan</a>
+          </nav>
+        </aside>
+
+        <div>
+          <div class="page-head">
+            <h1 class="h1">☁️ Roblox Open Cloud DataStore Inspector</h1>
+            <p class="small">Inspeksi langsung data donatur yang tersimpan di DataStore <code>SaweriaDonations</code> Roblox secara realtime.</p>
+          </div>
+
+          <div class="card" style="margin-bottom: 24px;">
+            <h2 class="h2">Pilih Game / Universe</h2>
+            <div class="form-row two" style="margin-top: 12px;">
+              <div class="field">
+                <label for="ds-universe">Universe ID</label>
+                <input class="input" id="ds-universe" placeholder="Contoh: 1234567890" />
+              </div>
+              <div class="field">
+                <label for="ds-apikey">Roblox API Key</label>
+                <input class="input" id="ds-apikey" type="password" placeholder="ApiKey..." />
+              </div>
+            </div>
+
+            <div class="form-actions" style="margin-top: 14px;">
+              <button class="btn btn-primary" id="btn-inspect" onclick="inspectDatastore()">🔍 Baca DataStore Live</button>
+              <button class="btn btn-ghost" onclick="testConnectionOnly()">⚡ Test Koneksi Saja</button>
+              <button class="btn btn-danger" onclick="clearDatastoreLive()">🗑️ Reset / Kosongkan DataStore</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="row between" style="margin-bottom: 12px;">
+              <h2 class="h2">Data Entry (DataStore: <code>SaweriaDonations</code>, Key: <code>AllDonations</code>)</h2>
+              <span class="pill" id="ds-status-pill">Menunggu Input</span>
+            </div>
+
+            <div id="datastore-output">
+              <pre class="code" style="max-height: 480px;">Masukkan Universe ID dan API Key lalu klik "Baca DataStore Live".</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/assets/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Auth.requireAdmin()) return;
+
+      // Try autofill from first service or settings
+      try {
+        const svcRes = await apiFetch('/api/admin/services');
+        if (svcRes.success && svcRes.services.length > 0) {
+          document.getElementById('ds-universe').value = svcRes.services[0].universeId;
+          document.getElementById('ds-apikey').value = svcRes.services[0].robloxApiKey;
+        } else {
+          const setRes = await apiFetch('/api/admin/settings');
+          if (setRes.success && setRes.settings.universeIds && setRes.settings.universeIds.length > 0) {
+            document.getElementById('ds-universe').value = setRes.settings.universeIds[0];
+            document.getElementById('ds-apikey').value = setRes.settings.robloxApiKey || '';
+          }
+        }
+      } catch (e) {}
+    });
+
+    async function inspectDatastore() {
+      const universeId = document.getElementById('ds-universe').value.trim();
+      const robloxApiKey = document.getElementById('ds-apikey').value.trim();
+      const output = document.getElementById('datastore-output');
+      const pill = document.getElementById('ds-status-pill');
+
+      if (!universeId || !robloxApiKey) {
+        showToast('Universe ID dan Roblox API Key wajib diisi!', 'warn');
+        return;
+      }
+
+      pill.className = 'pill warn';
+      pill.innerText = 'Membaca...';
+      output.innerHTML = '<pre class="code">Menghubungi server Roblox Open Cloud API...</pre>';
+
+      try {
+        const res = await apiFetch('/api/admin/roblox/datastore', {
+          method: 'POST',
+          body: JSON.stringify({ universeId, robloxApiKey })
+        });
+
+        if (res.success) {
+          pill.className = 'pill ok';
+          pill.innerText = 'Berhasil Terhubung';
+          const donors = Array.isArray(res.data) ? res.data : [];
+          output.innerHTML = `
+            <div style="margin-bottom: 12px;" class="small">
+              Total Donatur Terdaftar: <b>${donors.length}</b> &middot; Total Donasi: <b>${formatRupiah(donors.reduce((sum, d) => sum + (d.Amount || 0), 0))}</b>
+            </div>
+            <pre class="code" style="max-height: 480px;">${JSON.stringify(res.data, null, 2)}</pre>
+          `;
+          showToast('DataStore berhasil dibaca!', 'success');
+        } else {
+          pill.className = 'pill bad';
+          pill.innerText = 'Gagal';
+          output.innerHTML = `<pre class="code" style="color: var(--bad);">${JSON.stringify(res.error, null, 2)}</pre>`;
+          showToast('Gagal membaca DataStore: ' + JSON.stringify(res.error), 'error');
+        }
+      } catch (err) {
+        pill.className = 'pill bad';
+        pill.innerText = 'Error';
+        output.innerHTML = `<pre class="code" style="color: var(--bad);">${err.message}</pre>`;
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function testConnectionOnly() {
+      const universeId = document.getElementById('ds-universe').value.trim();
+      const robloxApiKey = document.getElementById('ds-apikey').value.trim();
+      if (!universeId || !robloxApiKey) {
+        showToast('Universe ID dan API Key wajib diisi!', 'warn');
+        return;
+      }
+      showToast('Menguji koneksi...', 'info');
+      try {
+        const res = await apiFetch('/api/admin/roblox/test-connection', {
+          method: 'POST',
+          body: JSON.stringify({ universeId, robloxApiKey })
+        });
+        if (res.success) {
+          showToast('✅ ' + res.message, 'success');
+        } else {
+          showToast('❌ ' + res.message, 'error');
+        }
+      } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+      }
+    }
+
+    async function clearDatastoreLive() {
+      const universeId = document.getElementById('ds-universe').value.trim();
+      const robloxApiKey = document.getElementById('ds-apikey').value.trim();
+      if (!universeId || !robloxApiKey) {
+        showToast('Universe ID dan API Key wajib diisi!', 'warn');
+        return;
+      }
+
+      if (!confirm(`PERINGATAN: Apakah Anda yakin ingin MENGOSONGKAN seluruh DataStore donasi di Universe ${universeId}? Tindakan ini tidak dapat dibatalkan.`)) {
+        return;
+      }
+
+      try {
+        const res = await apiFetch('/api/admin/roblox/clear-datastore', {
+          method: 'POST',
+          body: JSON.stringify({ universeId, robloxApiKey })
+        });
+        if (res.success) {
+          showToast('DataStore berhasil dikosongkan!', 'success');
+          inspectDatastore();
+        } else {
+          showToast('Gagal mengosongkan DataStore: ' + JSON.stringify(res.error), 'error');
+        }
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+  </script>
+</body>
+</html>
+

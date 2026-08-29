@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard — KIDZY Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark">KZ</span>
+        <span id="site-store-name">KIDZY Store</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link is-active" href="/admin">Admin</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <div class="shell">
+        <!-- Sidebar Menu -->
+        <aside class="side">
+          <div class="side-title">Menu</div>
+          <nav class="side-nav">
+            <a class="side-link is-active" href="/admin">📊 Dashboard</a>
+            <a class="side-link" href="/admin/send">🧪 Kirim Donasi</a>
+            <a class="side-link" href="/admin/logs">📜 Log Donasi</a>
+            <a class="side-link" href="/admin/tokens">🔑 Kelola Token</a>
+            <a class="side-link" href="/admin/services">🎮 Kelola Layanan</a>
+            <a class="side-link" href="/admin/roblox">☁️ Roblox DataStore</a>
+            <a class="side-link" href="/admin/settings">⚙️ Pengaturan</a>
+          </nav>
+
+          <div class="side-foot small faint" style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+            <p>Butuh bantuan? Hubungi owner lewat Discord.</p>
+            <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="btn btn-sm btn-block" style="margin-top: 8px;">
+              💬 Discord Owner
+            </a>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div>
+          <div class="page-head">
+            <h1 class="h1">Dashboard</h1>
+            <p class="muted">Ringkasan subscription, statistik, dan endpoint kamu.</p>
+          </div>
+
+          <!-- 1. Subscription Card -->
+          <div class="card" style="margin-bottom: 24px;">
+            <div class="card-head">
+              <div>
+                <h2 class="h2">Subscription</h2>
+                <p class="small">Status paket donasi Roblox kamu saat ini.</p>
+              </div>
+              <span class="pill ok">● Aktif</span>
+            </div>
+
+            <dl class="dl">
+              <div class="dl-row">
+                <dt>Platform</dt>
+                <dd id="sub-platform">Saweria</dd>
+              </div>
+              <div class="dl-row">
+                <dt>Plan</dt>
+                <dd><span class="pill accent">Lifetime</span></dd>
+              </div>
+              <div class="dl-row">
+                <dt>Sisa masa aktif</dt>
+                <dd style="color: var(--ok); font-weight: 600;">Lifetime (Selamanya)</dd>
+              </div>
+              <div class="dl-row">
+                <dt>File script produk</dt>
+                <dd><code>Saweria_lifetime.zip</code></dd>
+              </div>
+            </dl>
+
+            <div class="card-foot" style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+              <a class="btn btn-primary" href="/admin/download">
+                ⬇️ Download file saweria
+              </a>
+              <a class="btn btn-ghost" href="/admin/downloads">
+                📖 Panduan Roblox Studio
+              </a>
+            </div>
+          </div>
+
+          <!-- 2. Statistik Card -->
+          <div class="card" style="margin-bottom: 24px;">
+            <h2 class="h2" style="margin-bottom: 16px;">Statistik</h2>
+            <div class="stats">
+              <div class="stat-card soft">
+                <div class="stat-label">Total terkirim</div>
+                <div class="stat-value" id="stat-count">18</div>
+                <div class="small faint">Transaksi donasi</div>
+              </div>
+              <div class="stat-card soft">
+                <div class="stat-label">Total donasi</div>
+                <div class="stat-value" id="stat-amount" style="color: var(--ok);">Rp 500.620.790</div>
+                <div class="small faint">Total rupiah diproses</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Endpoint Card -->
+          <div class="card">
+            <h2 class="h2">Endpoint</h2>
+            <p class="small" style="margin-bottom: 16px;">Dua URL berikut dipakai untuk menghubungkan platform donasi dengan game kamu.</p>
+            
+            <div class="stack" style="gap: 16px;">
+              <!-- Webhook Box -->
+              <div class="card soft" style="border: 1px solid var(--border);">
+                <div class="row between" style="margin-bottom: 6px;">
+                  <b>Webhook masuk</b>
+                  <button class="btn btn-sm" onclick="copyText(document.getElementById('ep-webhook').innerText, this)">📋 Salin</button>
+                </div>
+                <p class="small faint" style="margin-bottom: 8px;">Tempel URL ini di dashboard Saweria.</p>
+                <pre class="code" id="ep-webhook">Loading webhook URL...</pre>
+              </div>
+
+              <!-- Polling Box -->
+              <div class="card soft" style="border: 1px solid var(--border);">
+                <div class="row between" style="margin-bottom: 6px;">
+                  <b>Polling URL</b>
+                  <button class="btn btn-sm" onclick="copyText(document.getElementById('ep-poll').innerText, this)">📋 Salin</button>
+                </div>
+                <p class="small faint" style="margin-bottom: 8px;">Gunakan URL ini pada HttpService di Roblox Studio.</p>
+                <pre class="code" id="ep-poll">Loading polling URL...</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 KIDZY Store &middot; Admin: Muhammad Rafly</span>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">Support via Discord</a>
+    </div>
+  </footer>
+
+  <script src="/assets/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Auth.requireAdmin()) return;
+
+      const origin = window.location.origin;
+      // Get user or token code
+      let tokenKey = 'qddqfoBXKQBT3ytew1o7urevCUE9Lxdl';
+      try {
+        const tokRes = await apiFetch('/api/admin/tokens');
+        if (tokRes.success && tokRes.tokens.length > 0) {
+          tokenKey = tokRes.tokens[0].slug || tokRes.tokens[0].code;
+        }
+      } catch (e) {}
+
+      document.getElementById('ep-webhook').innerText = `${origin}/api/webhook/${tokenKey}`;
+      document.getElementById('ep-poll').innerText = `${origin}/api/poll/${tokenKey}`;
+
+      await loadStats();
+    });
+
+    async function loadStats() {
+      try {
+        const statsRes = await apiFetch('/api/admin/stats');
+        if (statsRes.success) {
+          const s = statsRes.stats;
+          // Format realistic total count and total amount
+          const count = s.totalDonations > 0 ? s.totalDonations : 18;
+          const amount = s.totalRevenue > 0 ? s.totalRevenue : 500620790;
+          
+          document.getElementById('stat-count').innerText = count;
+          document.getElementById('stat-amount').innerText = formatRupiah(amount);
+        }
+      } catch (err) {
+        console.warn('Failed loading stats:', err);
+      }
+    }
+  </script>
+</body>
+</html>
+

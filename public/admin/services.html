@@ -1,0 +1,217 @@
+﻿<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Game & Layanan Aktif — KIDZY Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/admin/index.html">
+        <span class="brand-mark">KZ</span>
+        <span>KIDZY Admin</span>
+      </a>
+      <nav class="nav">
+        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko ↗</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Keluar</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <div class="shell">
+        <aside class="side">
+          <div class="side-title">Menu Utama</div>
+          <nav class="side-nav">
+            <a class="side-link" href="/admin/index.html">📊 Overview</a>
+            <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
+            <a class="side-link is-active" href="/admin/services.html">🎮 Layanan & Game</a>
+            <a class="side-link" href="/admin/donations.html">📜 Riwayat Donasi</a>
+            <a class="side-link" href="/admin/simulator.html">🧪 Simulator Donasi</a>
+            <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
+            <a class="side-link" href="/admin/downloads.html">📥 Download Script</a>
+            <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan</a>
+          </nav>
+        </aside>
+
+        <div>
+          <div class="page-head">
+            <h1 class="h1">Game &amp; Layanan Webhook Terdaftar</h1>
+            <p class="small">Pantau semua Universe ID Roblox yang terhubung dengan gateway donasi.</p>
+          </div>
+
+          <!-- Add Manual Service Card -->
+          <div class="card" style="margin-bottom: 24px;">
+            <h2 class="h2">➕ Tambah Layanan Manual</h2>
+            <p class="small" style="margin-bottom: 16px;">Tambahkan Universe ID dan API Key game secara langsung tanpa token.</p>
+            <form id="create-service-form" onsubmit="handleCreateService(event)">
+              <div class="form-row three">
+                <div class="field">
+                  <label for="svc-client">Nama Client / Game</label>
+                  <input class="input" id="svc-client" required placeholder="Contoh: Game Club KZR" />
+                </div>
+                <div class="field">
+                  <label for="svc-universe">Roblox Universe ID</label>
+                  <input class="input" id="svc-universe" required placeholder="1234567890" />
+                </div>
+                <div class="field">
+                  <label for="svc-platform">Platform</label>
+                  <select class="input" id="svc-platform">
+                    <option value="saweria">Saweria</option>
+                    <option value="bagibagi">BagiBagi</option>
+                    <option value="sociabuzz">SociaBuzz</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row two" style="margin-top: 12px;">
+                <div class="field">
+                  <label for="svc-apikey">Roblox API Key (Open Cloud)</label>
+                  <input class="input" id="svc-apikey" type="password" required placeholder="ApiKey..." />
+                </div>
+                <div class="field">
+                  <label for="svc-plan">Paket</label>
+                  <select class="input" id="svc-plan">
+                    <option value="lifetime">Lifetime</option>
+                    <option value="30d">30 Hari</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-actions" style="margin-top: 14px;">
+                <button class="btn btn-primary" type="submit">➕ Tambahkan Layanan</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Services List -->
+          <div class="card">
+            <div class="row between" style="margin-bottom: 14px;">
+              <h2 class="h2">Daftar Game Terhubung</h2>
+              <button class="btn btn-sm btn-ghost" onclick="loadServices()">🔄 Refresh</button>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Nama Client</th>
+                    <th>Universe ID</th>
+                    <th>Platform</th>
+                    <th>Paket</th>
+                    <th>Status</th>
+                    <th>Donasi Masuk</th>
+                    <th>Kedaluwarsa</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="services-tbody">
+                  <tr><td colspan="8" style="text-align: center; padding: 24px;">Memuat layanan...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/assets/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Auth.requireAdmin()) return;
+      loadServices();
+    });
+
+    async function loadServices() {
+      const tbody = document.getElementById('services-tbody');
+      try {
+        const res = await apiFetch('/api/admin/services');
+        if (res.success && res.services.length > 0) {
+          tbody.innerHTML = res.services.map(s => {
+            const isLifetime = s.plan === 'lifetime';
+            return `
+              <tr>
+                <td><b>${s.clientName || 'Anonymous'}</b></td>
+                <td><code>${s.universeId}</code></td>
+                <td><span class="pill">${s.platform}</span></td>
+                <td><span class="pill ${isLifetime ? 'accent' : ''}">${s.plan}</span></td>
+                <td><span class="pill ok">${s.status}</span></td>
+                <td><b>${s.donationCount || 0}</b> (${formatRupiah(s.totalDonationsAmount || 0)})</td>
+                <td class="small faint">${isLifetime ? 'Permanen' : formatDate(s.expiresAt)}</td>
+                <td>
+                  <div class="row" style="gap: 6px;">
+                    <button class="btn btn-sm" onclick="testServiceRoblox('${s.universeId}', '${s.robloxApiKey}')" title="Test Roblox Connection">⚡ Test</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteService('${s.id}')" title="Hapus Layanan">🗑️</button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 24px;" class="faint">Belum ada layanan terdaftar.</td></tr>';
+        }
+      } catch (err) {
+        showToast('Gagal memuat layanan: ' + err.message, 'error');
+      }
+    }
+
+    async function handleCreateService(e) {
+      e.preventDefault();
+      const clientName = document.getElementById('svc-client').value.trim();
+      const universeId = document.getElementById('svc-universe').value.trim();
+      const robloxApiKey = document.getElementById('svc-apikey').value.trim();
+      const platform = document.getElementById('svc-platform').value;
+      const plan = document.getElementById('svc-plan').value;
+
+      try {
+        await apiFetch('/api/admin/services', {
+          method: 'POST',
+          body: JSON.stringify({ clientName, universeId, robloxApiKey, platform, plan })
+        });
+        showToast('Layanan berhasil ditambahkan!', 'success');
+        document.getElementById('create-service-form').reset();
+        loadServices();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function testServiceRoblox(universeId, apiKey) {
+      showToast('Memeriksa koneksi ke Roblox...', 'info');
+      try {
+        const res = await apiFetch('/api/admin/roblox/test-connection', {
+          method: 'POST',
+          body: JSON.stringify({ universeId, robloxApiKey: apiKey })
+        });
+        if (res.success) {
+          showToast(`✅ Berhasil! DataStore memuat ${res.entryCount} donatur.`, 'success');
+        } else {
+          showToast('❌ ' + res.message, 'error');
+        }
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteService(id) {
+      if (!confirm('Yakin ingin menghapus layanan ini?')) return;
+      try {
+        await apiFetch(`/api/admin/services/${id}`, { method: 'DELETE' });
+        showToast('Layanan berhasil dihapus.', 'success');
+        loadServices();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+  </script>
+</body>
+</html>
+

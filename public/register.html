@@ -1,0 +1,129 @@
+﻿<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daftar Akun — KIDZY Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark">KZ</span>
+        <span>KIDZY Store</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/p/saweria.html">Saweria</a>
+        <a class="nav-link" href="/p/bagibagi.html">BagiBagi</a>
+        <a class="nav-link" href="/p/sociabuzz.html">SociaBuzz</a>
+        <a class="nav-link" href="/login.html">Login</a>
+        <a class="btn btn-sm btn-primary is-active" href="/register.html">Register</a>
+        <span class="nav-sep"></span>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container page">
+      <div class="page-head">
+        <h1 class="h1">Buat Akun Baru</h1>
+        <p class="lead">Daftarkan akun untuk memantau status webhook dan riwayat donasi server kamu.</p>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <div id="reg-alert"></div>
+
+          <form id="reg-form" class="stack" onsubmit="handleRegister(event)">
+            <div class="field">
+              <label for="reg-name">Nama Lengkap / Username</label>
+              <input class="input" id="reg-name" name="name" required placeholder="Contoh: Rafly Gamer" />
+            </div>
+
+            <div class="field">
+              <label for="reg-email">Email</label>
+              <input class="input" id="reg-email" name="email" type="email" required placeholder="emailkamu@gmail.com" />
+            </div>
+
+            <div class="field">
+              <label for="reg-password">Password</label>
+              <input class="input" id="reg-password" name="password" type="password" required placeholder="Minimal 6 karakter" minlength="6" />
+            </div>
+
+            <div class="form-actions" style="margin-top: 10px;">
+              <button class="btn btn-primary btn-lg" id="reg-btn" type="submit">Daftar Sekarang</button>
+              <a class="btn btn-ghost" href="/login.html">Sudah punya akun? Masuk</a>
+            </div>
+          </form>
+        </div>
+
+        <aside class="aside">
+          <div class="card soft">
+            <h2 class="h2">Keuntungan Memiliki Akun</h2>
+            <p class="small">Kelola semua webhook Roblox dalam satu portal.</p>
+            <div class="sep"></div>
+            <ul class="features">
+              <li class="on">Aktivasi token otomatis</li>
+              <li class="on">Simpan riwayat donasi masuk</li>
+              <li class="on">Akses download script & update</li>
+              <li class="on">Notifikasi masa aktif subscription</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 KIDZY Store</span>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">Support via Discord</a>
+    </div>
+  </footer>
+
+  <script src="/assets/app.js"></script>
+  <script>
+    async function handleRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const btn = document.getElementById('reg-btn');
+      const alertBox = document.getElementById('reg-alert');
+
+      btn.disabled = true;
+      btn.innerText = 'Mendaftarkan...';
+
+      try {
+        const res = await apiFetch('/api/auth/register', {
+          method: 'POST',
+          body: JSON.stringify({ name, email, password })
+        });
+
+        Auth.setAuth(res.token, res.user);
+        showToast('Pendaftaran berhasil!', 'success');
+
+        setTimeout(() => {
+          window.location.href = '/register-service.html';
+        }, 600);
+      } catch (err) {
+        alertBox.innerHTML = `
+          <div class="alert bad">
+            <div>${err.message}</div>
+          </div>
+        `;
+        showToast(err.message, 'error');
+        btn.disabled = false;
+        btn.innerText = 'Daftar Sekarang';
+      }
+    }
+  </script>
+</body>
+</html>
+

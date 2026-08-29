@@ -1,0 +1,177 @@
+﻿<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pembayaran Order — KIDZY Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark">KZ</span>
+        <span>KIDZY Store</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/p/saweria.html">Saweria</a>
+        <a class="nav-link" href="/p/bagibagi.html">BagiBagi</a>
+        <a class="nav-link" href="/p/sociabuzz.html">SociaBuzz</a>
+        <a class="nav-link" href="/register-service.html">Aktivasi Token</a>
+        <span class="nav-sep"></span>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <div id="nav-auth" class="row"></div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container page">
+      <div class="page-head">
+        <p class="eyebrow" id="order-eyebrow">Saweria &middot; Lifetime</p>
+        <h1 class="h1">Pembayaran Subscription</h1>
+        <p class="lead">Bayar dengan QRIS atau transfer Bank, lalu kirim bukti pembayaran lewat Discord untuk menerima token aktivasi resmi.</p>
+      </div>
+
+      <div class="split">
+        <div class="grid two auto">
+          <!-- QRIS Card -->
+          <div class="card">
+            <h2 class="h2">QRIS Semua Pembayaran</h2>
+            <p class="small">Scan kode berikut dari GoPay, OVO, DANA, ShopeePay, BCA Mobile, atau e-wallet lainnya.</p>
+            <div style="margin-top: 16px; display: flex; justify-content: center; background: var(--surface-2); padding: 16px; border-radius: var(--r);">
+              <img id="qris-img" src="/assets/qris.png" class="qr" alt="QRIS Pembayaran" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=SaweriaRobloxStorePayment'" />
+            </div>
+            <p class="hint" style="text-align: center;">Scan kode di atas lalu masukkan nominal sesuai tagihan.</p>
+          </div>
+
+          <!-- Bank Transfer Card -->
+          <div class="card">
+            <h2 class="h2" id="bank-title">Transfer Bank BNI</h2>
+            <p class="small">Transfer manual langsung ke rekening di bawah ini.</p>
+            <div style="margin-top: 16px;">
+              <dl class="dl">
+                <div class="dl-row">
+                  <dt>Bank Penerima</dt>
+                  <dd id="bank-name">BNI</dd>
+                </div>
+                <div class="dl-row">
+                  <dt>Nama Rekening</dt>
+                  <dd id="bank-holder">Ahmad Taufik</dd>
+                </div>
+                <div class="dl-row">
+                  <dt>Nomor Rekening</dt>
+                  <dd class="token" id="bank-account" style="cursor: pointer;" onclick="copyText(this.innerText, this)" title="Klik untuk salin">1788342779</dd>
+                </div>
+                <div class="dl-row">
+                  <dt>Total Tagihan</dt>
+                  <dd id="order-amount" style="color: var(--ok); font-size: 16px;">Rp 300.000</dd>
+                </div>
+              </dl>
+              <button class="btn btn-sm btn-block" style="margin-top: 12px;" onclick="copyText(document.getElementById('bank-account').innerText, this)">
+                📋 Salin Nomor Rekening
+              </button>
+            </div>
+            <p class="hint">Pastikan nama penerima sesuai sebelum mengirim, lalu simpan struk bukti transfer.</p>
+          </div>
+        </div>
+
+        <!-- Aside Summary -->
+        <aside class="aside">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <p class="small">Total Tagihan</p>
+                <div class="price" id="summary-price">Rp 300.000</div>
+              </div>
+              <span class="pill accent" id="summary-pill">Lifetime</span>
+            </div>
+
+            <div class="sep"></div>
+
+            <dl class="dl">
+              <div class="dl-row"><dt>Platform</dt><dd id="summary-platform">Saweria</dd></div>
+              <div class="dl-row"><dt>Paket</dt><dd id="summary-plan">Lifetime (Selamanya)</dd></div>
+              <div class="dl-row"><dt>Roblox Open Cloud</dt><dd style="color: var(--ok);">Tersedia</dd></div>
+            </dl>
+
+            <div class="sep"></div>
+
+            <div class="stack tight">
+              <a class="btn btn-primary btn-block" id="discord-btn" href="https://discord.gg/tqnreKW6D8" target="_blank" rel="noreferrer">
+                💬 Kirim Bukti via Discord
+              </a>
+              <a class="btn btn-block" href="/register-service.html">Sudah punya token</a>
+              <a class="btn btn-ghost btn-block" href="/">Kembali ke Home</a>
+            </div>
+
+            <p class="hint" style="margin-top: 14px;">
+              Setelah bukti dicek oleh Owner (Rafly), token aktivasi akan dikirimkan untuk langsung dimasukkan di menu Aktivasi Token.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 KIDZY Store</span>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">Support via Discord</a>
+    </div>
+  </footer>
+
+  <script src="/assets/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      const platform = (params.get('platform') || 'saweria').toLowerCase();
+      const plan = (params.get('plan') || 'lifetime').toLowerCase();
+
+      // Platform names formatting
+      const platformNames = {
+        saweria: 'Saweria',
+        bagibagi: 'BagiBagi',
+        sociabuzz: 'SociaBuzz'
+      };
+
+      const platTitle = platformNames[platform] || 'Saweria';
+      const isLifetime = plan === 'lifetime';
+
+      document.getElementById('order-eyebrow').innerText = `${platTitle} · ${isLifetime ? 'Lifetime' : '30 Hari'}`;
+      document.getElementById('summary-platform').innerText = platTitle;
+      document.getElementById('summary-plan').innerText = isLifetime ? 'Lifetime (Selamanya)' : '30 Hari';
+      document.getElementById('summary-pill').innerText = isLifetime ? 'Lifetime' : '30 Hari';
+
+      try {
+        const info = await apiFetch('/api/store-info');
+        if (info.bankName) {
+          document.getElementById('bank-title').innerText = `Transfer Bank ${info.bankName}`;
+          document.getElementById('bank-name').innerText = info.bankName;
+        }
+        if (info.bankAccount) document.getElementById('bank-account').innerText = info.bankAccount;
+        if (info.bankHolder) document.getElementById('bank-holder').innerText = info.bankHolder;
+        if (info.discordUrl) document.getElementById('discord-btn').href = info.discordUrl;
+        if (info.qrisImage) document.getElementById('qris-img').src = info.qrisImage;
+
+        // Pricing
+        let price = isLifetime ? 300000 : 90000;
+        if (info.prices && info.prices[platform]) {
+          price = isLifetime ? info.prices[platform].lifetime : info.prices[platform].plan30d;
+        }
+
+        const formatted = formatRupiah(price);
+        document.getElementById('order-amount').innerText = formatted;
+        document.getElementById('summary-price').innerText = formatted;
+      } catch (e) {
+        console.warn('Using default store info:', e);
+      }
+    });
+  </script>
+</body>
+</html>
+

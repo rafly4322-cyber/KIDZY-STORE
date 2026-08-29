@@ -1,0 +1,165 @@
+{
+  "users": [
+    {
+      "id": "usr_admin_1",
+      "email": "rafly4322@gmail.com",
+      "passwordHash": "1f3da7368b6175348977fb6c56cd215f7c2cc0e5b5153db528df098012b9dc921278fd12995b7f764f99c35d920a94d3b3cc60aba7d31d922dd92ac5dfc75c11",
+      "passwordSalt": "f0943070e8aa0aa5606b0e919b75cddc",
+      "role": "admin",
+      "name": "Muhammad Rafly (Admin)",
+      "createdAt": "2026-08-29T00:31:09.635Z"
+    }
+  ],
+  "sessions": {
+    "2518c3f8abf61c83b0b3523dd2949cedd5e8bf39e53345e71b71726b38fe7486": {
+      "userId": "usr_admin_1",
+      "email": "rafly4322@gmail.com",
+      "role": "admin",
+      "name": "Muhammad Rafly (Admin)",
+      "createdAt": "2026-08-29T00:31:11.135Z",
+      "expiresAt": "2026-09-05T00:31:11.135Z"
+    },
+    "dd1bce91ec528ad31418f223d251f25a7bf76486bdeb6ece75eb07040071e095": {
+      "userId": "usr_admin_1",
+      "email": "rafly4322@gmail.com",
+      "role": "admin",
+      "name": "Muhammad Rafly (Admin)",
+      "createdAt": "2026-08-29T05:48:27.769Z",
+      "expiresAt": "2026-09-05T05:48:27.769Z"
+    }
+  },
+  "tokens": [
+    {
+      "id": "tok_1787963568922_459",
+      "code": "KZ-SAW-453D-40AD-1D6D",
+      "slug": "qddqfoBXKQBT3ytew1o7urevCUE9Lxdl",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "unused",
+      "note": "KIDZY Lifetime Saweria Token",
+      "createdAt": "2026-08-29T00:32:48.922Z",
+      "usedAt": null,
+      "usedBy": null,
+      "serviceId": null
+    },
+    {
+      "id": "tok_demo_1",
+      "code": "KZ-SAW-DEMO-2026",
+      "slug": "vM9eRz2LpQxW7kYtNu8sBc4Va1Jd5EfH",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "unused",
+      "note": "Sample Lifetime Saweria Token",
+      "createdAt": "2026-08-29T00:31:09.635Z",
+      "usedAt": null,
+      "usedBy": null,
+      "expiresAt": null
+    },
+    {
+      "id": "tok_demo_2",
+      "code": "KZ-30D-TEST-9999",
+      "slug": "kP2xL9mN4vR7wQ1sTu8zAc5Vb3Je6GhY",
+      "platform": "saweria",
+      "plan": "30d",
+      "status": "unused",
+      "note": "Sample 30-Day Token",
+      "createdAt": "2026-08-29T00:31:09.635Z",
+      "usedAt": null,
+      "usedBy": null,
+      "expiresAt": null
+    }
+  ],
+  "services": [],
+  "donations": [
+    {
+      "id": "sim_1787982653048",
+      "nama": "Muhammad Rafly Test",
+      "amount": 250000,
+      "message": "Halo dari KIDZY Store!",
+      "platform": "saweria",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-29T05:50:53.048Z",
+      "details": {
+        "targetUniverses": 0,
+        "results": []
+      }
+    },
+    {
+      "id": "sim_1787963602857",
+      "nama": "Siti_Kusuma",
+      "amount": 200000,
+      "message": "Game paling seru abis",
+      "platform": "saweria",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-29T00:33:22.857Z",
+      "details": {
+        "targetUniverses": 0,
+        "results": []
+      }
+    },
+    {
+      "id": "saw_1787963471143",
+      "nama": "Muhammad Rafly",
+      "amount": 150000,
+      "message": "Testing Saweria Webhook Integration!",
+      "platform": "saweria",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-29T00:31:11.143Z",
+      "details": {
+        "targetUniverses": 0,
+        "results": []
+      }
+    },
+    {
+      "id": "don_init_1",
+      "nama": "Ahmad",
+      "amount": 500000,
+      "message": "Semoga game lancar jaya!",
+      "platform": "saweria",
+      "universeId": "default",
+      "status": "success",
+      "timestamp": "2026-08-29T00:31:09.635Z"
+    },
+    {
+      "id": "don_init_2",
+      "nama": "RizkyGaming",
+      "amount": 450000,
+      "message": "Dukung developer muda Indonesia! 🚀",
+      "platform": "saweria",
+      "universeId": "default",
+      "status": "success",
+      "timestamp": "2026-08-29T00:31:09.635Z"
+    }
+  ],
+  "settings": {
+    "storeName": "KIDZY Store",
+    "logoText": "KZ",
+    "discordUrl": "https://discord.gg/tqnreKW6D8",
+    "bankName": "BNI",
+    "bankAccount": "1788342779",
+    "bankHolder": "Ahmad Taufik",
+    "qrisImage": "/assets/qris.png",
+    "prices": {
+      "saweria": {
+        "plan30d": 90000,
+        "lifetime": 300000
+      },
+      "bagibagi": {
+        "plan30d": 90000,
+        "lifetime": 300000
+      },
+      "sociabuzz": {
+        "plan30d": 90000,
+        "lifetime": 300000
+      }
+    },
+    "robloxApiKey": "",
+    "universeIds": []
+  }
+}

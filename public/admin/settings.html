@@ -1,0 +1,213 @@
+﻿<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pengaturan Toko — KIDZY Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/admin/index.html">
+        <span class="brand-mark">KZ</span>
+        <span>KIDZY Admin</span>
+      </a>
+      <nav class="nav">
+        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko ↗</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Keluar</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <div class="shell">
+        <aside class="side">
+          <div class="side-title">Menu Utama</div>
+          <nav class="side-nav">
+            <a class="side-link" href="/admin/index.html">📊 Overview</a>
+            <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
+            <a class="side-link" href="/admin/services.html">🎮 Layanan & Game</a>
+            <a class="side-link" href="/admin/donations.html">📜 Riwayat Donasi</a>
+            <a class="side-link" href="/admin/simulator.html">🧪 Simulator Donasi</a>
+            <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
+            <a class="side-link" href="/admin/downloads.html">📥 Download Script</a>
+            <a class="side-link is-active" href="/admin/settings.html">⚙️ Pengaturan</a>
+          </nav>
+        </aside>
+
+        <div>
+          <div class="page-head">
+            <h1 class="h1">⚙️ Pengaturan Sistem &amp; Toko</h1>
+            <p class="small">Kelola rekening pembayaran, tautan Discord, harga paket, dan keamanan akun kamu.</p>
+          </div>
+
+          <!-- Store & Payment Config -->
+          <div class="card" style="margin-bottom: 24px;">
+            <h2 class="h2">Informasi Pembayaran &amp; Toko</h2>
+            <p class="small" style="margin-bottom: 16px;">Data ini akan tampil di halaman checkout / order toko.</p>
+
+            <form id="settings-form" class="stack" onsubmit="handleSaveSettings(event)">
+              <div class="form-row two">
+                <div class="field">
+                  <label for="set-store-name">Nama Toko</label>
+                  <input class="input" id="set-store-name" required />
+                </div>
+                <div class="field">
+                  <label for="set-discord">Link Undangan Discord</label>
+                  <input class="input" id="set-discord" required />
+                </div>
+              </div>
+
+              <div class="form-row three">
+                <div class="field">
+                  <label for="set-bank-name">Nama Bank</label>
+                  <input class="input" id="set-bank-name" placeholder="Contoh: BNI" required />
+                </div>
+                <div class="field">
+                  <label for="set-bank-account">Nomor Rekening</label>
+                  <input class="input" id="set-bank-account" placeholder="1788342779" required />
+                </div>
+                <div class="field">
+                  <label for="set-bank-holder">Nama Pemilik Rekening</label>
+                  <input class="input" id="set-bank-holder" placeholder="Ahmad Taufik" required />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="set-qris">URL / Gambar QRIS</label>
+                <input class="input" id="set-qris" placeholder="/assets/qris.png" />
+              </div>
+
+              <div class="form-row two">
+                <div class="field">
+                  <label for="set-price-30d">Harga Paket 30 Hari (IDR)</label>
+                  <input class="input" id="set-price-30d" type="number" step="1000" />
+                </div>
+                <div class="field">
+                  <label for="set-price-lifetime">Harga Paket Lifetime (IDR)</label>
+                  <input class="input" id="set-price-lifetime" type="number" step="1000" />
+                </div>
+              </div>
+
+              <div class="form-actions" style="margin-top: 10px;">
+                <button class="btn btn-primary" type="submit">💾 Simpan Pengaturan Toko</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Change Password -->
+          <div class="card">
+            <h2 class="h2">Keamanan Akun Admin</h2>
+            <p class="small" style="margin-bottom: 16px;">Ubah password akun admin kamu.</p>
+
+            <form id="password-form" class="stack" onsubmit="handleChangePassword(event)">
+              <div class="form-row two">
+                <div class="field">
+                  <label for="pwd-current">Password Saat Ini</label>
+                  <input class="input" id="pwd-current" type="password" required />
+                </div>
+                <div class="field">
+                  <label for="pwd-new">Password Baru</label>
+                  <input class="input" id="pwd-new" type="password" minlength="6" required />
+                </div>
+              </div>
+
+              <div class="form-actions" style="margin-top: 10px;">
+                <button class="btn btn-accent" type="submit">🔒 Perbarui Password</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/assets/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!Auth.requireAdmin()) return;
+      loadSettings();
+    });
+
+    async function loadSettings() {
+      try {
+        const res = await apiFetch('/api/admin/settings');
+        if (res.success && res.settings) {
+          const s = res.settings;
+          document.getElementById('set-store-name').value = s.storeName || '';
+          document.getElementById('set-discord').value = s.discordUrl || '';
+          document.getElementById('set-bank-name').value = s.bankName || '';
+          document.getElementById('set-bank-account').value = s.bankAccount || '';
+          document.getElementById('set-bank-holder').value = s.bankHolder || '';
+          document.getElementById('set-qris').value = s.qrisImage || '';
+
+          if (s.prices && s.prices.saweria) {
+            document.getElementById('set-price-30d').value = s.prices.saweria.plan30d || 90000;
+            document.getElementById('set-price-lifetime').value = s.prices.saweria.lifetime || 300000;
+          }
+        }
+      } catch (err) {
+        showToast('Gagal memuat pengaturan: ' + err.message, 'error');
+      }
+    }
+
+    async function handleSaveSettings(e) {
+      e.preventDefault();
+      const storeName = document.getElementById('set-store-name').value.trim();
+      const discordUrl = document.getElementById('set-discord').value.trim();
+      const bankName = document.getElementById('set-bank-name').value.trim();
+      const bankAccount = document.getElementById('set-bank-account').value.trim();
+      const bankHolder = document.getElementById('set-bank-holder').value.trim();
+      const qrisImage = document.getElementById('set-qris').value.trim();
+      const plan30d = parseInt(document.getElementById('set-price-30d').value) || 90000;
+      const lifetime = parseInt(document.getElementById('set-price-lifetime').value) || 300000;
+
+      try {
+        await apiFetch('/api/admin/settings', {
+          method: 'POST',
+          body: JSON.stringify({
+            storeName,
+            discordUrl,
+            bankName,
+            bankAccount,
+            bankHolder,
+            qrisImage,
+            prices: {
+              saweria: { plan30d, lifetime },
+              bagibagi: { plan30d, lifetime },
+              sociabuzz: { plan30d, lifetime }
+            }
+          })
+        });
+        showToast('Pengaturan toko berhasil disimpan!', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function handleChangePassword(e) {
+      e.preventDefault();
+      const currentPassword = document.getElementById('pwd-current').value;
+      const newPassword = document.getElementById('pwd-new').value;
+
+      try {
+        await apiFetch('/api/auth/change-password', {
+          method: 'POST',
+          body: JSON.stringify({ currentPassword, newPassword })
+        });
+        showToast('Password berhasil diubah!', 'success');
+        document.getElementById('password-form').reset();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+  </script>
+</body>
+</html>
+

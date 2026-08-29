@@ -1,0 +1,143 @@
+﻿<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Log Donasi — KIDZY Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark">KZ</span>
+        <span>KIDZY Store</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link is-active" href="/admin">Admin</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <div class="shell">
+        <!-- Sidebar Menu -->
+        <aside class="side">
+          <div class="side-title">Menu</div>
+          <nav class="side-nav">
+            <a class="side-link" href="/admin">📊 Dashboard</a>
+            <a class="side-link" href="/admin/send">🧪 Kirim Donasi</a>
+            <a class="side-link is-active" href="/admin/logs">📜 Log Donasi</a>
+            <a class="side-link" href="/admin/tokens">🔑 Kelola Token</a>
+            <a class="side-link" href="/admin/services">🎮 Kelola Layanan</a>
+            <a class="side-link" href="/admin/roblox">☁️ Roblox DataStore</a>
+            <a class="side-link" href="/admin/settings">⚙️ Pengaturan</a>
+          </nav>
+
+          <div class="side-foot small faint" style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+            <p>Butuh bantuan? Hubungi owner lewat Discord.</p>
+            <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="btn btn-sm btn-block" style="margin-top: 8px;">
+              💬 Discord Owner
+            </a>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div>
+          <div class="page-head">
+            <div class="row between">
+              <div>
+                <h1 class="h1">Log Donasi</h1>
+                <p class="muted">Catatan riwayat transaksi donasi yang masuk ke server game kamu.</p>
+              </div>
+              <div class="row">
+                <button class="btn btn-sm btn-ghost" onclick="loadLogs()">🔄 Refresh</button>
+                <button class="btn btn-sm btn-danger" onclick="clearLogs()">🗑️ Bersihkan</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Waktu</th>
+                    <th>Nama Donatur</th>
+                    <th>Jumlah</th>
+                    <th>Pesan</th>
+                    <th>Platform</th>
+                    <th>Target Game</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="logs-tbody">
+                  <tr><td colspan="7" style="text-align:center; padding: 24px;">Memuat log donasi...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 KIDZY Store &middot; Admin: Muhammad Rafly</span>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">Support via Discord</a>
+    </div>
+  </footer>
+
+  <script src="/assets/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Auth.requireAdmin();
+      loadLogs();
+    });
+
+    async function loadLogs() {
+      const tbody = document.getElementById('logs-tbody');
+      try {
+        const res = await apiFetch('/api/admin/donations');
+        if (res.success && res.donations.length > 0) {
+          tbody.innerHTML = res.donations.map(d => `
+            <tr>
+              <td class="small faint">${formatDate(d.timestamp)}</td>
+              <td><b>${d.nama}</b></td>
+              <td style="color: var(--ok); font-weight: 700;">${formatRupiah(d.amount)}</td>
+              <td class="small" style="max-width: 250px;">${d.message || '-'}</td>
+              <td><span class="pill">${d.platform || 'saweria'}</span></td>
+              <td><code>${d.universeId || 'Semua'}</code></td>
+              <td><span class="pill ok">${d.status || 'success'}</span></td>
+            </tr>
+          `).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 24px;" class="faint">Belum ada riwayat transaksi donasi.</td></tr>';
+        }
+      } catch (err) {
+        showToast('Gagal memuat log: ' + err.message, 'error');
+      }
+    }
+
+    async function clearLogs() {
+      if (!confirm('Yakin ingin menghapus semua catatan riwayat donasi?')) return;
+      try {
+        await apiFetch('/api/admin/donations', { method: 'DELETE' });
+        showToast('Log donasi berhasil dibersihkan.', 'success');
+        loadLogs();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+  </script>
+</body>
+</html>
+

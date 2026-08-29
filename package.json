@@ -1,0 +1,27 @@
+{
+  "name": "saweria-webhook-backend",
+  "version": "2.5.0",
+  "description": "Saweria Roblox Webhook & Store Platform with Admin Panel",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.x"
+  },
+  "keywords": [
+    "saweria",
+    "webhook",
+    "roblox",
+    "datastore",
+    "bagibagi",
+    "sociabuzz"
+  ]
+}
