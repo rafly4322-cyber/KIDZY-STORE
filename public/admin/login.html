@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login Admin — KIDZY Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark">KZ</span>
+        <span>KIDZY Store</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/p/saweria.html">Saweria</a>
+        <a class="nav-link" href="/p/bagibagi.html">BagiBagi</a>
+        <a class="nav-link" href="/p/sociabuzz.html">SociaBuzz</a>
+        <a class="nav-link is-active" href="/login.html">Login</a>
+        <span class="nav-sep"></span>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container page">
+      <div class="page-head">
+        <h1 class="h1">Masuk Dashboard Admin</h1>
+        <p class="lead">Gunakan akun admin atau member kamu untuk membuka dashboard pengelolaan donasi Roblox.</p>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <div id="login-alert"></div>
+
+          <form id="login-form" class="stack" onsubmit="handleLogin(event)">
+            <div class="field">
+              <label for="login-email">Email Admin</label>
+              <input class="input" id="login-email" name="email" type="email" required placeholder="rafly4322@gmail.com" autocomplete="email" />
+            </div>
+
+            <div class="field">
+              <label for="login-password">Password</label>
+              <input class="input" id="login-password" name="password" type="password" required placeholder="Masukkan password kamu" autocomplete="current-password" />
+            </div>
+
+            <div class="form-actions" style="margin-top: 10px;">
+              <button class="btn btn-primary btn-lg" id="login-btn" type="submit">Masuk ke Dashboard</button>
+            </div>
+          </form>
+        </div>
+
+        <aside class="aside">
+          <div class="card soft">
+            <h2 class="h2">Fitur Dashboard Admin</h2>
+            <p class="small">Semua kebutuhan subscription & kontrol ada di satu dashboard terintegrasi.</p>
+            <div class="sep"></div>
+            <ul class="features">
+              <li class="on">Generator Token (30 Hari & Lifetime)</li>
+              <li class="on">Kelola Universe ID & Roblox API Key</li>
+              <li class="on">Live log riwayat donasi masuk</li>
+              <li class="on">Simulator kirim donasi uji coba</li>
+              <li class="on">Roblox DataStore Inspector & Reset</li>
+              <li class="on">Download file model Roblox (.rbxm)</li>
+              <li class="on">Atur rekening SeaBank & Discord</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 KIDZY Store</span>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">Support via Discord</a>
+    </div>
+  </footer>
+
+  <script src="/assets/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (Auth.isAdmin()) {
+        window.location.href = '/admin/index.html';
+      }
+    });
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const alertBox = document.getElementById('login-alert');
+      const btn = document.getElementById('login-btn');
+
+      if (!email || !password) {
+        alertBox.innerHTML = '<div class="alert alert-error">Email dan password wajib diisi.</div>';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Memverifikasi...';
+      alertBox.innerHTML = '';
+
+      try {
+        const res = await API.post('/api/auth/login', { email, password });
+        if (res.success && res.token) {
+          Auth.setToken(res.token);
+          Auth.setUser(res.user);
+
+          alertBox.innerHTML = '<div class="alert alert-success">Login berhasil! Mengalihkan ke dashboard...</div>';
+          setTimeout(() => {
+            window.location.href = '/admin/index.html';
+          }, 600);
+        } else {
+          alertBox.innerHTML = `<div class="alert alert-error">${res.message || 'Login gagal. Periksa kembali email dan password.'}</div>`;
+          btn.disabled = false;
+          btn.textContent = 'Masuk ke Dashboard';
+        }
+      } catch (err) {
+        alertBox.innerHTML = `<div class="alert alert-error">Terjadi kesalahan: ${err.message}</div>`;
+        btn.disabled = false;
+        btn.textContent = 'Masuk ke Dashboard';
+      }
+    }
+  </script>
+</body>
+</html>
