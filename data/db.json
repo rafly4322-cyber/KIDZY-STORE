@@ -30,6 +30,19 @@
   },
   "tokens": [
     {
+      "id": "tok_1788015463746_445",
+      "code": "KZ-SAW-3FF3-EF69-CCC6",
+      "slug": "eOYOMjMNwClXbHVx4MTYF1B7rgnqIFLg",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "unused",
+      "note": "Contoh Token Baru Buat Pembeli",
+      "createdAt": "2026-08-29T14:57:43.746Z",
+      "usedAt": null,
+      "usedBy": null,
+      "serviceId": null
+    },
+    {
       "id": "tok_1787963568922_459",
       "code": "KZ-SAW-453D-40AD-1D6D",
       "slug": "qddqfoBXKQBT3ytew1o7urevCUE9Lxdl",
