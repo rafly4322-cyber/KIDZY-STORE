@@ -160,14 +160,18 @@ app.get('/api/store-info', (req, res) => {
     });
 });
 
-// Service Activation (Token Redeem)
-app.post('/api/register-service', (req, res) => {
-    const { token, universe_id, roblox_api_key, client_name, platform } = req.body;
+// Service Activation (Token Redeem - Supports both endpoints & field naming)
+const handleServiceRegistration = (req, res) => {
+    const token = req.body.token || req.body.code;
+    const universe_id = req.body.universe_id || req.body.universeId;
+    const roblox_api_key = req.body.roblox_api_key || req.body.robloxApiKey || 'default-global-key';
+    const client_name = req.body.client_name || req.body.name || req.body.clientName || 'Pengguna';
+    const platform = req.body.platform;
 
-    if (!token || !universe_id || !roblox_api_key) {
+    if (!token || !universe_id) {
         return res.status(400).json({
             success: false,
-            message: 'Token aktivasi, Universe ID, dan Roblox API Key wajib diisi.'
+            message: 'Token aktivasi dan Universe ID wajib diisi.'
         });
     }
 
@@ -190,17 +194,24 @@ app.post('/api/register-service', (req, res) => {
         tokenCode: tokenObj.code,
         universeId: universe_id,
         robloxApiKey: roblox_api_key,
-        clientName: client_name || req.body.email || 'Pengguna',
+        clientName: client_name,
         platform: tokenObj.platform || platform || 'saweria',
         plan: tokenObj.plan || 'lifetime'
     });
+
+    const origin = req.headers.host ? `${req.protocol || 'https'}://${req.headers.host}` : 'https://kidzy-store.vercel.app';
+    service.webhookUrl = `${origin}/api/webhook/${service.webhookSlug || service.tokenCode}`;
+    service.pollUrl = `${origin}/api/poll/${service.webhookSlug || service.tokenCode}`;
 
     res.json({
         success: true,
         message: 'Layanan berhasil diaktifkan!',
         service: service
     });
-});
+};
+
+app.post('/api/register-service', handleServiceRegistration);
+app.post('/api/services/register', handleServiceRegistration);
 
 // ============================================
 // AUTH ENDPOINTS

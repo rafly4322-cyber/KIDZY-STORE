@@ -1,5 +1,6 @@
 /**
- * KIDZY / Rafly Store — Core Client Logic
+ * KIDZY Store — Universal Modern Client Library (2026 Edition)
+ * Background: #08090D | Card: #11131A | Accent: Violet / Electric Blue / Cyan
  */
 
 // Theme Management
@@ -7,7 +8,7 @@
     const saved = localStorage.getItem('app_theme');
     if (saved) {
         document.documentElement.setAttribute('data-theme', saved);
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    } else {
         document.documentElement.setAttribute('data-theme', 'dark');
     }
 })();
@@ -25,11 +26,13 @@ function showToast(message, type = 'info') {
     if (!container) {
         container = document.createElement('div');
         container.id = 'toast-container';
+        container.style.cssText = 'position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;';
         document.body.appendChild(container);
     }
 
     const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
+    toast.className = `alert alert-${type === 'error' ? 'error' : type === 'success' ? 'success' : 'info'}`;
+    toast.style.cssText = 'pointer-events: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.6); transition: all 0.3s ease;';
     
     let icon = 'ℹ️';
     if (type === 'success') icon = '✅';
@@ -42,27 +45,21 @@ function showToast(message, type = 'info') {
     setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateY(10px)';
-        setTimeout(() => toast.remove(), 250);
+        setTimeout(() => toast.remove(), 300);
     }, 3500);
 }
 
-// Copy to Clipboard (with fallback for all browsers)
+// Copy to Clipboard (with universal fallback)
 function copyText(text, btn) {
     if (!text || text.includes('Loading')) return;
     
     function onSuccess() {
         showToast('Tersalin ke clipboard!', 'success');
         if (btn) {
-            const original = btn.innerHTML;
-            btn.innerHTML = '✨ Tersalin!';
-            btn.style.background = 'linear-gradient(135deg, #4ade80, #22c55e)';
-            btn.style.color = '#0f172a';
-            btn.style.borderColor = 'transparent';
+            const original = btn.textContent;
+            btn.textContent = '✨ Tersalin!';
             setTimeout(() => {
-                btn.innerHTML = original;
-                btn.style.background = '';
-                btn.style.color = '';
-                btn.style.borderColor = '';
+                btn.textContent = original;
             }, 2000);
         }
     }
@@ -131,6 +128,12 @@ const Auth = {
         localStorage.setItem('auth_token', token);
         localStorage.setItem('auth_user', JSON.stringify(user));
     },
+    setToken(token) {
+        localStorage.setItem('auth_token', token);
+    },
+    setUser(user) {
+        localStorage.setItem('auth_user', JSON.stringify(user));
+    },
     clearAuth() {
         localStorage.removeItem('auth_token');
         localStorage.removeItem('auth_user');
@@ -163,58 +166,51 @@ const Auth = {
         return true;
     },
     requireAdmin() {
-        if (!this.isLoggedIn()) {
+        if (!this.isLoggedIn() || !this.isAdmin()) {
             window.location.href = '/login.html';
-            return false;
-        }
-        if (!this.isAdmin()) {
-            window.location.href = '/';
             return false;
         }
         return true;
     }
 };
 
-// API Fetch Helper with Auth Headers
-async function apiFetch(url, options = {}) {
-    const token = Auth.getToken();
-    const headers = {
-        'Content-Type': 'application/json',
-        ...(options.headers || {})
-    };
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    try {
-        const res = await fetch(url, { ...options, headers });
-        const data = await res.json();
-        if (!res.ok) {
-            throw new Error(data.message || data.error || 'Terjadi kesalahan pada server');
+// Universal API Client
+const API = {
+    async request(url, options = {}) {
+        const token = Auth.getToken();
+        const headers = {
+            'Content-Type': 'application/json',
+            ...(options.headers || {})
+        };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
         }
-        return data;
-    } catch (err) {
-        console.error('API Error:', err);
-        throw err;
-    }
-}
 
-// Global Nav User Info setup
-document.addEventListener('DOMContentLoaded', () => {
-    const user = Auth.getUser();
-    const navAuthContainer = document.getElementById('nav-auth');
-    if (navAuthContainer) {
-        if (user) {
-            navAuthContainer.innerHTML = `
-                ${user.role === 'admin' ? '<a class="btn btn-sm btn-primary" href="/admin/index.html">Dashboard Admin</a>' : '<span class="small font-bold">' + user.name + '</span>'}
-                <button class="btn btn-sm btn-ghost" onclick="Auth.logout()">Keluar</button>
-            `;
-        } else {
-            navAuthContainer.innerHTML = `
-                <a class="nav-link" href="/login.html">Login</a>
-                <a class="btn btn-sm btn-primary" href="/register.html">Register</a>
-            `;
+        try {
+            const res = await fetch(url, { ...options, headers });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                throw new Error(data.message || data.error || `HTTP Error ${res.status}`);
+            }
+            return data;
+        } catch (err) {
+            console.error('API Error:', err);
+            throw err;
         }
+    },
+    get(url, options) {
+        return this.request(url, { ...options, method: 'GET' });
+    },
+    post(url, body, options) {
+        return this.request(url, { ...options, method: 'POST', body: JSON.stringify(body) });
+    },
+    put(url, body, options) {
+        return this.request(url, { ...options, method: 'PUT', body: JSON.stringify(body) });
+    },
+    delete(url, options) {
+        return this.request(url, { ...options, method: 'DELETE' });
     }
-});
+};
 
+// Global alias for compatibility
+const apiFetch = (url, options) => API.request(url, options);
