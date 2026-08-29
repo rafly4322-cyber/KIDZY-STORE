@@ -30,6 +30,19 @@
   },
   "tokens": [
     {
+      "id": "tok_1788021586546_228",
+      "code": "KZ-SAW-8C39-C4C7-E611",
+      "slug": "lXU2A19FHYHKxVu8MCm8OqkNpKKYNAWq",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "unused",
+      "note": "[FREE GIVEAWAY] Testing Giveaway",
+      "createdAt": "2026-08-29T16:39:46.547Z",
+      "usedAt": null,
+      "usedBy": null,
+      "serviceId": null
+    },
+    {
       "id": "tok_1788016787959_284",
       "code": "KIDZY-SAWERIA-LIFETIME-VIP",
       "slug": "VJON7CCA9soIpdNA5jZgtU8SeJNwsmlF",

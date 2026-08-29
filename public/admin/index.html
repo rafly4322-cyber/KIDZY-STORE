@@ -58,16 +58,17 @@
           </div>
 
           <!-- Quick Generate Token Card -->
-          <div class="card" style="margin-bottom: 24px; border: 1px solid var(--glass-border-gold); background: rgba(250, 192, 45, 0.04);">
+          <div class="card" style="margin-bottom: 24px; border: 1px solid var(--accent); background: linear-gradient(180deg, rgba(99, 102, 241, 0.06) 0%, var(--card) 100%);">
             <div class="card-head">
               <div>
-                <h2 class="h2">✨ Buat Token Aktivasi Pembeli</h2>
-                <p class="small">Generate token baru dalam 1-klik untuk dikirimkan ke pembeli di Discord/WhatsApp.</p>
+                <span class="badge badge-accent" style="margin-bottom: 8px;">🎁 Quick Token Generator</span>
+                <h2 class="h2">Buat Token Lisensi / Free Giveaway (Lifetime)</h2>
+                <p class="small faint">Generate token baru dalam 1-klik untuk dikirimkan ke pembeli atau giveaway di Discord.</p>
               </div>
-              <a class="btn btn-sm btn-accent" href="/admin/tokens.html">🔑 Lihat Semua Token &rarr;</a>
+              <a class="btn btn-sm btn-ghost" href="/admin/tokens.html">🔑 Semua Token &rarr;</a>
             </div>
 
-            <form id="quick-token-form" onsubmit="handleQuickCreateToken(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) auto; gap: 12px; align-items: end;">
+            <form id="quick-token-form" onsubmit="handleQuickCreateToken(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto; gap: 12px; align-items: end;">
               <div class="field">
                 <label for="qtok-platform">Platform</label>
                 <select class="input" id="qtok-platform">
@@ -80,14 +81,13 @@
               <div class="field">
                 <label for="qtok-plan">Paket Layanan</label>
                 <select class="input" id="qtok-plan">
-                  <option value="lifetime">Lifetime (Selamanya)</option>
-                  <option value="30d">30 Hari</option>
+                  <option value="lifetime">Lifetime (Permanen Rp 450k)</option>
                 </select>
               </div>
 
               <div class="field">
-                <label for="qtok-note">Nama Pembeli (Catatan)</label>
-                <input class="input" id="qtok-note" placeholder="Contoh: Pembeli @User123" required />
+                <label for="qtok-note">Nama Penerima / Catatan</label>
+                <input class="input" id="qtok-note" placeholder="Contoh: @SultanRoblox / Giveaway" required />
               </div>
 
               <div>
@@ -97,15 +97,15 @@
               </div>
             </form>
 
-            <div id="quick-token-result" style="display: none; margin-top: 16px; padding: 14px; background: var(--surface-2); border-radius: var(--r-sm); border: 1px solid var(--ok);">
-              <div class="row between">
+            <div id="quick-token-result" style="display: none; margin-top: 16px; padding: 14px; background: #0B0D13; border-radius: var(--r); border: 1px solid var(--ok);">
+              <div class="row" style="justify-content: space-between;">
                 <div>
-                  <span class="pill ok">✓ Token Berhasil Dibuat!</span>
-                  <div style="margin-top: 6px; font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--accent);" id="qtok-code-display"></div>
+                  <span class="badge badge-live">✓ Token Berhasil Dibuat!</span>
+                  <div style="margin-top: 6px; font-family: var(--mono); font-size: 15px; font-weight: 700; color: #A5B4FC;" id="qtok-code-display"></div>
                 </div>
                 <div class="row" style="gap: 8px;">
-                  <button class="btn btn-sm btn-primary" id="qtok-copy-btn">📋 Salin Kode</button>
-                  <button class="btn btn-sm btn-accent" id="qtok-copy-link">🔗 Salin Link Aktivasi</button>
+                  <button class="btn btn-sm btn-cyan" id="qtok-copy-btn">📋 Salin Kode</button>
+                  <button class="btn btn-sm btn-primary" id="qtok-copy-link">🔗 Salin Format Discord</button>
                 </div>
               </div>
             </div>

@@ -10,7 +10,7 @@ const { db, hashPassword, verifyPassword } = require('./data/db');
 
 async function runMasterAudit() {
     console.log('\n======================================================');
-    console.log('🚀 MEMULAI AUDIT KESELURUHAN SISTEM (MASTER AUDIT V2)');
+    console.log('🚀 MEMULAI AUDIT KESELURUHAN SISTEM (MASTER AUDIT V3)');
     console.log('======================================================\n');
 
     let passed = 0;
@@ -32,8 +32,7 @@ async function runMasterAudit() {
     assert(settings.bankName === 'SeaBank', 'Bank Name is SeaBank', `(${settings.bankName})`);
     assert(settings.bankAccount === '901506323909', 'Account Number is 901506323909', `(${settings.bankAccount})`);
     assert(settings.bankHolder === 'MUHAMMAD RAFLI FIRDAUS', 'Account Holder is MUHAMMAD RAFLI FIRDAUS');
-    assert(settings.prices.saweria.lifetime === 300000, 'Saweria Lifetime price is Rp 300.000');
-    assert(settings.prices.saweria.plan30d === 100000, 'Saweria 30d price is Rp 100.000');
+    assert(settings.prices.saweria.lifetime === 450000, 'Saweria Lifetime price is Rp 450.000');
     assert(settings.discordUsername === 'kidddzyyaj', 'Discord username is kidddzyyaj');
 
     // 2. Admin Auth
@@ -75,11 +74,12 @@ async function runMasterAudit() {
         assert(fs.existsSync(fullPath), `File public/${file} exists and accessible`);
     });
 
-    // Check SeaBank and Discord kidddzyyaj across HTML files
+    // Check SeaBank, Discord kidddzyyaj, and Lifetime 450k across HTML files
     const htmlFilesToCheck = ['p/saweria.html', 'p/bagibagi.html', 'p/sociabuzz.html', 'order/index.html', 'index.html'];
     htmlFilesToCheck.forEach(file => {
         const content = fs.readFileSync(path.join(__dirname, 'public', file), 'utf-8');
         assert(content.includes('kidddzyyaj'), `File public/${file} contains Discord username kidddzyyaj`);
+        assert(content.includes('450.000') || content.includes('450'), `File public/${file} contains Lifetime price Rp 450.000`);
         if (file !== 'index.html') {
             assert(content.includes('901506323909'), `File public/${file} contains SeaBank account 901506323909`);
         }

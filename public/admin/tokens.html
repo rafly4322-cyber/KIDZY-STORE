@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
@@ -6,7 +6,7 @@
   <title>Kelola Token Aktivasi — KIDZY Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
@@ -17,8 +17,7 @@
         <span>KIDZY Admin</span>
       </a>
       <nav class="nav">
-        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko ↗</a>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko &rarr;</a>
         <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Keluar</button>
       </nav>
     </div>
@@ -35,25 +34,44 @@
             <a class="side-link" href="/admin/services.html">🎮 Layanan & Game</a>
             <a class="side-link" href="/admin/donations.html">📜 Riwayat Donasi</a>
             <a class="side-link" href="/admin/simulator.html">🧪 Simulator Donasi</a>
-            <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
-            <a class="side-link" href="/admin/downloads.html">📥 Download Script</a>
             <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan</a>
           </nav>
         </aside>
 
         <div>
           <div class="page-head">
-            <h1 class="h1">Manajemen Token Aktivasi</h1>
-            <p class="small">Generate token baru untuk pembeli paket 30 Hari atau Lifetime.</p>
+            <h1 class="h1">Manajemen Token Lisensi</h1>
+            <p class="lead">Buat token lisensi Lifetime untuk pembeli atau generate token gratis (Giveaway) dalam 1-klik.</p>
           </div>
 
-          <!-- Generate Token Card -->
+          <!-- Quick Free Giveaway Generator Card -->
+          <div class="card" style="margin-bottom: 24px; border: 1px solid var(--accent); background: linear-gradient(180deg, rgba(99, 102, 241, 0.08) 0%, var(--card) 100%);">
+            <div class="card-head">
+              <div>
+                <span class="badge badge-accent" style="margin-bottom: 8px;">🎁 Alat Khusus Owner</span>
+                <h2 class="h2">1-Click Free Giveaway Token (Lifetime)</h2>
+                <p class="small faint">Buat token gratis secara instan dan langsung salin format pesan rapi untuk dikirim ke Discord.</p>
+              </div>
+            </div>
+
+            <div class="row" style="gap: 12px; margin-top: 10px;">
+              <input class="input" id="giveaway-recipient" placeholder="Nama penerima / username Discord (Contoh: @SultanRoblox)" style="flex: 1;" />
+              <button class="btn btn-primary" onclick="generateGiveawayToken()">🎁 Generate Token Free</button>
+            </div>
+
+            <div id="giveaway-result" style="display: none; margin-top: 16px; padding: 16px; background: #0B0D13; border-radius: var(--r); border: 1px solid var(--ok);">
+              <h3 class="h3" style="color: #A7F3D0; font-size: 15px; margin-bottom: 8px;">✅ Token Berhasil Dibuat!</h3>
+              <textarea class="input mono" id="giveaway-text" rows="5" readonly style="resize: none; font-size: 13px; margin-bottom: 12px;"></textarea>
+              <button class="btn btn-cyan btn-sm" onclick="copyGiveawayText(this)">📋 Salin Format Pesan Discord</button>
+            </div>
+          </div>
+
+          <!-- Custom Generate Token Card -->
           <div class="card" style="margin-bottom: 24px;">
-            <h2 class="h2">➕ Generate Token Baru</h2>
-            <p class="small" style="margin-bottom: 16px;">Buat token aktivasi unik untuk dikirimkan ke pembeli via Discord.</p>
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">➕ Buat Token Manual</h2>
             
             <form id="create-token-form" onsubmit="handleCreateToken(event)">
-              <div class="form-row three">
+              <div class="grid three" style="margin-bottom: 14px;">
                 <div class="field">
                   <label for="tok-platform">Platform</label>
                   <select class="input" id="tok-platform">
@@ -66,50 +84,46 @@
                 <div class="field">
                   <label for="tok-plan">Paket Layanan</label>
                   <select class="input" id="tok-plan">
-                    <option value="lifetime">Lifetime (Selamanya)</option>
-                    <option value="30d">30 Hari</option>
+                    <option value="lifetime">Lifetime (Permanen)</option>
                   </select>
                 </div>
 
                 <div class="field">
-                  <label for="tok-custom">Custom Kode Token (Opsional)</label>
+                  <label for="tok-custom">Custom Kode (Opsional)</label>
                   <input class="input" id="tok-custom" placeholder="Otomatis jika kosong" />
                 </div>
               </div>
 
-              <div class="field" style="margin-top: 12px;">
-                <label for="tok-note">Catatan Pembeli / Pembayaran</label>
-                <input class="input" id="tok-note" placeholder="Contoh: Order Discord @user123 via QRIS" />
+              <div class="field" style="margin-bottom: 16px;">
+                <label for="tok-note">Catatan Pembeli / Invoice</label>
+                <input class="input" id="tok-note" placeholder="Contoh: Pembeli @User123 via SeaBank Rp 450.000" />
               </div>
 
-              <div class="form-actions" style="margin-top: 14px;">
-                <button class="btn btn-primary" type="submit">✨ Buat Token Sekarang</button>
-              </div>
+              <button class="btn btn-primary" type="submit">✨ Simpan Token</button>
             </form>
           </div>
 
           <!-- Token List Table -->
           <div class="card">
-            <div class="row between" style="margin-bottom: 14px;">
-              <h2 class="h2">Daftar Semua Token</h2>
+            <div class="row" style="justify-content: space-between; margin-bottom: 18px;">
+              <h2 class="h2" style="font-size: 18px;">Daftar Semua Token Lisensi</h2>
               <button class="btn btn-sm btn-ghost" onclick="loadTokens()">🔄 Refresh</button>
             </div>
 
-            <div class="table-container">
-              <table class="data-table">
+            <div class="table-wrap">
+              <table>
                 <thead>
                   <tr>
                     <th>Kode Token</th>
                     <th>Platform</th>
                     <th>Paket</th>
                     <th>Status</th>
-                    <th>Catatan / Pemakai</th>
-                    <th>Tanggal Dibuat</th>
+                    <th>Catatan</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody id="tokens-tbody">
-                  <tr><td colspan="7" style="text-align: center; padding: 24px;">Memuat token...</td></tr>
+                  <tr><td colspan="6" style="text-align: center; padding: 24px;">Memuat token...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -122,47 +136,75 @@
   <script src="/assets/app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      if (!Auth.requireAdmin()) return;
+      if (!Auth.isAdmin()) {
+        window.location.href = '/login.html';
+        return;
+      }
       loadTokens();
     });
+
+    async function generateGiveawayToken() {
+      const recipient = document.getElementById('giveaway-recipient').value.trim() || 'Sahabat KIDZY';
+      const resultBox = document.getElementById('giveaway-result');
+      const textBox = document.getElementById('giveaway-text');
+
+      try {
+        const res = await API.post('/api/admin/tokens', {
+          platform: 'saweria',
+          plan: 'lifetime',
+          note: `[FREE GIVEAWAY] ${recipient}`
+        });
+
+        if (res.success && res.token) {
+          const t = res.token;
+          const msg = `🎁 **TOKEN SAWERIA LIFETIME VIP (KIDZY STORE)**:\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔑 **Kode Token**: \`${t.code}\`\n👑 **Paket**: Lifetime (Permanen Seumur Hidup)\n🌐 **Aktivasi di**: https://kidzy-store.vercel.app/activation.html\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n*Masukkan kode token & Universe ID game Roblox kamu di link aktivasi di atas untuk langsung aktif!*`;
+          
+          textBox.value = msg;
+          resultBox.style.display = 'block';
+          loadTokens();
+        }
+      } catch (err) {
+        alert('Gagal membuat token: ' + err.message);
+      }
+    }
+
+    function copyGiveawayText(btn) {
+      const val = document.getElementById('giveaway-text').value;
+      navigator.clipboard.writeText(val).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Tersalin!';
+        setTimeout(() => { btn.textContent = orig; }, 2000);
+      });
+    }
 
     async function loadTokens() {
       const tbody = document.getElementById('tokens-tbody');
       try {
-        const res = await apiFetch('/api/admin/tokens');
-        if (res.success && res.tokens.length > 0) {
+        const res = await API.get('/api/admin/tokens');
+        if (res.success && res.tokens) {
+          if (res.tokens.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 24px;">Belum ada token.</td></tr>';
+            return;
+          }
+
           tbody.innerHTML = res.tokens.map(t => {
             const isUnused = t.status === 'unused';
-            const redeemLink = `${window.location.origin}/register-service.html?token=${t.code}`;
             return `
               <tr>
+                <td><span class="mono" style="font-weight: 700; color: #A5B4FC;">${t.code}</span></td>
+                <td><span class="badge">${t.platform.toUpperCase()}</span></td>
+                <td><span class="badge badge-accent">${t.plan}</span></td>
+                <td><span class="badge ${isUnused ? 'badge-live' : ''}">${t.status}</span></td>
+                <td><span class="small faint">${t.note || '-'}</span></td>
                 <td>
-                  <span class="token" style="font-weight: 700; cursor: pointer;" onclick="copyText('${t.code}', this)" title="Klik untuk salin">${t.code}</span>
-                </td>
-                <td><span class="pill">${t.platform}</span></td>
-                <td><span class="pill ${t.plan === 'lifetime' ? 'accent' : ''}">${t.plan}</span></td>
-                <td>
-                  <span class="pill ${isUnused ? 'warn' : 'ok'}">${isUnused ? 'Belum Terpakai' : 'Aktif'}</span>
-                </td>
-                <td class="small">
-                  <div>${t.note || '-'}</div>
-                  ${t.usedBy ? `<div class="faint">Dipakai oleh: <b>${t.usedBy}</b></div>` : ''}
-                </td>
-                <td class="small faint">${formatDate(t.createdAt)}</td>
-                <td>
-                  <div class="row" style="gap: 6px;">
-                    <button class="btn btn-sm" onclick="copyText('${redeemLink}', this)" title="Salin Link Aktivasi">🔗 Link</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteToken('${t.id}')" title="Hapus Token">🗑️</button>
-                  </div>
+                  <button class="btn btn-sm btn-cyan" onclick="copyText('${t.code}', this)">Salin Token</button>
                 </td>
               </tr>
             `;
           }).join('');
-        } else {
-          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 24px;" class="faint">Belum ada token. Buat token pertama kamu di atas!</td></tr>';
         }
       } catch (err) {
-        showToast('Gagal memuat token: ' + err.message, 'error');
+        tbody.innerHTML = `<tr><td colspan="6" style="color: #F87171; text-align: center;">Gagal memuat token: ${err.message}</td></tr>`;
       }
     }
 
@@ -174,29 +216,26 @@
       const note = document.getElementById('tok-note').value.trim();
 
       try {
-        const res = await apiFetch('/api/admin/tokens', {
-          method: 'POST',
-          body: JSON.stringify({ platform, plan, customCode, note })
-        });
-        showToast(`Token ${res.token.code} berhasil dibuat!`, 'success');
-        document.getElementById('create-token-form').reset();
-        loadTokens();
+        const res = await API.post('/api/admin/tokens', { platform, plan, customCode, note });
+        if (res.success) {
+          alert('Token berhasil dibuat: ' + res.token.code);
+          document.getElementById('create-token-form').reset();
+          loadTokens();
+        } else {
+          alert('Gagal: ' + (res.message || 'Terjadi kesalahan'));
+        }
       } catch (err) {
-        showToast(err.message, 'error');
+        alert('Gagal: ' + err.message);
       }
     }
 
-    async function deleteToken(id) {
-      if (!confirm('Yakin ingin menghapus token ini?')) return;
-      try {
-        await apiFetch(`/api/admin/tokens/${id}`, { method: 'DELETE' });
-        showToast('Token berhasil dihapus.', 'success');
-        loadTokens();
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
+    function copyText(val, btn) {
+      navigator.clipboard.writeText(val).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Tersalin!';
+        setTimeout(() => { btn.textContent = orig; }, 2000);
+      });
     }
   </script>
 </body>
 </html>
-
