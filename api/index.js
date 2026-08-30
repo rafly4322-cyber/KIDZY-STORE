@@ -77,6 +77,15 @@ app.use((req, res, next) => {
     next();
 });
 
+// Serve static assets from public folder
+const PUBLIC_DIR = path.join(__dirname, '../public');
+if (fs.existsSync(PUBLIC_DIR)) {
+    app.use(express.static(PUBLIC_DIR, {
+        maxAge: '1d',
+        etag: true
+    }));
+}
+
 // Normalize URL on Vercel so both /api/xxx and /xxx match Express routes
 app.use((req, res, next) => {
     if (!req.url.startsWith('/api') && !req.url.startsWith('/assets') && !req.url.startsWith('/downloads')) {
@@ -94,15 +103,6 @@ function sanitizeText(str) {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
-}
-
-// Serve static assets from public folder
-const PUBLIC_DIR = path.join(__dirname, '../public');
-if (fs.existsSync(PUBLIC_DIR)) {
-    app.use(express.static(PUBLIC_DIR, {
-        maxAge: '1d',
-        etag: true
-    }));
 }
 
 // Memory queue for in-game polling

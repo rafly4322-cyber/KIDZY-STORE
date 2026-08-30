@@ -6,10 +6,11 @@
   <title>Paket Saweria Lifetime — KIDZY Store</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="/">
@@ -25,29 +26,33 @@
         <span class="nav-sep"></span>
         <a class="btn btn-sm btn-ghost" href="/login.html">Login Admin</a>
       </nav>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
+        ☰
+      </button>
     </div>
   </header>
 
   <main>
     <div class="container page">
       <div class="page-head">
-        <div class="row" style="margin-bottom: 12px;">
-          <span class="badge badge-accent">Platform Saweria</span>
-          <span class="badge badge-live">Akses Permanen</span>
+        <div class="row" style="margin-bottom: 10px;">
+          <span class="badge badge-gold">⭐ Saweria Edition</span>
+          <span class="badge badge-live">Lifetime Permanen</span>
         </div>
-        <h1 class="h1">Saweria Lifetime Edition</h1>
-        <p class="lead">Akses permanen seumur hidup tanpa biaya perpanjangan. Webhook Saweria realtime terhubung otomatis ke Roblox DataStore, notifikasi in-game, dan sistem leaderboard.</p>
+        <h1 class="h1">Saweria Roblox Lifetime</h1>
+        <p class="lead">Hubungkan akun Saweria kamu langsung ke DataStore Roblox dengan notifikasi alert visual, efek partikel orbit, dan kamera 360&deg; realtime tanpa biaya perpanjangan.</p>
       </div>
 
       <div class="split" style="margin-bottom: 40px;">
-        <!-- Lifetime Card -->
+        <!-- Product Details Card -->
         <div class="card pricing-card featured">
           <div>
             <div class="card-head">
               <span class="badge badge-accent">Lifetime Access</span>
+              <span class="badge badge-live">Stok Tersedia</span>
             </div>
-            <h3 class="h2" style="font-size: 26px;">Saweria Lifetime</h3>
-            <p class="small faint">Akses permanen seumur hidup tanpa biaya perpanjangan.</p>
+            <h3 class="h2" style="font-size: 28px;">Saweria Lifetime</h3>
+            <p class="small faint">Akses permanen seumur hidup tanpa biaya langganan bulanan.</p>
 
             <div class="price-box">
               <span class="price-currency">Rp</span>
@@ -55,60 +60,72 @@
               <span class="price-period">/ Selamanya</span>
             </div>
 
-            <ul class="feature-list" style="margin-bottom: 28px;">
+            <ul class="feature-list" style="margin-bottom: 30px;">
               <li class="feature-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 Akses Webhook Lifetime Permanen (Selamanya)
               </li>
               <li class="feature-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                5 Level Efek Partikel &amp; Orbit VFX Aura
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                5 Level Efek Partikel &amp; Orbit VFX Aura Sesuai Tier Donasi
               </li>
               <li class="feature-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                1-Server Kamera Sinematik 360&deg; Orbit ke Donatur
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                1-Server Kamera Sinematik 360&deg; Orbit Otomatis ke Donatur
               </li>
               <li class="feature-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Papan Leaderboard 3D Realtime &amp; Leaderstats
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Papan Leaderboard 3D Realtime &amp; Auto Sync DataStore
               </li>
               <li class="feature-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Free Update Script Selamanya &amp; Priority Support
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Gratis Update Script Model &amp; Bantuan Pemasangan
               </li>
             </ul>
           </div>
 
-          <a class="btn btn-primary btn-lg btn-block" href="/order/index.html?platform=saweria&plan=lifetime">Order Saweria Lifetime (Rp 450.000) &rarr;</a>
+          <button class="btn btn-primary btn-lg btn-block" onclick="openOrderModal('Saweria Lifetime', 'Rp 450.000')">
+            ⚡ Beli Sekarang via SeaBank (Rp 450.000)
+          </button>
         </div>
 
-        <!-- Guide Card -->
-        <div class="card soft">
-          <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">Pembayaran SeaBank</h2>
-          <p class="small faint" style="margin-bottom: 16px;">Transfer ke rekening resmi, lalu DM Discord:</p>
+        <!-- Payment & Instructions Card -->
+        <aside class="stack">
+          <div class="card soft">
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">Pembayaran Resmi</h2>
+            <p class="small faint" style="margin-bottom: 16px;">Transfer ke rekening SeaBank berikut, lalu kirim bukti transfer ke Discord:</p>
 
-          <div class="field" style="margin-bottom: 12px;">
-            <label>Bank Tujuan:</label>
-            <input class="input" readonly value="SeaBank (Kode 535)" />
+            <div class="field" style="margin-bottom: 12px;">
+              <label>Bank Tujuan:</label>
+              <input class="input" readonly value="SeaBank (Kode Bank 535)" />
+            </div>
+
+            <div class="field" style="margin-bottom: 12px;">
+              <label>Nomor Rekening:</label>
+              <div class="row" style="gap: 8px;">
+                <input class="input mono" readonly value="901506323909" style="font-weight: 700; font-size: 16px;" />
+                <button class="btn btn-sm btn-cyan" onclick="copyText('901506323909', this)">Salin</button>
+              </div>
+            </div>
+
+            <div class="field" style="margin-bottom: 12px;">
+              <label>Atas Nama:</label>
+              <input class="input" readonly value="MUHAMMAD RAFLI FIRDAUS" />
+            </div>
+
+            <div class="field" style="margin-bottom: 20px;">
+              <label>DM Discord Owner:</label>
+              <div class="row" style="gap: 8px;">
+                <input class="input mono" readonly value="kidddzyyaj" style="font-weight: 700; color: #A5B4FC;" />
+                <button class="btn btn-sm btn-ghost" onclick="copyText('kidddzyyaj', this)">Salin</button>
+              </div>
+            </div>
+
+            <a class="btn btn-ghost btn-block" href="/activation.html">
+              🔑 Sudah Punya Token? Klik Aktivasi &rarr;
+            </a>
           </div>
-
-          <div class="field" style="margin-bottom: 12px;">
-            <label>Nomor Rekening:</label>
-            <input class="input mono" readonly value="901506323909" />
-          </div>
-
-          <div class="field" style="margin-bottom: 12px;">
-            <label>Atas Nama:</label>
-            <input class="input" readonly value="MUHAMMAD RAFLI FIRDAUS" />
-          </div>
-
-          <div class="field" style="margin-bottom: 20px;">
-            <label>DM Discord Owner:</label>
-            <input class="input mono" readonly value="kidddzyyaj" style="font-weight: 700; color: #A5B4FC;" />
-          </div>
-
-          <a class="btn btn-ghost btn-block" href="/activation.html">Sudah Punya Token? Aktivasi &rarr;</a>
-        </div>
+        </aside>
       </div>
 
       <div>
@@ -117,9 +134,48 @@
     </div>
   </main>
 
+  <!-- Payment Modal -->
+  <div class="modal-backdrop" id="order-modal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('order-modal')">&times;</button>
+      
+      <div style="text-align: center; margin-bottom: 20px;">
+        <span class="badge badge-gold" style="margin-bottom: 8px;">Pembelian Langsung</span>
+        <h2 class="h2">Saweria Lifetime</h2>
+        <div style="font-size: 24px; font-weight: 800; color: #34D399; margin-top: 4px;">Rp 450.000</div>
+      </div>
+
+      <div class="stack" style="gap: 14px;">
+        <div class="field">
+          <label>Transfer SeaBank:</label>
+          <div class="row" style="gap: 8px;">
+            <input class="input mono" readonly value="901506323909" style="font-weight: 700; font-size: 16px;" />
+            <button class="btn btn-sm btn-cyan" onclick="copyText('901506323909', this)">Salin Rekening</button>
+          </div>
+          <span class="small faint">SeaBank &middot; a/n <b>MUHAMMAD RAFLI FIRDAUS</b></span>
+        </div>
+
+        <div class="field">
+          <label>Kirim Bukti Transfer ke Discord:</label>
+          <div class="row" style="gap: 8px;">
+            <input class="input mono" readonly value="kidddzyyaj" style="font-weight: 700; color: #A5B4FC;" />
+            <button class="btn btn-sm btn-ghost" onclick="copyText('kidddzyyaj', this)">Salin User</button>
+          </div>
+        </div>
+
+        <div style="margin-top: 10px;">
+          <a class="btn btn-primary btn-block btn-lg" href="https://discord.com/users/kidddzyyaj" target="_blank">
+            💬 Buka Chat Discord Owner
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; 2026 KIDZY Store</span>
+      <span>&copy; 2026 <b>KIDZY Store</b> &middot; Sistem Gateway Roblox</span>
       <span class="small faint">Discord: <b>kidddzyyaj</b></span>
     </div>
   </footer>

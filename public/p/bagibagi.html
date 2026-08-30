@@ -6,7 +6,7 @@
   <title>Paket BagiBagi Lifetime — KIDZY Store</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
@@ -25,28 +25,32 @@
         <span class="nav-sep"></span>
         <a class="btn btn-sm btn-ghost" href="/login.html">Login Admin</a>
       </nav>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
+        ☰
+      </button>
     </div>
   </header>
 
   <main>
     <div class="container page">
       <div class="page-head">
-        <div class="row" style="margin-bottom: 12px;">
-          <span class="badge badge-accent">Platform BagiBagi (QRIS)</span>
-          <span class="badge badge-live">Akses Permanen</span>
+        <div class="row" style="margin-bottom: 10px;">
+          <span class="badge badge-cyan">Platform BagiBagi</span>
+          <span class="badge badge-live">QRIS Gateway</span>
         </div>
-        <h1 class="h1">BagiBagi Lifetime Edition</h1>
-        <p class="lead">Akses permanen seumur hidup tanpa biaya perpanjangan. Integrasi webhook donasi BagiBagi QRIS otomatis terhubung ke game Roblox kamu.</p>
+        <h1 class="h1">BagiBagi Roblox Lifetime</h1>
+        <p class="lead">Integrasi donasi BagiBagi realtime dengan dukungan pembayaran QRIS, GoPay, OVO, ShopeePay, DANA, dan transfer bank ke game Roblox kamu.</p>
       </div>
 
       <div class="split" style="margin-bottom: 40px;">
-        <div class="card pricing-card featured">
+        <div class="card pricing-card">
           <div>
             <div class="card-head">
-              <span class="badge badge-accent">Lifetime Access</span>
+              <span class="badge badge-cyan">QRIS &amp; E-Wallet</span>
+              <span class="badge badge-live">Permanen</span>
             </div>
-            <h3 class="h2" style="font-size: 26px;">BagiBagi Lifetime</h3>
-            <p class="small faint">Akses permanen seumur hidup tanpa biaya perpanjangan.</p>
+            <h3 class="h2" style="font-size: 28px;">BagiBagi Lifetime</h3>
+            <p class="small faint">Akses permanen seumur hidup tanpa biaya perpanjangan bulanan.</p>
 
             <div class="price-box">
               <span class="price-currency">Rp</span>
@@ -54,55 +58,56 @@
               <span class="price-period">/ Selamanya</span>
             </div>
 
-            <ul class="feature-list" style="margin-bottom: 28px;">
+            <ul class="feature-list" style="margin-bottom: 30px;">
               <li class="feature-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Akses Webhook Lifetime Permanen (Selamanya)
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Akses Webhook Lifetime Permanen
               </li>
               <li class="feature-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Support QRIS &amp; Seluruh E-Wallet
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Support QRIS, GoPay, OVO, DANA, &amp; ShopeePay
               </li>
               <li class="feature-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                5 Level Efek Partikel &amp; Orbit VFX
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                In-Game Alert &amp; 3D Leaderboard Realtime
               </li>
               <li class="feature-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Leaderboard 3D Realtime &amp; Notifikasi Layar
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Auto Open Cloud DataStore Synchronizer
               </li>
             </ul>
           </div>
 
-          <a class="btn btn-primary btn-lg btn-block" href="/order/index.html?platform=bagibagi&plan=lifetime">Order BagiBagi Lifetime (Rp 450.000) &rarr;</a>
+          <button class="btn btn-cyan btn-lg btn-block" onclick="openOrderModal('BagiBagi Lifetime', 'Rp 450.000')">
+            ⚡ Order BagiBagi Lifetime (Rp 450.000)
+          </button>
         </div>
 
-        <div class="card soft">
-          <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">Pembayaran SeaBank</h2>
-          <p class="small faint" style="margin-bottom: 16px;">Transfer ke rekening resmi, lalu DM Discord:</p>
+        <aside class="stack">
+          <div class="card soft">
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">Pembayaran SeaBank</h2>
+            <div class="field" style="margin-bottom: 12px;">
+              <label>Nomor Rekening SeaBank:</label>
+              <div class="row" style="gap: 8px;">
+                <input class="input mono" readonly value="901506323909" style="font-weight: 700; font-size: 16px;" />
+                <button class="btn btn-sm btn-cyan" onclick="copyText('901506323909', this)">Salin</button>
+              </div>
+              <span class="small faint">a/n <b>MUHAMMAD RAFLI FIRDAUS</b></span>
+            </div>
 
-          <div class="field" style="margin-bottom: 12px;">
-            <label>Bank Tujuan:</label>
-            <input class="input" readonly value="SeaBank (Kode 535)" />
+            <div class="field" style="margin-bottom: 20px;">
+              <label>DM Discord Owner:</label>
+              <div class="row" style="gap: 8px;">
+                <input class="input mono" readonly value="kidddzyyaj" style="font-weight: 700; color: #A5B4FC;" />
+                <button class="btn btn-sm btn-ghost" onclick="copyText('kidddzyyaj', this)">Salin</button>
+              </div>
+            </div>
+
+            <a class="btn btn-ghost btn-block" href="/activation.html">
+              🔑 Sudah Punya Token? Klik Aktivasi &rarr;
+            </a>
           </div>
-
-          <div class="field" style="margin-bottom: 12px;">
-            <label>Nomor Rekening:</label>
-            <input class="input mono" readonly value="901506323909" />
-          </div>
-
-          <div class="field" style="margin-bottom: 12px;">
-            <label>Atas Nama:</label>
-            <input class="input" readonly value="MUHAMMAD RAFLI FIRDAUS" />
-          </div>
-
-          <div class="field" style="margin-bottom: 20px;">
-            <label>DM Discord Owner:</label>
-            <input class="input mono" readonly value="kidddzyyaj" style="font-weight: 700; color: #A5B4FC;" />
-          </div>
-
-          <a class="btn btn-ghost btn-block" href="/activation.html">Sudah Punya Token? Aktivasi &rarr;</a>
-        </div>
+        </aside>
       </div>
 
       <div>
@@ -111,9 +116,36 @@
     </div>
   </main>
 
+  <!-- Order Modal -->
+  <div class="modal-backdrop" id="order-modal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('order-modal')">&times;</button>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <span class="badge badge-cyan" style="margin-bottom: 8px;">Konfirmasi Pembelian</span>
+        <h2 class="h2">BagiBagi Lifetime</h2>
+        <div style="font-size: 24px; font-weight: 800; color: #34D399; margin-top: 4px;">Rp 450.000</div>
+      </div>
+      <div class="stack" style="gap: 14px;">
+        <div class="field">
+          <label>Transfer SeaBank:</label>
+          <div class="row" style="gap: 8px;">
+            <input class="input mono" readonly value="901506323909" style="font-weight: 700; font-size: 16px;" />
+            <button class="btn btn-sm btn-cyan" onclick="copyText('901506323909', this)">Salin Rekening</button>
+          </div>
+          <span class="small faint">SeaBank &middot; a/n <b>MUHAMMAD RAFLI FIRDAUS</b></span>
+        </div>
+        <div>
+          <a class="btn btn-primary btn-block btn-lg" href="https://discord.com/users/kidddzyyaj" target="_blank">
+            💬 Buka Chat Discord Owner
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; 2026 KIDZY Store</span>
+      <span>&copy; 2026 <b>KIDZY Store</b></span>
       <span class="small faint">Discord: <b>kidddzyyaj</b></span>
     </div>
   </footer>

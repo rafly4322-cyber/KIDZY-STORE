@@ -1,6 +1,6 @@
 /**
  * KIDZY Store — Universal Modern Client Library (2026 Edition)
- * Background: #08090D | Card: #11131A | Accent: Violet / Electric Blue / Cyan
+ * Rich interactive features: Live Roblox In-Game Simulator, Modals, 1-Click Copy & Toast
  */
 
 // Theme Management
@@ -20,46 +20,62 @@ function toggleTheme() {
     localStorage.setItem('app_theme', target);
 }
 
-// Toast Notifications
+// Mobile Nav Toggle
+function toggleMobileNav() {
+    const nav = document.querySelector('.nav');
+    if (nav) {
+        nav.classList.toggle('is-open');
+    }
+}
+
+// Toast Notifications System
 function showToast(message, type = 'info') {
     let container = document.getElementById('toast-container');
     if (!container) {
         container = document.createElement('div');
         container.id = 'toast-container';
-        container.style.cssText = 'position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;';
+        container.style.cssText = 'position: fixed; bottom: 24px; right: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; max-width: 90vw;';
         document.body.appendChild(container);
     }
 
     const toast = document.createElement('div');
     toast.className = `alert alert-${type === 'error' ? 'error' : type === 'success' ? 'success' : 'info'}`;
-    toast.style.cssText = 'pointer-events: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.6); transition: all 0.3s ease;';
+    toast.style.cssText = 'pointer-events: auto; box-shadow: 0 16px 36px rgba(0,0,0,0.8); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); transform: translateY(15px); opacity: 0;';
     
     let icon = 'ℹ️';
-    if (type === 'success') icon = '✅';
+    if (type === 'success') icon = '✨';
     if (type === 'error') icon = '❌';
     if (type === 'warn') icon = '⚠️';
 
-    toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+    toast.innerHTML = `<span style="font-size: 16px;">${icon}</span> <span style="font-weight: 500;">${message}</span>`;
     container.appendChild(toast);
+
+    // Animate in
+    requestAnimationFrame(() => {
+        toast.style.transform = 'translateY(0)';
+        toast.style.opacity = '1';
+    });
 
     setTimeout(() => {
         toast.style.opacity = '0';
-        toast.style.transform = 'translateY(10px)';
+        toast.style.transform = 'translateY(15px)';
         setTimeout(() => toast.remove(), 300);
     }, 3500);
 }
 
-// Copy to Clipboard (with universal fallback)
+// 1-Click Copy to Clipboard
 function copyText(text, btn) {
     if (!text || text.includes('Loading')) return;
     
     function onSuccess() {
         showToast('Tersalin ke clipboard!', 'success');
         if (btn) {
-            const original = btn.textContent;
-            btn.textContent = '✨ Tersalin!';
+            const original = btn.innerHTML;
+            btn.innerHTML = '✨ Tersalin!';
+            btn.style.borderColor = '#10B981';
             setTimeout(() => {
-                btn.textContent = original;
+                btn.innerHTML = original;
+                btn.style.borderColor = '';
             }, 2000);
         }
     }
@@ -90,7 +106,7 @@ function fallbackCopy(text, cb) {
     }
 }
 
-// Format Rupiah
+// Rupiah & Date Formatters
 function formatRupiah(number) {
     return new Intl.NumberFormat('id-ID', {
         style: 'currency',
@@ -112,6 +128,61 @@ function formatDate(isoStr) {
     });
 }
 
+// Modal Management
+function openOrderModal(platform = 'Saweria', price = 'Rp 450.000') {
+    const modal = document.getElementById('order-modal');
+    if (!modal) return;
+    
+    const platformEl = document.getElementById('modal-platform-name');
+    const priceEl = document.getElementById('modal-price-display');
+    if (platformEl) platformEl.textContent = platform;
+    if (priceEl) priceEl.textContent = price;
+
+    modal.classList.add('is-active');
+}
+
+function closeModal(modalId = 'order-modal') {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('is-active');
+    }
+}
+
+// FAQ Accordion
+function toggleFaq(headEl) {
+    const item = headEl.closest('.faq-item');
+    if (item) {
+        item.classList.toggle('is-open');
+    }
+}
+
+// Live In-Game Roblox Alert Simulator
+function runSimAlert() {
+    const donorInput = document.getElementById('sim-donor-input');
+    const amountInput = document.getElementById('sim-amount-input');
+    const msgInput = document.getElementById('sim-msg-input');
+    const screen = document.getElementById('sim-screen-container');
+
+    const donor = (donorInput && donorInput.value.trim()) || 'SultanRoblox_VIP';
+    const amount = (amountInput && parseInt(amountInput.value)) || 100000;
+    const msg = (msgInput && msgInput.value.trim()) || 'Semoga gamenya makin rame bang! 🔥';
+
+    if (!screen) return;
+
+    // Trigger visual pop-up inside simulator
+    screen.innerHTML = `
+        <div class="roblox-notif">
+            <div class="roblox-notif-title">⭐ SAWERIA DONATION ALERT ⭐</div>
+            <div class="roblox-notif-donor">${donor}</div>
+            <div class="roblox-notif-amount">${formatRupiah(amount)}</div>
+            <div class="roblox-notif-msg">"${msg}"</div>
+            <div style="margin-top: 8px; font-size: 11px; color: #94A3B8;">✨ Orbit Camera VFX &amp; Leaderboard Synced!</div>
+        </div>
+    `;
+
+    showToast(`Donasi dari ${donor} (${formatRupiah(amount)}) berhasil disimulasikan!`, 'success');
+}
+
 // Auth Manager
 const Auth = {
     getToken() {
@@ -126,12 +197,6 @@ const Auth = {
     },
     setAuth(token, user) {
         localStorage.setItem('auth_token', token);
-        localStorage.setItem('auth_user', JSON.stringify(user));
-    },
-    setToken(token) {
-        localStorage.setItem('auth_token', token);
-    },
-    setUser(user) {
         localStorage.setItem('auth_user', JSON.stringify(user));
     },
     clearAuth() {

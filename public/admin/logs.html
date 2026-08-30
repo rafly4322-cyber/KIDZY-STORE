@@ -1,85 +1,82 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Log Donasi — KIDZY Store</title>
+  <title>Log Donasi — KIDZY Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="/">
+      <a class="brand" href="/admin">
         <span class="brand-mark">KZ</span>
-        <span>KIDZY Store</span>
+        <span>KIDZY Admin</span>
       </a>
       <nav class="nav">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link is-active" href="/admin">Admin</a>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
-        <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Logout</button>
+        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko &rarr;</a>
+        <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Keluar</button>
       </nav>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
+        ☰
+      </button>
     </div>
   </header>
 
   <main class="page">
     <div class="container">
       <div class="shell">
-        <!-- Sidebar Menu -->
         <aside class="side">
-          <div class="side-title">Menu</div>
+          <div class="side-title">Menu Utama</div>
           <nav class="side-nav">
             <a class="side-link" href="/admin">📊 Dashboard</a>
-            <a class="side-link" href="/admin/send">🧪 Kirim Donasi</a>
-            <a class="side-link is-active" href="/admin/logs">📜 Log Donasi</a>
-            <a class="side-link" href="/admin/tokens">🔑 Kelola Token</a>
-            <a class="side-link" href="/admin/services">🎮 Kelola Layanan</a>
-            <a class="side-link" href="/admin/roblox">☁️ Roblox DataStore</a>
-            <a class="side-link" href="/admin/settings">⚙️ Pengaturan</a>
+            <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
+            <a class="side-link" href="/admin/send.html">⚡ Simulator Donasi</a>
+            <a class="side-link is-active" href="/admin/logs.html">📜 Log Donasi</a>
+            <a class="side-link" href="/admin/services.html">🎮 Layanan Game</a>
+            <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
+            <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan Toko</a>
+            <a class="side-link" href="/admin/downloads.html">⬇️ Download File</a>
           </nav>
-
-          <div class="side-foot small faint" style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
-            <p>Butuh bantuan? Hubungi owner lewat Discord.</p>
-            <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="btn btn-sm btn-block" style="margin-top: 8px;">
-              💬 Discord Owner
-            </a>
-          </div>
         </aside>
 
-        <!-- Main Content -->
         <div>
           <div class="page-head">
-            <div class="row between">
+            <div class="row between" style="flex-wrap: wrap; gap: 12px;">
               <div>
-                <h1 class="h1">Log Donasi</h1>
-                <p class="muted">Catatan riwayat transaksi donasi yang masuk ke server game kamu.</p>
+                <div class="row" style="margin-bottom: 6px;">
+                  <span class="badge badge-live">Realtime Activity</span>
+                </div>
+                <h1 class="h1">Riwayat Log Donasi</h1>
+                <p class="lead">Catatan transaksi donasi yang masuk ke server gateway dan diteruskan ke DataStore game Roblox.</p>
               </div>
-              <div class="row">
+              <div class="row" style="gap: 8px;">
                 <button class="btn btn-sm btn-ghost" onclick="loadLogs()">🔄 Refresh</button>
-                <button class="btn btn-sm btn-danger" onclick="clearLogs()">🗑️ Bersihkan</button>
+                <button class="btn btn-sm btn-danger" onclick="clearLogs()">🗑️ Bersihkan Log</button>
               </div>
             </div>
           </div>
 
           <div class="card">
-            <div class="table-container">
-              <table class="data-table">
+            <div class="table-responsive">
+              <table class="table">
                 <thead>
                   <tr>
                     <th>Waktu</th>
                     <th>Nama Donatur</th>
-                    <th>Jumlah</th>
-                    <th>Pesan</th>
+                    <th>Nominal</th>
+                    <th>Pesan Donasi</th>
                     <th>Platform</th>
                     <th>Target Game</th>
                     <th>Status</th>
                   </tr>
                 </thead>
                 <tbody id="logs-tbody">
-                  <tr><td colspan="7" style="text-align:center; padding: 24px;">Memuat log donasi...</td></tr>
+                  <tr><td colspan="7" style="text-align: center; padding: 32px; color: var(--muted);">Memuat log donasi...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -91,8 +88,7 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; 2026 KIDZY Store &middot; Admin: Muhammad Rafly</span>
-      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">Support via Discord</a>
+      <span>&copy; 2026 <b>KIDZY Store</b></span>
     </div>
   </footer>
 
@@ -106,21 +102,21 @@
     async function loadLogs() {
       const tbody = document.getElementById('logs-tbody');
       try {
-        const res = await apiFetch('/api/admin/donations');
+        const res = await API.get('/api/admin/donations');
         if (res.success && res.donations.length > 0) {
           tbody.innerHTML = res.donations.map(d => `
             <tr>
-              <td class="small faint">${formatDate(d.timestamp)}</td>
-              <td><b>${d.nama}</b></td>
-              <td style="color: var(--ok); font-weight: 700;">${formatRupiah(d.amount)}</td>
-              <td class="small" style="max-width: 250px;">${d.message || '-'}</td>
-              <td><span class="pill">${d.platform || 'saweria'}</span></td>
-              <td><code>${d.universeId || 'Semua'}</code></td>
-              <td><span class="pill ok">${d.status || 'success'}</span></td>
+              <td style="color: var(--muted); font-size: 13px;">${formatDate(d.timestamp)}</td>
+              <td><b style="color: var(--ink);">${d.nama}</b></td>
+              <td><span class="mono" style="color: #34D399; font-weight: 700;">${formatRupiah(d.amount)}</span></td>
+              <td style="max-width: 260px; color: var(--text-secondary); font-size: 13.5px;">${d.message || '-'}</td>
+              <td><span class="badge badge-accent">${(d.platform || 'saweria').toUpperCase()}</span></td>
+              <td><span class="code" style="font-size: 12px;">${d.universeId || 'Semua'}</span></td>
+              <td><span class="badge badge-live">${d.status || 'success'}</span></td>
             </tr>
           `).join('');
         } else {
-          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 24px;" class="faint">Belum ada riwayat transaksi donasi.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 32px; color: var(--muted);">Belum ada riwayat donasi yang tercatat.</td></tr>';
         }
       } catch (err) {
         showToast('Gagal memuat log: ' + err.message, 'error');
@@ -130,8 +126,8 @@
     async function clearLogs() {
       if (!confirm('Yakin ingin menghapus semua catatan riwayat donasi?')) return;
       try {
-        await apiFetch('/api/admin/donations', { method: 'DELETE' });
-        showToast('Log donasi berhasil dibersihkan.', 'success');
+        await API.delete('/api/admin/donations');
+        showToast('Riwayat donasi berhasil dibersihkan.', 'success');
         loadLogs();
       } catch (err) {
         showToast(err.message, 'error');
@@ -140,4 +136,3 @@
   </script>
 </body>
 </html>
-

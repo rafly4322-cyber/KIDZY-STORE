@@ -6,21 +6,24 @@
   <title>Pengaturan Toko — KIDZY Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="/admin/index.html">
+      <a class="brand" href="/admin">
         <span class="brand-mark">KZ</span>
         <span>KIDZY Admin</span>
       </a>
       <nav class="nav">
-        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko ↗</a>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko &rarr;</a>
         <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Keluar</button>
       </nav>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
+        ☰
+      </button>
     </div>
   </header>
 
@@ -30,48 +33,50 @@
         <aside class="side">
           <div class="side-title">Menu Utama</div>
           <nav class="side-nav">
-            <a class="side-link" href="/admin/index.html">📊 Overview</a>
+            <a class="side-link" href="/admin">📊 Dashboard</a>
             <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
-            <a class="side-link" href="/admin/services.html">🎮 Layanan & Game</a>
-            <a class="side-link" href="/admin/donations.html">📜 Riwayat Donasi</a>
-            <a class="side-link" href="/admin/simulator.html">🧪 Simulator Donasi</a>
+            <a class="side-link" href="/admin/send.html">⚡ Simulator Donasi</a>
+            <a class="side-link" href="/admin/logs.html">📜 Log Donasi</a>
+            <a class="side-link" href="/admin/services.html">🎮 Layanan Game</a>
             <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
-            <a class="side-link" href="/admin/downloads.html">📥 Download Script</a>
-            <a class="side-link is-active" href="/admin/settings.html">⚙️ Pengaturan</a>
+            <a class="side-link is-active" href="/admin/settings.html">⚙️ Pengaturan Toko</a>
+            <a class="side-link" href="/admin/downloads.html">⬇️ Download File</a>
           </nav>
         </aside>
 
         <div>
           <div class="page-head">
-            <h1 class="h1">⚙️ Pengaturan Sistem &amp; Toko</h1>
-            <p class="small">Kelola rekening pembayaran, tautan Discord, harga paket, dan keamanan akun kamu.</p>
+            <div class="row" style="margin-bottom: 6px;">
+              <span class="badge badge-accent">Configuration</span>
+            </div>
+            <h1 class="h1">Pengaturan Sistem &amp; Toko</h1>
+            <p class="lead">Kelola data rekening pembayaran, Discord owner, dan keamanan akun administrator.</p>
           </div>
 
           <!-- Store & Payment Config -->
           <div class="card" style="margin-bottom: 24px;">
-            <h2 class="h2">Informasi Pembayaran &amp; Toko</h2>
-            <p class="small" style="margin-bottom: 16px;">Data ini akan tampil di halaman checkout / order toko.</p>
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">Informasi Rekening &amp; Toko</h2>
 
             <form id="settings-form" class="stack" onsubmit="handleSaveSettings(event)">
-              <div class="form-row two">
+              <div class="grid two">
                 <div class="field">
                   <label for="set-store-name">Nama Toko</label>
                   <input class="input" id="set-store-name" required />
                 </div>
                 <div class="field">
-                  <label for="set-discord">Link Undangan Discord</label>
-                  <input class="input" id="set-discord" required />
+                  <label for="set-discord">Link Undangan / Username Discord</label>
+                  <input class="input mono" id="set-discord" required />
                 </div>
               </div>
 
-              <div class="form-row three">
+              <div class="grid three">
                 <div class="field">
                   <label for="set-bank-name">Nama Bank</label>
-                  <input class="input" id="set-bank-name" placeholder="Contoh: SeaBank" required />
+                  <input class="input" id="set-bank-name" placeholder="SeaBank (Kode 535)" required />
                 </div>
                 <div class="field">
                   <label for="set-bank-account">Nomor Rekening</label>
-                  <input class="input" id="set-bank-account" placeholder="901506323909" required />
+                  <input class="input mono" id="set-bank-account" placeholder="901506323909" required />
                 </div>
                 <div class="field">
                   <label for="set-bank-holder">Nama Pemilik Rekening</label>
@@ -80,34 +85,21 @@
               </div>
 
               <div class="field">
-                <label for="set-qris">URL / Gambar QRIS</label>
-                <input class="input" id="set-qris" placeholder="/assets/qris.png" />
+                <label for="set-price-lifetime">Harga Paket Lifetime (IDR)</label>
+                <input class="input mono" id="set-price-lifetime" type="number" step="1000" />
               </div>
 
-              <div class="form-row two">
-                <div class="field">
-                  <label for="set-price-30d">Harga Paket 30 Hari (IDR)</label>
-                  <input class="input" id="set-price-30d" type="number" step="1000" />
-                </div>
-                <div class="field">
-                  <label for="set-price-lifetime">Harga Paket Lifetime (IDR)</label>
-                  <input class="input" id="set-price-lifetime" type="number" step="1000" />
-                </div>
-              </div>
-
-              <div class="form-actions" style="margin-top: 10px;">
-                <button class="btn btn-primary" type="submit">💾 Simpan Pengaturan Toko</button>
-              </div>
+              <button class="btn btn-primary" type="submit" style="margin-top: 6px;">
+                💾 Simpan Pengaturan Toko
+              </button>
             </form>
           </div>
 
           <!-- Change Password -->
           <div class="card">
-            <h2 class="h2">Keamanan Akun Admin</h2>
-            <p class="small" style="margin-bottom: 16px;">Ubah password akun admin kamu.</p>
-
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">Keamanan Akun Admin</h2>
             <form id="password-form" class="stack" onsubmit="handleChangePassword(event)">
-              <div class="form-row two">
+              <div class="grid two">
                 <div class="field">
                   <label for="pwd-current">Password Saat Ini</label>
                   <input class="input" id="pwd-current" type="password" required />
@@ -118,15 +110,21 @@
                 </div>
               </div>
 
-              <div class="form-actions" style="margin-top: 10px;">
-                <button class="btn btn-accent" type="submit">🔒 Perbarui Password</button>
-              </div>
+              <button class="btn btn-cyan" type="submit" style="margin-top: 6px;">
+                🔒 Perbarui Password
+              </button>
             </form>
           </div>
         </div>
       </div>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 <b>KIDZY Store</b></span>
+    </div>
+  </footer>
 
   <script src="/assets/app.js"></script>
   <script>
@@ -137,19 +135,17 @@
 
     async function loadSettings() {
       try {
-        const res = await apiFetch('/api/admin/settings');
+        const res = await API.get('/api/admin/settings');
         if (res.success && res.settings) {
           const s = res.settings;
-          document.getElementById('set-store-name').value = s.storeName || '';
-          document.getElementById('set-discord').value = s.discordUrl || '';
-          document.getElementById('set-bank-name').value = s.bankName || '';
-          document.getElementById('set-bank-account').value = s.bankAccount || '';
-          document.getElementById('set-bank-holder').value = s.bankHolder || '';
-          document.getElementById('set-qris').value = s.qrisImage || '';
+          document.getElementById('set-store-name').value = s.storeName || 'KIDZY Store';
+          document.getElementById('set-discord').value = s.discordUrl || 'kidddzyyaj';
+          document.getElementById('set-bank-name').value = s.bankName || 'SeaBank (Kode 535)';
+          document.getElementById('set-bank-account').value = s.bankAccount || '901506323909';
+          document.getElementById('set-bank-holder').value = s.bankHolder || 'MUHAMMAD RAFLI FIRDAUS';
 
           if (s.prices && s.prices.saweria) {
-            document.getElementById('set-price-30d').value = s.prices.saweria.plan30d || 90000;
-            document.getElementById('set-price-lifetime').value = s.prices.saweria.lifetime || 300000;
+            document.getElementById('set-price-lifetime').value = s.prices.saweria.lifetime || 450000;
           }
         }
       } catch (err) {
@@ -164,26 +160,20 @@
       const bankName = document.getElementById('set-bank-name').value.trim();
       const bankAccount = document.getElementById('set-bank-account').value.trim();
       const bankHolder = document.getElementById('set-bank-holder').value.trim();
-      const qrisImage = document.getElementById('set-qris').value.trim();
-      const plan30d = parseInt(document.getElementById('set-price-30d').value) || 90000;
-      const lifetime = parseInt(document.getElementById('set-price-lifetime').value) || 300000;
+      const lifetime = parseInt(document.getElementById('set-price-lifetime').value) || 450000;
 
       try {
-        await apiFetch('/api/admin/settings', {
-          method: 'POST',
-          body: JSON.stringify({
-            storeName,
-            discordUrl,
-            bankName,
-            bankAccount,
-            bankHolder,
-            qrisImage,
-            prices: {
-              saweria: { plan30d, lifetime },
-              bagibagi: { plan30d, lifetime },
-              sociabuzz: { plan30d, lifetime }
-            }
-          })
+        await API.post('/api/admin/settings', {
+          storeName,
+          discordUrl,
+          bankName,
+          bankAccount,
+          bankHolder,
+          prices: {
+            saweria: { lifetime },
+            bagibagi: { lifetime },
+            sociabuzz: { lifetime }
+          }
         });
         showToast('Pengaturan toko berhasil disimpan!', 'success');
       } catch (err) {
@@ -197,10 +187,7 @@
       const newPassword = document.getElementById('pwd-new').value;
 
       try {
-        await apiFetch('/api/auth/change-password', {
-          method: 'POST',
-          body: JSON.stringify({ currentPassword, newPassword })
-        });
+        await API.post('/api/auth/change-password', { currentPassword, newPassword });
         showToast('Password berhasil diubah!', 'success');
         document.getElementById('password-form').reset();
       } catch (err) {
@@ -210,4 +197,3 @@
   </script>
 </body>
 </html>
-

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
@@ -6,21 +6,24 @@
   <title>Roblox DataStore Inspector — KIDZY Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="/admin/index.html">
+      <a class="brand" href="/admin">
         <span class="brand-mark">KZ</span>
         <span>KIDZY Admin</span>
       </a>
       <nav class="nav">
-        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko ↗</a>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko &rarr;</a>
         <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Keluar</button>
       </nav>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
+        ☰
+      </button>
     </div>
   </header>
 
@@ -30,51 +33,57 @@
         <aside class="side">
           <div class="side-title">Menu Utama</div>
           <nav class="side-nav">
-            <a class="side-link" href="/admin/index.html">📊 Overview</a>
+            <a class="side-link" href="/admin">📊 Dashboard</a>
             <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
-            <a class="side-link" href="/admin/services.html">🎮 Layanan & Game</a>
-            <a class="side-link" href="/admin/donations.html">📜 Riwayat Donasi</a>
-            <a class="side-link" href="/admin/simulator.html">🧪 Simulator Donasi</a>
+            <a class="side-link" href="/admin/send.html">⚡ Simulator Donasi</a>
+            <a class="side-link" href="/admin/logs.html">📜 Log Donasi</a>
+            <a class="side-link" href="/admin/services.html">🎮 Layanan Game</a>
             <a class="side-link is-active" href="/admin/roblox.html">☁️ Roblox DataStore</a>
-            <a class="side-link" href="/admin/downloads.html">📥 Download Script</a>
-            <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan</a>
+            <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan Toko</a>
+            <a class="side-link" href="/admin/downloads.html">⬇️ Download File</a>
           </nav>
         </aside>
 
         <div>
           <div class="page-head">
-            <h1 class="h1">☁️ Roblox Open Cloud DataStore Inspector</h1>
-            <p class="small">Inspeksi langsung data donatur yang tersimpan di DataStore <code>SaweriaDonations</code> Roblox secara realtime.</p>
+            <div class="row" style="margin-bottom: 6px;">
+              <span class="badge badge-cyan">Roblox Open Cloud</span>
+            </div>
+            <h1 class="h1">Roblox DataStore Inspector</h1>
+            <p class="lead">Inspeksi langsung data donatur yang tersimpan di DataStore <code>SaweriaDonations</code> secara realtime.</p>
           </div>
 
           <div class="card" style="margin-bottom: 24px;">
-            <h2 class="h2">Pilih Game / Universe</h2>
-            <div class="form-row two" style="margin-top: 12px;">
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">Pilih Universe Game</h2>
+            <div class="grid two" style="margin-bottom: 16px;">
               <div class="field">
                 <label for="ds-universe">Universe ID</label>
-                <input class="input" id="ds-universe" placeholder="Contoh: 1234567890" />
+                <input class="input mono" id="ds-universe" placeholder="Contoh: 10764300084" />
               </div>
               <div class="field">
-                <label for="ds-apikey">Roblox API Key</label>
-                <input class="input" id="ds-apikey" type="password" placeholder="ApiKey..." />
+                <label for="ds-apikey">Roblox Open Cloud API Key</label>
+                <input class="input mono" id="ds-apikey" type="password" placeholder="ApiKey..." />
               </div>
             </div>
 
-            <div class="form-actions" style="margin-top: 14px;">
+            <div class="row" style="gap: 10px; flex-wrap: wrap;">
               <button class="btn btn-primary" id="btn-inspect" onclick="inspectDatastore()">🔍 Baca DataStore Live</button>
-              <button class="btn btn-ghost" onclick="testConnectionOnly()">⚡ Test Koneksi Saja</button>
+              <button class="btn btn-ghost" onclick="testConnectionOnly()">⚡ Test Koneksi</button>
               <button class="btn btn-danger" onclick="clearDatastoreLive()">🗑️ Reset / Kosongkan DataStore</button>
             </div>
           </div>
 
           <div class="card">
-            <div class="row between" style="margin-bottom: 12px;">
-              <h2 class="h2">Data Entry (DataStore: <code>SaweriaDonations</code>, Key: <code>AllDonations</code>)</h2>
-              <span class="pill" id="ds-status-pill">Menunggu Input</span>
+            <div class="card-head">
+              <div>
+                <h2 class="h2">Data Entry DataStore (SaweriaDonations)</h2>
+                <p class="small faint">Key: <code>AllDonations</code></p>
+              </div>
+              <span class="badge" id="ds-status-pill">Menunggu Input</span>
             </div>
 
             <div id="datastore-output">
-              <pre class="code" style="max-height: 480px;">Masukkan Universe ID dan API Key lalu klik "Baca DataStore Live".</pre>
+              <pre class="code" style="max-height: 480px; overflow-y: auto;">Masukkan Universe ID dan API Key lalu klik "Baca DataStore Live".</pre>
             </div>
           </div>
         </div>
@@ -82,19 +91,24 @@
     </div>
   </main>
 
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 <b>KIDZY Store</b></span>
+    </div>
+  </footer>
+
   <script src="/assets/app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       if (!Auth.requireAdmin()) return;
 
-      // Try autofill from first service or settings
       try {
-        const svcRes = await apiFetch('/api/admin/services');
+        const svcRes = await API.get('/api/admin/services');
         if (svcRes.success && svcRes.services.length > 0) {
           document.getElementById('ds-universe').value = svcRes.services[0].universeId;
           document.getElementById('ds-apikey').value = svcRes.services[0].robloxApiKey;
         } else {
-          const setRes = await apiFetch('/api/admin/settings');
+          const setRes = await API.get('/api/admin/settings');
           if (setRes.success && setRes.settings.universeIds && setRes.settings.universeIds.length > 0) {
             document.getElementById('ds-universe').value = setRes.settings.universeIds[0];
             document.getElementById('ds-apikey').value = setRes.settings.robloxApiKey || '';
@@ -114,37 +128,34 @@
         return;
       }
 
-      pill.className = 'pill warn';
+      pill.className = 'badge badge-accent';
       pill.innerText = 'Membaca...';
       output.innerHTML = '<pre class="code">Menghubungi server Roblox Open Cloud API...</pre>';
 
       try {
-        const res = await apiFetch('/api/admin/roblox/datastore', {
-          method: 'POST',
-          body: JSON.stringify({ universeId, robloxApiKey })
-        });
+        const res = await API.post('/api/admin/roblox/datastore', { universeId, robloxApiKey });
 
         if (res.success) {
-          pill.className = 'pill ok';
+          pill.className = 'badge badge-live';
           pill.innerText = 'Berhasil Terhubung';
           const donors = Array.isArray(res.data) ? res.data : [];
           output.innerHTML = `
             <div style="margin-bottom: 12px;" class="small">
-              Total Donatur Terdaftar: <b>${donors.length}</b> &middot; Total Donasi: <b>${formatRupiah(donors.reduce((sum, d) => sum + (d.Amount || 0), 0))}</b>
+              Total Donatur Terdaftar: <b>${donors.length}</b> &middot; Total Donasi: <b style="color: #34D399;">${formatRupiah(donors.reduce((sum, d) => sum + (d.Amount || 0), 0))}</b>
             </div>
-            <pre class="code" style="max-height: 480px;">${JSON.stringify(res.data, null, 2)}</pre>
+            <pre class="code" style="max-height: 480px; overflow-y: auto;">${JSON.stringify(res.data, null, 2)}</pre>
           `;
           showToast('DataStore berhasil dibaca!', 'success');
         } else {
-          pill.className = 'pill bad';
+          pill.className = 'badge badge-bad';
           pill.innerText = 'Gagal';
-          output.innerHTML = `<pre class="code" style="color: var(--bad);">${JSON.stringify(res.error, null, 2)}</pre>`;
+          output.innerHTML = `<pre class="code" style="color: #F87171;">${JSON.stringify(res.error, null, 2)}</pre>`;
           showToast('Gagal membaca DataStore: ' + JSON.stringify(res.error), 'error');
         }
       } catch (err) {
-        pill.className = 'pill bad';
+        pill.className = 'badge badge-bad';
         pill.innerText = 'Error';
-        output.innerHTML = `<pre class="code" style="color: var(--bad);">${err.message}</pre>`;
+        output.innerHTML = `<pre class="code" style="color: #F87171;">${err.message}</pre>`;
         showToast(err.message, 'error');
       }
     }
@@ -158,10 +169,7 @@
       }
       showToast('Menguji koneksi...', 'info');
       try {
-        const res = await apiFetch('/api/admin/roblox/test-connection', {
-          method: 'POST',
-          body: JSON.stringify({ universeId, robloxApiKey })
-        });
+        const res = await API.post('/api/admin/roblox/test-connection', { universeId, robloxApiKey });
         if (res.success) {
           showToast('✅ ' + res.message, 'success');
         } else {
@@ -185,10 +193,7 @@
       }
 
       try {
-        const res = await apiFetch('/api/admin/roblox/clear-datastore', {
-          method: 'POST',
-          body: JSON.stringify({ universeId, robloxApiKey })
-        });
+        const res = await API.post('/api/admin/roblox/clear-datastore', { universeId, robloxApiKey });
         if (res.success) {
           showToast('DataStore berhasil dikosongkan!', 'success');
           inspectDatastore();
@@ -202,4 +207,3 @@
   </script>
 </body>
 </html>
-

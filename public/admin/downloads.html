@@ -1,26 +1,29 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Download Script & Model — KIDZY Admin</title>
+  <title>Download Asset & Model — KIDZY Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="/admin/index.html">
+      <a class="brand" href="/admin">
         <span class="brand-mark">KZ</span>
         <span>KIDZY Admin</span>
       </a>
       <nav class="nav">
-        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko ↗</a>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko &rarr;</a>
         <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Keluar</button>
       </nav>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
+        ☰
+      </button>
     </div>
   </header>
 
@@ -30,87 +33,101 @@
         <aside class="side">
           <div class="side-title">Menu Utama</div>
           <nav class="side-nav">
-            <a class="side-link" href="/admin/index.html">📊 Overview</a>
+            <a class="side-link" href="/admin">📊 Dashboard</a>
             <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
-            <a class="side-link" href="/admin/services.html">🎮 Layanan & Game</a>
-            <a class="side-link" href="/admin/donations.html">📜 Riwayat Donasi</a>
-            <a class="side-link" href="/admin/simulator.html">🧪 Simulator Donasi</a>
+            <a class="side-link" href="/admin/send.html">⚡ Simulator Donasi</a>
+            <a class="side-link" href="/admin/logs.html">📜 Log Donasi</a>
+            <a class="side-link" href="/admin/services.html">🎮 Layanan Game</a>
             <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
-            <a class="side-link is-active" href="/admin/downloads.html">📥 Download Script</a>
-            <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan</a>
+            <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan Toko</a>
+            <a class="side-link is-active" href="/admin/downloads.html">⬇️ Download File</a>
           </nav>
         </aside>
 
         <div>
           <div class="page-head">
-            <h1 class="h1">📥 Download Script &amp; Model Roblox</h1>
+            <div class="row" style="margin-bottom: 6px;">
+              <span class="badge badge-accent">Resources &amp; Models</span>
+            </div>
+            <h1 class="h1">Download Asset Roblox Studio</h1>
             <p class="lead">Unduh paket Roblox Studio Model V2.0 dan script contoh integrasi DataStore.</p>
           </div>
 
           <div class="grid two" style="margin-bottom: 24px;">
             <!-- Roblox Model Card -->
-            <div class="card">
-              <span class="pill accent" style="margin-bottom: 10px; align-self: flex-start;">Model Roblox Studio (.rbxm)</span>
-              <h2 class="h2">Saweria V2.0 by @KIDZY</h2>
-              <p class="small" style="margin-bottom: 16px;">
-                Paket model lengkap siap import ke Roblox Studio. Sudah termasuk Leaderboard UI, Visual Effects, Sound Alert, dan sinkronisasi DataStore.
-              </p>
-              <div class="sep"></div>
+            <div class="card pricing-card featured">
+              <div>
+                <div class="card-head">
+                  <span class="badge badge-gold">Model Roblox (.rbxm)</span>
+                  <span class="badge badge-live">V2.0 Ready</span>
+                </div>
+                <h2 class="h2">Saweria V2.0 by @KIDZY</h2>
+                <p class="small faint" style="margin: 8px 0 20px 0;">
+                  Paket model lengkap siap import ke Roblox Studio. Sudah termasuk Leaderboard 3D UI, Orbit Visual Effects, Sound Alert, dan sinkronisasi DataStore.
+                </p>
+              </div>
               <a class="btn btn-primary btn-block" href="/api/download/model" download="Saweria_V2_Roblox_Model.rbxm">
                 ⬇️ Unduh Model (.rbxm)
               </a>
             </div>
 
             <!-- Test Datastore Lua Card -->
-            <div class="card">
-              <span class="pill" style="margin-bottom: 10px; align-self: flex-start;">Script &amp; Format (.lua)</span>
-              <h2 class="h2">Format DataStore JSON</h2>
-              <p class="small" style="margin-bottom: 16px;">
-                Contoh struktur data JSON donatur (Nama, Total Amount, Messages history, Timestamp) untuk custom script kamu.
-              </p>
-              <div class="sep"></div>
-              <a class="btn btn-block" href="/api/download/script" download="TestDatastore.lua">
-                ⬇️ Unduh Contoh JSON (.lua)
+            <div class="card pricing-card">
+              <div>
+                <div class="card-head">
+                  <span class="badge">Script &amp; Example (.lua)</span>
+                </div>
+                <h2 class="h2">Contoh Skrip DataStore</h2>
+                <p class="small faint" style="margin: 8px 0 20px 0;">
+                  Contoh struktur data JSON donatur (Nama, Nominal, Pesan, Timestamp) untuk integrasi kustom script Luau kamu.
+                </p>
+              </div>
+              <a class="btn btn-cyan btn-block" href="/api/download/script" download="TestDatastore.lua">
+                ⬇️ Unduh Skrip (.lua)
               </a>
             </div>
           </div>
 
           <!-- Installation Tutorial -->
-          <div class="card">
-            <h2 class="h2">📖 Panduan Pemasangan di Roblox Studio</h2>
-            <div class="sep"></div>
+          <div class="card soft" style="padding: 32px;">
+            <h2 class="h2" style="font-size: 20px; margin-bottom: 20px;">📖 Panduan Pemasangan di Roblox Studio</h2>
             
-            <ol class="steps">
-              <li>
-                <span>
-                  <b>Buka Roblox Studio &amp; Enable HTTP Requests</b><br>
-                  Buka game kamu &rarr; Klik <b>Game Settings</b> &rarr; Pilih tab <b>Security</b> &rarr; Aktifkan toggle <b>Allow HTTP Requests</b> dan <b>Enable Studio Access to API Services</b>.
-                </span>
-              </li>
-              <li>
-                <span>
-                  <b>Import Model .rbxm</b><br>
-                  Klik kanan pada <b>Workspace</b> atau <b>ServerScriptService</b> di Explorer &rarr; Pilih <b>Insert from File...</b> &rarr; Pilih file <code>Saweria_V2_Roblox_Model.rbxm</code> yang telah diunduh.
-                </span>
-              </li>
-              <li>
-                <span>
-                  <b>Atur Group &amp; Permissions</b><br>
-                  Pindahkan folder UI ke <code>StarterGui</code>, dan Script Server ke <code>ServerScriptService</code> sesuai instruksi di dalam model.
-                </span>
-              </li>
-              <li>
-                <span>
-                  <b>Uji Coba dengan Simulator</b><br>
-                  Jalankan game di Studio (Play Mode) lalu buka tab <a href="/admin/simulator.html"><b>Simulator Donasi</b></a> di dashboard admin ini untuk mengirim donasi uji coba secara live!
-                </span>
-              </li>
-            </ol>
+            <div class="stack" style="gap: 20px;">
+              <div class="row" style="align-items: flex-start; gap: 14px;">
+                <span class="brand-mark" style="width: 32px; height: 32px; font-size: 13px; flex-shrink: 0;">1</span>
+                <div>
+                  <h4 class="h3" style="font-size: 15px;">Enable HTTP Requests &amp; API Services</h4>
+                  <p class="small faint">Buka game kamu di Roblox Studio &rarr; Klik <b>Game Settings</b> &rarr; Tab <b>Security</b> &rarr; Aktifkan toggle <b>Allow HTTP Requests</b> dan <b>Enable Studio Access to API Services</b>.</p>
+                </div>
+              </div>
+
+              <div class="row" style="align-items: flex-start; gap: 14px;">
+                <span class="brand-mark" style="width: 32px; height: 32px; font-size: 13px; flex-shrink: 0;">2</span>
+                <div>
+                  <h4 class="h3" style="font-size: 15px;">Import Model .rbxm</h4>
+                  <p class="small faint">Klik kanan pada <b>ServerScriptService</b> di Explorer Roblox Studio &rarr; Pilih <b>Insert from File...</b> &rarr; Pilih file model <code>Saweria_V2_Roblox_Model.rbxm</code> yang telah diunduh.</p>
+                </div>
+              </div>
+
+              <div class="row" style="align-items: flex-start; gap: 14px;">
+                <span class="brand-mark" style="width: 32px; height: 32px; font-size: 13px; flex-shrink: 0;">3</span>
+                <div>
+                  <h4 class="h3" style="font-size: 15px;">Uji Coba dengan Simulator</h4>
+                  <p class="small faint">Jalankan game di Studio (Play Mode), lalu buka tab <a href="/admin/send.html" style="color: #A5B4FC; text-decoration: underline;"><b>Simulator Donasi</b></a> di dashboard admin ini untuk mengirim donasi uji coba live!</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 <b>KIDZY Store</b></span>
+    </div>
+  </footer>
 
   <script src="/assets/app.js"></script>
   <script>
@@ -120,4 +137,3 @@
   </script>
 </body>
 </html>
-

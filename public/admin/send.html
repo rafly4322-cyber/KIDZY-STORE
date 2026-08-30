@@ -1,75 +1,75 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kirim Donasi — KIDZY Store</title>
+  <title>Simulator Donasi — KIDZY Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="/">
+      <a class="brand" href="/admin">
         <span class="brand-mark">KZ</span>
-        <span>KIDZY Store</span>
+        <span>KIDZY Admin</span>
       </a>
       <nav class="nav">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link is-active" href="/admin">Admin</a>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
-        <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Logout</button>
+        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko &rarr;</a>
+        <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Keluar</button>
       </nav>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
+        ☰
+      </button>
     </div>
   </header>
 
   <main class="page">
     <div class="container">
       <div class="shell">
-        <!-- Sidebar Menu -->
         <aside class="side">
-          <div class="side-title">Menu</div>
+          <div class="side-title">Menu Utama</div>
           <nav class="side-nav">
             <a class="side-link" href="/admin">📊 Dashboard</a>
-            <a class="side-link is-active" href="/admin/send">🧪 Kirim Donasi</a>
-            <a class="side-link" href="/admin/logs">📜 Log Donasi</a>
-            <a class="side-link" href="/admin/tokens">🔑 Kelola Token</a>
-            <a class="side-link" href="/admin/services">🎮 Kelola Layanan</a>
-            <a class="side-link" href="/admin/roblox">☁️ Roblox DataStore</a>
-            <a class="side-link" href="/admin/settings">⚙️ Pengaturan</a>
+            <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
+            <a class="side-link is-active" href="/admin/send.html">⚡ Simulator Donasi</a>
+            <a class="side-link" href="/admin/logs.html">📜 Log Donasi</a>
+            <a class="side-link" href="/admin/services.html">🎮 Layanan Game</a>
+            <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
+            <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan Toko</a>
+            <a class="side-link" href="/admin/downloads.html">⬇️ Download File</a>
           </nav>
-
-          <div class="side-foot small faint" style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
-            <p>Butuh bantuan? Hubungi owner lewat Discord.</p>
-            <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="btn btn-sm btn-block" style="margin-top: 8px;">
-              💬 Discord Owner
-            </a>
-          </div>
         </aside>
 
-        <!-- Main Content -->
         <div>
           <div class="page-head">
-            <h1 class="h1">Kirim Donasi Uji Coba</h1>
-            <p class="muted">Kirim donasi tiruan ke sistem webhook dan Roblox DataStore untuk menguji leaderboard & visual effects di game.</p>
+            <div class="row" style="margin-bottom: 6px;">
+              <span class="badge badge-cyan">Testing &amp; QA</span>
+            </div>
+            <h1 class="h1">Simulator Donasi Uji Coba</h1>
+            <p class="lead">Kirim donasi uji coba langsung ke server gateway dan DataStore Roblox untuk menguji visual effects dan leaderboard in-game.</p>
           </div>
 
           <div class="split">
+            <!-- Form Card -->
             <div class="card">
-              <h2 class="h2">Form Kirim Donasi</h2>
-              <p class="small" style="margin-bottom: 16px;">Donasi yang dikirim di sini akan langsung masuk ke log dan diteruskan ke DataStore Roblox.</p>
+              <div class="card-head">
+                <h2 class="h2">Form Kirim Donasi Tiruan</h2>
+                <button class="btn btn-sm btn-ghost" type="button" onclick="randomize()">🎲 Acak Data</button>
+              </div>
 
               <form id="sim-form" class="stack" onsubmit="handleSendDonation(event)">
-                <div class="form-row two">
+                <div class="grid two">
                   <div class="field">
                     <label for="sim-nama">Nama Donatur</label>
                     <input class="input" id="sim-nama" required value="Muhammad Rafly" />
                   </div>
                   <div class="field">
                     <label for="sim-amount">Nominal Donasi (IDR)</label>
-                    <input class="input" id="sim-amount" type="number" required value="100000" step="5000" />
+                    <input class="input mono" id="sim-amount" type="number" required value="100000" step="5000" />
                   </div>
                 </div>
 
@@ -78,7 +78,7 @@
                   <input class="input" id="sim-message" required value="Semangat kembangin gamenya! Server Roblox gacor 🚀" />
                 </div>
 
-                <div class="form-row two">
+                <div class="grid two">
                   <div class="field">
                     <label for="sim-platform">Platform</label>
                     <select class="input" id="sim-platform">
@@ -89,25 +89,25 @@
                   </div>
                   <div class="field">
                     <label for="sim-target-universe">Target Universe ID (Opsional)</label>
-                    <input class="input" id="sim-target-universe" placeholder="Kosongkan untuk semua layanan aktif" />
+                    <input class="input mono" id="sim-target-universe" placeholder="Kosongkan untuk semua game aktif" />
                   </div>
                 </div>
 
-                <div class="form-actions" style="margin-top: 10px;">
-                  <button class="btn btn-primary btn-lg" id="sim-btn" type="submit">⚡ Kirim Donasi Sekarang</button>
-                  <button class="btn btn-ghost" type="button" onclick="randomize()">🎲 Acak Data</button>
+                <div style="margin-top: 12px;">
+                  <button class="btn btn-primary btn-lg btn-block" id="sim-btn" type="submit">
+                    ⚡ Kirim Donasi Sekarang
+                  </button>
                 </div>
               </form>
             </div>
 
             <!-- Output Box -->
-            <aside class="aside">
+            <aside class="stack">
               <div class="card soft">
-                <h2 class="h2">Hasil Pengiriman</h2>
-                <p class="small">Status respons webhook server.</p>
-                <div class="sep"></div>
+                <h2 class="h2" style="font-size: 18px; margin-bottom: 8px;">Hasil Respons Gateway</h2>
+                <p class="small faint" style="margin-bottom: 16px;">Status eksekusi webhook dan update DataStore:</p>
                 <div id="result-box">
-                  <pre class="code" style="max-height: 380px;">Menunggu pengiriman...</pre>
+                  <pre class="code" style="max-height: 380px; overflow-y: auto;">Menunggu pengiriman...</pre>
                 </div>
               </div>
             </aside>
@@ -119,8 +119,7 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; 2026 KIDZY Store &middot; Admin: Muhammad Rafly</span>
-      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">Support via Discord</a>
+      <span>&copy; 2026 <b>KIDZY Store</b></span>
     </div>
   </footer>
 
@@ -131,11 +130,11 @@
     });
 
     const samples = [
-      { name: 'RaflyGamer', amount: 150000, msg: 'Semangat kembangin gamenya!' },
+      { name: 'RaflyGamer', amount: 150000, msg: 'Semangat kembangin gamenya bang!' },
       { name: 'Ahmad_Sultan', amount: 500000, msg: 'Top Up Leaderboard #1' },
       { name: 'Budi_Pro', amount: 50000, msg: 'Support developer Indonesia!' },
-      { name: 'Siti_Kusuma', amount: 200000, msg: 'Game paling seru abis' },
-      { name: 'Dewi_Cantik', amount: 75000, msg: 'Titip salam buat admin' }
+      { name: 'Siti_Kusuma', amount: 200000, msg: 'Game paling keren abis!' },
+      { name: 'Sultan_Roblox', amount: 1000000, msg: 'Titip salam buat seluruh player server' }
     ];
 
     function randomize() {
@@ -157,26 +156,24 @@
       const targetUniverseId = document.getElementById('sim-target-universe').value.trim();
 
       btn.disabled = true;
-      btn.innerText = 'Mengirim...';
+      btn.textContent = 'Memproses...';
       box.innerHTML = '<pre class="code">Memproses pengiriman donasi...</pre>';
 
       try {
-        const res = await apiFetch('/api/admin/simulate-donation', {
-          method: 'POST',
-          body: JSON.stringify({ nama, amount, message, platform, targetUniverseId })
+        const res = await API.post('/api/admin/simulate-donation', {
+          nama, amount, message, platform, targetUniverseId
         });
 
-        box.innerHTML = `<pre class="code" style="color: var(--ok);">${JSON.stringify(res, null, 2)}</pre>`;
-        showToast(`Donasi ${formatRupiah(amount)} berhasil terkirim!`, 'success');
+        box.innerHTML = `<pre class="code" style="color: #34D399;">${JSON.stringify(res, null, 2)}</pre>`;
+        showToast(`Donasi ${formatRupiah(amount)} berhasil disimulasikan!`, 'success');
       } catch (err) {
-        box.innerHTML = `<pre class="code" style="color: var(--bad);">${err.message}</pre>`;
+        box.innerHTML = `<pre class="code" style="color: #F87171;">${err.message}</pre>`;
         showToast(err.message, 'error');
       } finally {
         btn.disabled = false;
-        btn.innerText = '⚡ Kirim Donasi Sekarang';
+        btn.textContent = '⚡ Kirim Donasi Sekarang';
       }
     }
   </script>
 </body>
 </html>
-

@@ -1,12 +1,12 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login — KIDZY Store</title>
+  <title>Login Dashboard — KIDZY Store</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
@@ -19,21 +19,25 @@
       <nav class="nav">
         <a class="nav-link" href="/">Home</a>
         <a class="nav-link" href="/p/saweria.html">Saweria</a>
-        <a class="nav-link" href="/p/bagibagi.html">BagiBagi</a>
-        <a class="nav-link" href="/p/sociabuzz.html">SociaBuzz</a>
+        <a class="nav-link" href="/activation.html">Aktivasi Token</a>
         <a class="nav-link is-active" href="/login.html">Login</a>
-        <a class="btn btn-sm btn-primary" href="/register.html">Register</a>
         <span class="nav-sep"></span>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <a class="btn btn-sm btn-primary" href="/register.html">Register Akun</a>
       </nav>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
+        ☰
+      </button>
     </div>
   </header>
 
   <main>
     <div class="container page">
       <div class="page-head">
-        <h1 class="h1">Masuk Dashboard</h1>
-        <p class="lead">Gunakan akun admin atau member kamu untuk membuka dashboard pengelolaan donasi Roblox.</p>
+        <div class="row" style="margin-bottom: 8px;">
+          <span class="badge badge-accent">Admin &amp; Member Portal</span>
+        </div>
+        <h1 class="h1">Masuk ke Dashboard</h1>
+        <p class="lead">Gunakan akun admin atau member untuk mengelola token, universe game, dan log donasi.</p>
       </div>
 
       <div class="split">
@@ -42,35 +46,55 @@
 
           <form id="login-form" class="stack" onsubmit="handleLogin(event)">
             <div class="field">
-              <label for="login-email">Email</label>
+              <label for="login-email">Alamat Email</label>
               <input class="input" id="login-email" name="email" type="email" required placeholder="rafly4322@gmail.com" autocomplete="email" />
             </div>
 
             <div class="field">
               <label for="login-password">Password</label>
-              <input class="input" id="login-password" name="password" type="password" required placeholder="Masukkan password kamu" autocomplete="current-password" />
+              <div style="position: relative;">
+                <input class="input" id="login-password" name="password" type="password" required placeholder="Masukkan password kamu" autocomplete="current-password" />
+                <button type="button" onclick="togglePasswordVisibility('login-password', this)" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 14px;">👁️</button>
+              </div>
             </div>
 
-            <div class="form-actions" style="margin-top: 10px;">
-              <button class="btn btn-primary btn-lg" id="login-btn" type="submit">Masuk ke Dashboard</button>
-              <a class="btn btn-ghost" href="/register.html">Belum punya akun? Buat akun</a>
+            <div style="margin-top: 12px;">
+              <button class="btn btn-primary btn-lg btn-block" id="login-btn" type="submit">
+                🔐 Masuk ke Dashboard
+              </button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 8px;">
+              <a class="small faint" href="/register.html" style="color: #A5B4FC; text-decoration: underline;">Belum punya akun? Buat akun baru &rarr;</a>
             </div>
           </form>
         </div>
 
-        <aside class="aside">
+        <aside class="stack">
           <div class="card soft">
-            <h2 class="h2">Fitur Dashboard Admin</h2>
-            <p class="small">Semua kebutuhan subscription & kontrol ada di satu dashboard terintegrasi.</p>
-            <div class="sep"></div>
-            <ul class="features">
-              <li class="on">Generator Token (30 Hari & Lifetime)</li>
-              <li class="on">Kelola Universe ID & Roblox API Key</li>
-              <li class="on">Live log riwayat donasi masuk</li>
-              <li class="on">Simulator kirim donasi uji coba</li>
-              <li class="on">Roblox DataStore Inspector & Reset</li>
-              <li class="on">Download file model Roblox (.rbxm)</li>
-              <li class="on">Atur rekening BNI, QRIS, & Discord</li>
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 12px;">Fitur Dashboard Admin</h2>
+            <p class="small faint" style="margin-bottom: 18px;">Semua manajemen gateway donasi dalam satu kontrol panel:</p>
+            <ul class="feature-list">
+              <li class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Instant Token Generator (Lifetime)
+              </li>
+              <li class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Kelola Universe ID &amp; API Key Roblox
+              </li>
+              <li class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Live Log Riwayat Donasi &amp; Nilai Rupiah
+              </li>
+              <li class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Simulator Kirim Donasi Uji Coba
+              </li>
+              <li class="feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Roblox Open Cloud DataStore Inspector
+              </li>
             </ul>
           </div>
         </aside>
@@ -80,19 +104,31 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; 2026 KIDZY Store</span>
-      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small">Support via Discord</a>
+      <span>&copy; 2026 <b>KIDZY Store</b></span>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small faint">Support via Discord</a>
     </div>
   </footer>
 
   <script src="/assets/app.js"></script>
   <script>
-    // If already logged in as admin, redirect to admin index
     document.addEventListener('DOMContentLoaded', () => {
       if (Auth.isAdmin()) {
         window.location.href = '/admin/index.html';
       }
     });
+
+    function togglePasswordVisibility(id, btn) {
+      const input = document.getElementById(id);
+      if (input) {
+        if (input.type === 'password') {
+          input.type = 'text';
+          btn.textContent = '🔒';
+        } else {
+          input.type = 'password';
+          btn.textContent = '👁️';
+        }
+      }
+    }
 
     async function handleLogin(e) {
       e.preventDefault();
@@ -102,13 +138,10 @@
       const alertBox = document.getElementById('login-alert');
 
       btn.disabled = true;
-      btn.innerText = 'Memverifikasi...';
+      btn.textContent = 'Memverifikasi...';
 
       try {
-        const res = await apiFetch('/api/auth/login', {
-          method: 'POST',
-          body: JSON.stringify({ email, password })
-        });
+        const res = await API.post('/api/auth/login', { email, password });
 
         Auth.setAuth(res.token, res.user);
         showToast('Login berhasil! Mengalihkan...', 'success');
@@ -117,21 +150,16 @@
           if (res.user.role === 'admin') {
             window.location.href = '/admin/index.html';
           } else {
-            window.location.href = '/register-service.html';
+            window.location.href = '/activation.html';
           }
         }, 600);
       } catch (err) {
-        alertBox.innerHTML = `
-          <div class="alert bad">
-            <div>${err.message}</div>
-          </div>
-        `;
-        showToast(err.message, 'error');
+        alertBox.innerHTML = `<div class="alert alert-error">${err.message || 'Email atau password salah.'}</div>`;
+        showToast(err.message || 'Login gagal', 'error');
         btn.disabled = false;
-        btn.innerText = 'Masuk ke Dashboard';
+        btn.textContent = '🔐 Masuk ke Dashboard';
       }
     }
   </script>
 </body>
 </html>
-

@@ -1,26 +1,29 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Game & Layanan Aktif — KIDZY Admin</title>
+  <title>Layanan Game — KIDZY Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="/admin/index.html">
+      <a class="brand" href="/admin">
         <span class="brand-mark">KZ</span>
         <span>KIDZY Admin</span>
       </a>
       <nav class="nav">
-        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko ↗</a>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko &rarr;</a>
         <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Keluar</button>
       </nav>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
+        ☰
+      </button>
     </div>
   </header>
 
@@ -30,36 +33,38 @@
         <aside class="side">
           <div class="side-title">Menu Utama</div>
           <nav class="side-nav">
-            <a class="side-link" href="/admin/index.html">📊 Overview</a>
+            <a class="side-link" href="/admin">📊 Dashboard</a>
             <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
-            <a class="side-link is-active" href="/admin/services.html">🎮 Layanan & Game</a>
-            <a class="side-link" href="/admin/donations.html">📜 Riwayat Donasi</a>
-            <a class="side-link" href="/admin/simulator.html">🧪 Simulator Donasi</a>
+            <a class="side-link" href="/admin/send.html">⚡ Simulator Donasi</a>
+            <a class="side-link" href="/admin/logs.html">📜 Log Donasi</a>
+            <a class="side-link is-active" href="/admin/services.html">🎮 Layanan Game</a>
             <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
-            <a class="side-link" href="/admin/downloads.html">📥 Download Script</a>
-            <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan</a>
+            <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan Toko</a>
+            <a class="side-link" href="/admin/downloads.html">⬇️ Download File</a>
           </nav>
         </aside>
 
         <div>
           <div class="page-head">
-            <h1 class="h1">Game &amp; Layanan Webhook Terdaftar</h1>
-            <p class="small">Pantau semua Universe ID Roblox yang terhubung dengan gateway donasi.</p>
+            <div class="row" style="margin-bottom: 6px;">
+              <span class="badge badge-accent">Connected Experiences</span>
+            </div>
+            <h1 class="h1">Game &amp; Layanan Terdaftar</h1>
+            <p class="lead">Kelola semua Universe ID game Roblox yang aktif menerima webhook donasi.</p>
           </div>
 
           <!-- Add Manual Service Card -->
           <div class="card" style="margin-bottom: 24px;">
-            <h2 class="h2">➕ Tambah Layanan Manual</h2>
-            <p class="small" style="margin-bottom: 16px;">Tambahkan Universe ID dan API Key game secara langsung tanpa token.</p>
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">➕ Tambah Layanan Manual</h2>
             <form id="create-service-form" onsubmit="handleCreateService(event)">
-              <div class="form-row three">
+              <div class="grid three" style="margin-bottom: 14px;">
                 <div class="field">
                   <label for="svc-client">Nama Client / Game</label>
                   <input class="input" id="svc-client" required placeholder="Contoh: Game Club KZR" />
                 </div>
                 <div class="field">
                   <label for="svc-universe">Roblox Universe ID</label>
-                  <input class="input" id="svc-universe" required placeholder="1234567890" />
+                  <input class="input mono" id="svc-universe" required placeholder="10764300084" />
                 </div>
                 <div class="field">
                   <label for="svc-platform">Platform</label>
@@ -71,35 +76,32 @@
                 </div>
               </div>
 
-              <div class="form-row two" style="margin-top: 12px;">
+              <div class="grid two" style="margin-bottom: 16px;">
                 <div class="field">
                   <label for="svc-apikey">Roblox API Key (Open Cloud)</label>
-                  <input class="input" id="svc-apikey" type="password" required placeholder="ApiKey..." />
+                  <input class="input mono" id="svc-apikey" type="password" required placeholder="ApiKey..." />
                 </div>
                 <div class="field">
                   <label for="svc-plan">Paket</label>
                   <select class="input" id="svc-plan">
-                    <option value="lifetime">Lifetime</option>
-                    <option value="30d">30 Hari</option>
+                    <option value="lifetime">Lifetime (Permanen)</option>
                   </select>
                 </div>
               </div>
 
-              <div class="form-actions" style="margin-top: 14px;">
-                <button class="btn btn-primary" type="submit">➕ Tambahkan Layanan</button>
-              </div>
+              <button class="btn btn-primary" type="submit">✨ Tambahkan Layanan</button>
             </form>
           </div>
 
           <!-- Services List -->
           <div class="card">
-            <div class="row between" style="margin-bottom: 14px;">
+            <div class="card-head">
               <h2 class="h2">Daftar Game Terhubung</h2>
               <button class="btn btn-sm btn-ghost" onclick="loadServices()">🔄 Refresh</button>
             </div>
 
-            <div class="table-container">
-              <table class="data-table">
+            <div class="table-responsive">
+              <table class="table">
                 <thead>
                   <tr>
                     <th>Nama Client</th>
@@ -107,13 +109,12 @@
                     <th>Platform</th>
                     <th>Paket</th>
                     <th>Status</th>
-                    <th>Donasi Masuk</th>
-                    <th>Kedaluwarsa</th>
+                    <th>Total Donasi</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody id="services-tbody">
-                  <tr><td colspan="8" style="text-align: center; padding: 24px;">Memuat layanan...</td></tr>
+                  <tr><td colspan="7" style="text-align: center; padding: 32px; color: var(--muted);">Memuat layanan...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -122,6 +123,12 @@
       </div>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 <b>KIDZY Store</b></span>
+    </div>
+  </footer>
 
   <script src="/assets/app.js"></script>
   <script>
@@ -133,30 +140,28 @@
     async function loadServices() {
       const tbody = document.getElementById('services-tbody');
       try {
-        const res = await apiFetch('/api/admin/services');
+        const res = await API.get('/api/admin/services');
         if (res.success && res.services.length > 0) {
           tbody.innerHTML = res.services.map(s => {
-            const isLifetime = s.plan === 'lifetime';
             return `
               <tr>
-                <td><b>${s.clientName || 'Anonymous'}</b></td>
-                <td><code>${s.universeId}</code></td>
-                <td><span class="pill">${s.platform}</span></td>
-                <td><span class="pill ${isLifetime ? 'accent' : ''}">${s.plan}</span></td>
-                <td><span class="pill ok">${s.status}</span></td>
-                <td><b>${s.donationCount || 0}</b> (${formatRupiah(s.totalDonationsAmount || 0)})</td>
-                <td class="small faint">${isLifetime ? 'Permanen' : formatDate(s.expiresAt)}</td>
+                <td><b style="color: var(--ink);">${s.clientName || 'Anonymous'}</b></td>
+                <td><span class="code" style="font-size: 13px;">${s.universeId}</span></td>
+                <td><span class="badge badge-accent">${s.platform.toUpperCase()}</span></td>
+                <td><span class="badge badge-gold">${s.plan.toUpperCase()}</span></td>
+                <td><span class="badge badge-live">${s.status}</span></td>
+                <td><b style="color: #34D399;">${s.donationCount || 0}</b> <span class="small faint">(${formatRupiah(s.totalDonationsAmount || 0)})</span></td>
                 <td>
                   <div class="row" style="gap: 6px;">
-                    <button class="btn btn-sm" onclick="testServiceRoblox('${s.universeId}', '${s.robloxApiKey}')" title="Test Roblox Connection">⚡ Test</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteService('${s.id}')" title="Hapus Layanan">🗑️</button>
+                    <button class="btn btn-sm btn-cyan" onclick="testServiceRoblox('${s.universeId}', '${s.robloxApiKey}')">⚡ Test</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteService('${s.id}')">Hapus</button>
                   </div>
                 </td>
               </tr>
             `;
           }).join('');
         } else {
-          tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 24px;" class="faint">Belum ada layanan terdaftar.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 32px; color: var(--muted);">Belum ada layanan terdaftar.</td></tr>';
         }
       } catch (err) {
         showToast('Gagal memuat layanan: ' + err.message, 'error');
@@ -172,10 +177,7 @@
       const plan = document.getElementById('svc-plan').value;
 
       try {
-        await apiFetch('/api/admin/services', {
-          method: 'POST',
-          body: JSON.stringify({ clientName, universeId, robloxApiKey, platform, plan })
-        });
+        await API.post('/api/admin/services', { clientName, universeId, robloxApiKey, platform, plan });
         showToast('Layanan berhasil ditambahkan!', 'success');
         document.getElementById('create-service-form').reset();
         loadServices();
@@ -185,16 +187,13 @@
     }
 
     async function testServiceRoblox(universeId, apiKey) {
-      showToast('Memeriksa koneksi ke Roblox...', 'info');
+      showToast('Memeriksa koneksi ke Roblox Open Cloud...', 'info');
       try {
-        const res = await apiFetch('/api/admin/roblox/test-connection', {
-          method: 'POST',
-          body: JSON.stringify({ universeId, robloxApiKey: apiKey })
-        });
+        const res = await API.post('/api/admin/roblox/test-connection', { universeId, robloxApiKey: apiKey });
         if (res.success) {
-          showToast(`✅ Berhasil! DataStore memuat ${res.entryCount} donatur.`, 'success');
+          showToast(`✅ Berhasil terhubung! DataStore memuat ${res.entryCount || 0} donatur.`, 'success');
         } else {
-          showToast('❌ ' + res.message, 'error');
+          showToast('❌ ' + (res.message || res.error), 'error');
         }
       } catch (err) {
         showToast(err.message, 'error');
@@ -204,8 +203,8 @@
     async function deleteService(id) {
       if (!confirm('Yakin ingin menghapus layanan ini?')) return;
       try {
-        await apiFetch(`/api/admin/services/${id}`, { method: 'DELETE' });
-        showToast('Layanan berhasil dihapus.', 'success');
+        await API.delete(`/api/admin/services/${id}`);
+        showToast('Layanan berhasil dihapus.', 'info');
         loadServices();
       } catch (err) {
         showToast(err.message, 'error');
@@ -214,4 +213,3 @@
   </script>
 </body>
 </html>
-
