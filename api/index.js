@@ -183,30 +183,35 @@ const handleServiceRegistration = (req, res) => {
         });
     }
 
-    if (tokenObj.status === 'active' || tokenObj.status === 'expired') {
-        return res.status(400).json({
-            success: false,
-            message: `Token ini sudah pernah digunakan pada ${tokenObj.usedAt || 'waktu sebelumnya'}.`
+    // Find or create service for this token
+    let existingService = db.getServices().find(s => s.tokenCode === tokenObj.code || s.slug === tokenObj.slug);
+    
+    let service;
+    if (existingService) {
+        service = db.updateService(existingService.id, {
+            universeId: String(universe_id).trim(),
+            clientName: client_name || existingService.clientName,
+            robloxApiKey: roblox_api_key || existingService.robloxApiKey
+        });
+    } else {
+        service = db.createService({
+            tokenCode: tokenObj.code,
+            universeId: universe_id,
+            robloxApiKey: roblox_api_key,
+            clientName: client_name,
+            platform: tokenObj.platform || platform || 'saweria',
+            plan: tokenObj.plan || 'lifetime'
         });
     }
 
-    const service = db.createService({
-        tokenCode: tokenObj.code,
-        universeId: universe_id,
-        robloxApiKey: roblox_api_key,
-        clientName: client_name,
-        platform: tokenObj.platform || platform || 'saweria',
-        plan: tokenObj.plan || 'lifetime'
-    });
-
     const proto = req.headers['x-forwarded-proto'] || (req.headers.host && req.headers.host.includes('localhost') ? 'http' : 'https');
     const origin = req.headers.host ? `${proto}://${req.headers.host}` : 'https://kidzy-store.vercel.app';
-    service.webhookUrl = `${origin}/api/webhook/${service.webhookSlug || service.tokenCode}`;
-    service.pollUrl = `${origin}/api/poll/${service.webhookSlug || service.tokenCode}`;
+    service.webhookUrl = `${origin}/api/webhook/${service.webhookSlug || service.slug || service.tokenCode}`;
+    service.pollUrl = `${origin}/api/poll/${service.webhookSlug || service.slug || service.tokenCode}`;
 
     res.json({
         success: true,
-        message: 'Layanan berhasil diaktifkan!',
+        message: existingService ? 'Layanan berhasil dihubungkan ke Universe ID game kamu!' : 'Layanan berhasil diaktifkan!',
         service: service
     });
 };
