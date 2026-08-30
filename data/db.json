@@ -74,12 +74,12 @@
       "slug": "VJON7CCA9soIpdNA5jZgtU8SeJNwsmlF",
       "platform": "saweria",
       "plan": "lifetime",
-      "status": "unused",
+      "status": "active",
       "note": "Token Aktivasi Lifetime Resmi untuk Muhammad Rafly Firdaus",
       "createdAt": "2026-08-29T15:19:47.960Z",
-      "usedAt": null,
-      "usedBy": null,
-      "serviceId": null
+      "usedAt": "2026-08-30T19:36:29.010Z",
+      "usedBy": "Muhammad Rafly (Owner Main Game)",
+      "serviceId": "svc_1788118589010_927"
     },
     {
       "id": "tok_1788015463746_445",
@@ -135,6 +135,23 @@
     }
   ],
   "services": [
+    {
+      "id": "svc_1788118589010_927",
+      "tokenCode": "KIDZY-SAWERIA-LIFETIME-VIP",
+      "slug": "VJON7CCA9soIpdNA5jZgtU8SeJNwsmlF",
+      "webhookSlug": "VJON7CCA9soIpdNA5jZgtU8SeJNwsmlF",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "10742273346",
+      "robloxApiKey": "dF31hM0QVUKE9Dwaco1yYQVZByI5N1OKh2CZ0qKlGeanKnAAZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SW1SR016Rm9UVEJSVmxWTFJUbEVkMkZqYnpGNVdWRldXa0o1U1RWT01VOUxhREpEV2pCeFMyeEhaV0Z1UzI1QlFTSXNJbTkzYm1WeVNXUWlPaUk0T0RBNU16VTRNRGc1SWl3aVpYaHdJam94TnpnNE1USXlNVGMxTENKcFlYUWlPakUzT0RneE1UZzFOelVzSW01aVppSTZNVGM0T0RFeE9EVTNOWDAuaHVxSnE1N054TkZQWktjaG5KNGtpSjBIUmY3N1BsSnM2LVdScUV4ZTAwdFBQSmt4YWVkUDVaOGRlNGNza1RrTlVqTi16eVdlY0R4M2loSjZSSzU2ejRCYzhCVERsQzYydWFMTnE4YnpOb0dORzlzVWJYbDAzMGp0cEtOalZEa0VZaTZqaVVmSlZjSDQ2WTFySHlwdzBmVFNFR2xwZVhPY0VIbGZ3cmg1TkZ0NTZQQ3JpbElHTHdob2ppcEJMWjlQRGpuMFYzWXhtNDVFZENyZGE1VEpvcmFhWHloV0pVRTV6Nm9xUjRuXzY3X0p3amhWcTFrQmI2TlpmLTlmNkJ1QVQ2bDBycm1ZdzB4blc0VWxDeWhrNWFSY3p3NXVHV3Z6bWprVi15bDFFYWZzaHBGVVgxcWhaQzNoT0xUQTNMdjhwaVNQd3dveDNIOGVHbERBMHFVeExn",
+      "clientName": "Muhammad Rafly (Owner Main Game)",
+      "status": "active",
+      "activatedAt": "2026-08-30T19:36:29.010Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0
+    },
     {
       "id": "svc_1788118012706_170",
       "tokenCode": "KZ-SAW-TEST-9999-FREE",
@@ -255,8 +272,10 @@
         "lifetime": 450000
       }
     },
-    "robloxApiKey": "",
-    "universeIds": [],
+    "robloxApiKey": "dF31hM0QVUKE9Dwaco1yYQVZByI5N1OKh2CZ0qKlGeanKnAAZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SW1SR016Rm9UVEJSVmxWTFJUbEVkMkZqYnpGNVdWRldXa0o1U1RWT01VOUxhREpEV2pCeFMyeEhaV0Z1UzI1QlFTSXNJbTkzYm1WeVNXUWlPaUk0T0RBNU16VTRNRGc1SWl3aVpYaHdJam94TnpnNE1USXlNVGMxTENKcFlYUWlPakUzT0RneE1UZzFOelVzSW01aVppSTZNVGM0T0RFeE9EVTNOWDAuaHVxSnE1N054TkZQWktjaG5KNGtpSjBIUmY3N1BsSnM2LVdScUV4ZTAwdFBQSmt4YWVkUDVaOGRlNGNza1RrTlVqTi16eVdlY0R4M2loSjZSSzU2ejRCYzhCVERsQzYydWFMTnE4YnpOb0dORzlzVWJYbDAzMGp0cEtOalZEa0VZaTZqaVVmSlZjSDQ2WTFySHlwdzBmVFNFR2xwZVhPY0VIbGZ3cmg1TkZ0NTZQQ3JpbElHTHdob2ppcEJMWjlQRGpuMFYzWXhtNDVFZENyZGE1VEpvcmFhWHloV0pVRTV6Nm9xUjRuXzY3X0p3amhWcTFrQmI2TlpmLTlmNkJ1QVQ2bDBycm1ZdzB4blc0VWxDeWhrNWFSY3p3NXVHV3Z6bWprVi15bDFFYWZzaHBGVVgxcWhaQzNoT0xUQTNMdjhwaVNQd3dveDNIOGVHbERBMHFVeExn",
+    "universeIds": [
+      "10742273346"
+    ],
     "discordUsername": "kidddzyyaj"
   }
 }
