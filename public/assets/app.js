@@ -277,5 +277,15 @@ const API = {
     }
 };
 
-// Global alias for compatibility
+// Global alias for compatibility & window exports
 const apiFetch = (url, options) => API.request(url, options);
+
+if (typeof window !== 'undefined') {
+    window.API = API;
+    window.Auth = Auth;
+    window.apiFetch = apiFetch;
+    window.showToast = showToast;
+    window.copyText = copyText;
+    window.formatRupiah = formatRupiah;
+    window.formatDate = formatDate;
+}

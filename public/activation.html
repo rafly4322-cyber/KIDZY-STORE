@@ -163,7 +163,17 @@
           name: clientName || `Game_${universeId}`
         };
 
-        const res = await API.post('/api/services/register', payload);
+        let res;
+        if (window.API && typeof window.API.post === 'function') {
+          res = await window.API.post('/api/services/register', payload);
+        } else {
+          const fetchRes = await fetch('/api/services/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          res = await fetchRes.json();
+        }
 
         if (res.success && res.service) {
           const svc = res.service;

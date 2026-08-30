@@ -559,24 +559,39 @@ label {
 
 .input {
   width: 100%;
-  padding: 13px 16px;
-  background: rgba(11, 14, 23, 0.85);
-  border: 1px solid var(--border);
+  padding: 14px 18px;
+  background: #0E121E !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
   border-radius: var(--r-sm);
-  color: var(--text);
-  font-size: 14.5px;
+  color: #FFFFFF !important;
+  font-size: 15px;
+  font-weight: 500;
   outline: none;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .input:focus {
-  border-color: var(--accent);
-  background: rgba(14, 18, 30, 0.95);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  border-color: #6366F1 !important;
+  background: #121829 !important;
+  box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.25), 0 0 20px rgba(99, 102, 241, 0.15);
+  color: #FFFFFF !important;
 }
 
 .input::placeholder {
-  color: var(--muted);
+  color: #64748B !important;
+  opacity: 0.8;
+}
+
+[data-theme="light"] .input {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+[data-theme="light"] .input:focus {
+  border-color: #6366F1 !important;
+  background: #FFFFFF !important;
+  color: #0F172A !important;
 }
 
 select.input {
