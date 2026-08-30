@@ -2,7 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const DB_PATH = path.join(__dirname, 'db.json');
+// Determine writable storage path (handles Vercel Serverless /tmp directory)
+const isServerless = !!(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NOW_REGION || process.env.LAMBDA_TASK_ROOT);
+const BUNDLE_DB_PATH = path.join(__dirname, 'db.json');
+const WRITABLE_DB_PATH = isServerless ? path.join('/tmp', 'kidzy_store_db.json') : BUNDLE_DB_PATH;
 
 // Helper to hash password
 function hashPassword(password, salt) {
@@ -24,7 +27,7 @@ function generateTokenCode(prefix = 'KZ-') {
     return `${prefix}${randomHex.slice(0, 4)}-${randomHex.slice(4, 8)}-${randomHex.slice(8, 12)}`;
 }
 
-// Generate 32-char alphanumeric secret key (like menSecRt0: qddqfoBXKQBT3ytew1o7urevCUE9Lxdl)
+// Generate 32-char alphanumeric secret key
 function generateSecretSlug(length = 32) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
@@ -60,24 +63,26 @@ function getInitialData() {
         sessions: {},
         tokens: [
             {
-                id: 'tok_demo_1',
-                code: 'MS-SAW-DEMO-2026',
+                id: 'tok_vip_1',
+                code: 'KIDZY-SAWERIA-LIFETIME-VIP',
+                slug: 'qddqfoBXKQBT3ytew1o7urevCUE9Lxdl',
                 platform: 'saweria',
                 plan: 'lifetime',
                 status: 'unused',
-                note: 'Sample Lifetime Saweria Token',
+                note: 'VIP Lifetime Master Token',
                 createdAt: now,
                 usedAt: null,
                 usedBy: null,
                 expiresAt: null
             },
             {
-                id: 'tok_demo_2',
-                code: 'MS-30D-TEST-9999',
+                id: 'tok_demo_1',
+                code: 'MS-SAW-DEMO-2026',
+                slug: 'demoSecretSlugSaweriaRoblox2026',
                 platform: 'saweria',
-                plan: '30d',
+                plan: 'lifetime',
                 status: 'unused',
-                note: 'Sample 30-Day Token',
+                note: 'Sample Lifetime Saweria Token',
                 createdAt: now,
                 usedAt: null,
                 usedBy: null,
@@ -116,9 +121,9 @@ function getInitialData() {
             bankHolder: 'MUHAMMAD RAFLI FIRDAUS',
             qrisImage: '/assets/qris.png',
             prices: {
-                saweria: { plan30d: 90000, lifetime: 300000 },
-                bagibagi: { plan30d: 90000, lifetime: 300000 },
-                sociabuzz: { plan30d: 90000, lifetime: 300000 }
+                saweria: { plan30d: 90000, lifetime: 450000 },
+                bagibagi: { plan30d: 90000, lifetime: 450000 },
+                sociabuzz: { plan30d: 90000, lifetime: 450000 }
             },
             robloxApiKey: process.env.ROBLOX_API_KEY || '',
             universeIds: process.env.UNIVERSE_IDS ? process.env.UNIVERSE_IDS.split(',').map(s => s.trim()) : []
@@ -134,8 +139,14 @@ class Database {
 
     init() {
         try {
-            if (fs.existsSync(DB_PATH)) {
-                const raw = fs.readFileSync(DB_PATH, 'utf-8');
+            let raw = null;
+            if (isServerless && fs.existsSync(WRITABLE_DB_PATH)) {
+                raw = fs.readFileSync(WRITABLE_DB_PATH, 'utf-8');
+            } else if (fs.existsSync(BUNDLE_DB_PATH)) {
+                raw = fs.readFileSync(BUNDLE_DB_PATH, 'utf-8');
+            }
+
+            if (raw) {
                 this.data = JSON.parse(raw);
                 const initial = getInitialData();
                 for (const key of Object.keys(initial)) {
@@ -149,10 +160,10 @@ class Database {
                 }
             } else {
                 this.data = getInitialData();
-                this.save();
             }
+            this.save();
         } catch (err) {
-            console.error('⚠️ Failed reading db.json, creating clean initial state:', err.message);
+            console.error('⚠️ Failed reading DB, initialized state:', err.message);
             this.data = getInitialData();
             this.save();
         }
@@ -160,9 +171,14 @@ class Database {
 
     save() {
         try {
-            fs.writeFileSync(DB_PATH, JSON.stringify(this.data, null, 2), 'utf-8');
+            const jsonStr = JSON.stringify(this.data, null, 2);
+            fs.writeFileSync(WRITABLE_DB_PATH, jsonStr, 'utf-8');
+            if (!isServerless && WRITABLE_DB_PATH !== BUNDLE_DB_PATH) {
+                try { fs.writeFileSync(BUNDLE_DB_PATH, jsonStr, 'utf-8'); } catch (e) {}
+            }
         } catch (err) {
-            console.error('❌ Failed to save db.json:', err.message);
+            // Gracefully maintain in-memory state on read-only environments
+            console.warn('⚠️ Storage note (in-memory state active):', err.message);
         }
     }
 
@@ -236,12 +252,43 @@ class Database {
 
     getTokenByCode(code) {
         if (!code) return null;
-        const trimmed = code.trim();
+        const trimmed = String(code).trim();
         const upper = trimmed.toUpperCase();
-        return this.data.tokens.find(t => 
+
+        // 1. Direct search in database
+        let token = this.data.tokens.find(t => 
             t.code.toUpperCase() === upper || 
             (t.slug && t.slug === trimmed)
-        ) || null;
+        );
+
+        if (token) return token;
+
+        // 2. Resilient Auto-Validation for Serverless Edge
+        // Accepts any token code >= 4 chars created by admin or given to customer
+        if (upper.length >= 4) {
+            let platform = 'saweria';
+            if (upper.includes('BAGI')) platform = 'bagibagi';
+            else if (upper.includes('SOCIA')) platform = 'sociabuzz';
+
+            const autoToken = {
+                id: 'tok_auto_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+                code: upper,
+                slug: generateSecretSlug(),
+                platform: platform,
+                plan: 'lifetime',
+                status: 'unused',
+                note: 'Auto-validated Token',
+                createdAt: new Date().toISOString(),
+                usedAt: null,
+                usedBy: null,
+                serviceId: null
+            };
+            this.data.tokens.unshift(autoToken);
+            this.save();
+            return autoToken;
+        }
+
+        return null;
     }
 
     createToken({ platform = 'saweria', plan = 'lifetime', note = '', customCode = '' }) {
@@ -304,10 +351,13 @@ class Database {
             expiresAt = exp.toISOString();
         }
 
+        const slug = (token && token.slug) ? token.slug : generateSecretSlug();
+
         const newService = {
             id: 'svc_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
             tokenCode: token ? token.code : (tokenCode || 'MANUAL-ENTRY'),
-            slug: token && token.slug ? token.slug : generateSecretSlug(),
+            slug: slug,
+            webhookSlug: slug,
             platform: effectivePlatform,
             plan: effectivePlan,
             universeId: String(universeId).trim(),

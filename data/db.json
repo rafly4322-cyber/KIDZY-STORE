@@ -30,6 +30,32 @@
   },
   "tokens": [
     {
+      "id": "tok_auto_1788118012705_181",
+      "code": "KZ-SAW-TEST-9999-FREE",
+      "slug": "99OEJEAdTZdVUZNIcvC2oLIPTPHxtlCp",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "active",
+      "note": "Auto-validated Token",
+      "createdAt": "2026-08-30T19:26:52.705Z",
+      "usedAt": "2026-08-30T19:26:52.706Z",
+      "usedBy": "Blox Test",
+      "serviceId": "svc_1788118012706_170"
+    },
+    {
+      "id": "tok_1788118012697_387",
+      "code": "KZ-SAW-1F1F-4DE8-3C9C",
+      "slug": "MPTuWMZHKfxCrNacTHSHOLfKQzxYquZv",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "unused",
+      "note": "Test Serverless",
+      "createdAt": "2026-08-30T19:26:52.697Z",
+      "usedAt": null,
+      "usedBy": null,
+      "serviceId": null
+    },
+    {
       "id": "tok_1788021586546_228",
       "code": "KZ-SAW-8C39-C4C7-E611",
       "slug": "lXU2A19FHYHKxVu8MCm8OqkNpKKYNAWq",
@@ -109,6 +135,23 @@
     }
   ],
   "services": [
+    {
+      "id": "svc_1788118012706_170",
+      "tokenCode": "KZ-SAW-TEST-9999-FREE",
+      "slug": "99OEJEAdTZdVUZNIcvC2oLIPTPHxtlCp",
+      "webhookSlug": "99OEJEAdTZdVUZNIcvC2oLIPTPHxtlCp",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "10764300084",
+      "robloxApiKey": "test-key",
+      "clientName": "Blox Test",
+      "status": "active",
+      "activatedAt": "2026-08-30T19:26:52.706Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0
+    },
     {
       "id": "svc_rafly_main",
       "tokenCode": "KZ-SAW-453D-40AD-1D6D",
