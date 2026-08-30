@@ -459,6 +459,37 @@ app.post(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi
 app.get(['/api/poll', '/api/poll/:token', '/api/saweria/get-donations', '/api/webhook/get-donations'], (req, res) => {
     const donations = [...donationQueue];
     donationQueue = [];
+
+    // Also check DB for unpolled donations from last 60 seconds (resilient to serverless cold starts)
+    const recent = db.getDonations(20);
+    const now = Date.now();
+    let updatedDb = false;
+
+    for (const d of recent) {
+        const timeDiff = now - new Date(d.timestamp).getTime();
+        if (timeDiff >= 0 && timeDiff < 60000 && !d.polled && !donations.some(x => x.id === d.id || (x.nama === d.nama && x.amount === d.amount && Math.abs(new Date(x.timestamp).getTime() - new Date(d.timestamp).getTime()) < 2000))) {
+            d.polled = true;
+            updatedDb = true;
+            donations.push({
+                nama: d.nama,
+                donorName: d.nama,
+                name: d.nama,
+                amount: d.amount,
+                amountFormatted: 'Rp ' + Number(d.amount).toLocaleString('id-ID'),
+                formattedAmount: 'Rp ' + Number(d.amount).toLocaleString('id-ID'),
+                message: d.message,
+                pesan: d.message,
+                platform: d.platform,
+                timestamp: d.timestamp,
+                id: d.id
+            });
+        }
+    }
+
+    if (updatedDb) {
+        db.save();
+    }
+
     res.json({ success: true, count: donations.length, donations: donations });
 });
 
