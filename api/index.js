@@ -326,8 +326,8 @@ app.post('/api/auth/change-password', authenticate, (req, res) => {
 // ============================================
 
 async function handleIncomingDonation(donationData, platform = 'saweria') {
-    const settings = db.getSettings();
-    const activeServices = db.getServices().filter(s => s.status === 'active' && s.platform === platform);
+    // Include services configured for this platform, all platforms, or default saweria
+    const activeServices = db.getServices().filter(s => s.status === 'active' && (!s.platform || s.platform === platform || s.platform === 'saweria' || s.platform === 'all'));
     
     // Also include default global settings if configured
     const globalRobloxApiKey = settings.robloxApiKey || process.env.ROBLOX_API_KEY || '';
