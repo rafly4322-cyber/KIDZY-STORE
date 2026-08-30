@@ -199,7 +199,8 @@ const handleServiceRegistration = (req, res) => {
         plan: tokenObj.plan || 'lifetime'
     });
 
-    const origin = req.headers.host ? `${req.protocol || 'https'}://${req.headers.host}` : 'https://kidzy-store.vercel.app';
+    const proto = req.headers['x-forwarded-proto'] || (req.headers.host && req.headers.host.includes('localhost') ? 'http' : 'https');
+    const origin = req.headers.host ? `${proto}://${req.headers.host}` : 'https://kidzy-store.vercel.app';
     service.webhookUrl = `${origin}/api/webhook/${service.webhookSlug || service.tokenCode}`;
     service.pollUrl = `${origin}/api/poll/${service.webhookSlug || service.tokenCode}`;
 
