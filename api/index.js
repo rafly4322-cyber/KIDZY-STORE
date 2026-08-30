@@ -472,32 +472,39 @@ app.post(['/api/sociabuzz', '/api/webhook/sociabuzz'], async (req, res) => {
     }
 });
 
-// Token-specific webhook receiver
-app.post('/api/webhook/:token', async (req, res) => {
+// Token-specific webhook receiver (Universal Gateway for Saweria, BagiBagi, SociaBuzz, and Trakteer)
+app.post(['/api/webhook/:token', '/api/v1/webhook/:token'], async (req, res) => {
     try {
         const token = req.params.token;
         const donationData = {
-            nama: req.body.donator_name || req.body.donater_name || req.body.name || req.body.nama || 'Anonymous',
-            amount: parseInt(req.body.amount_raw) || parseInt(req.body.amount) || 0,
-            message: req.body.message || req.body.pesan || 'Terima kasih atas dukungannya!',
-            timestamp: req.body.created_at || new Date().toISOString(),
+            nama: req.body.donator_name || req.body.donater_name || req.body.supporter_name || req.body.supporter || req.body.name || req.body.sender || req.body.nama || 'Anonymous',
+            amount: parseInt(req.body.amount_raw) || parseInt(req.body.amount) || parseInt(req.body.price) || 0,
+            message: req.body.message || req.body.pesan || req.body.supporter_message || 'Terima kasih atas dukungannya!',
+            timestamp: req.body.created_at || req.body.timestamp || new Date().toISOString(),
             id: req.body.id || ('wh_' + Date.now()),
             email: req.body.donator_email || req.body.email || ''
         };
+
+        // Determine platform from payload attributes or headers
+        let platform = 'saweria';
+        if (req.body.supporter_name || req.body.supporter) platform = 'sociabuzz';
+        else if (req.body.sender || (req.body.name && !req.body.donator_name)) platform = 'bagibagi';
 
         if (donationData.amount <= 0) {
             return res.status(400).json({ success: false, message: 'Nominal donasi tidak valid.' });
         }
 
-        const result = await handleIncomingDonation(donationData, 'saweria');
+        const result = await handleIncomingDonation(donationData, platform);
         res.status(200).json({
             success: true,
-            message: `Donasi webhook berhasil diproses (${result.universesUpdated}/${result.totalUniverses} game terupdate).`,
+            message: `Donasi ${platform.toUpperCase()} berhasil diproses (${result.universesUpdated}/${result.totalUniverses} game terupdate).`,
             data: donationData,
+            platform,
             token,
             result
         });
     } catch (err) {
+        console.error('❌ Universal Webhook Error:', err);
         res.status(500).json({ success: false, error: err.message });
     }
 });
