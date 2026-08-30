@@ -139,21 +139,31 @@
 
     async function loadServices() {
       const tbody = document.getElementById('services-tbody');
+      const origin = window.location.origin;
       try {
         const res = await API.get('/api/admin/services');
         if (res.success && res.services.length > 0) {
           tbody.innerHTML = res.services.map(s => {
+            const slug = s.webhookSlug || s.slug || s.tokenCode;
+            const whUrl = `${origin}/api/webhook/${slug}`;
+            const pollUrl = `${origin}/api/poll/${slug}`;
+
             return `
               <tr>
-                <td><b style="color: var(--ink);">${s.clientName || 'Anonymous'}</b></td>
+                <td>
+                  <b style="color: var(--ink); font-size: 14px;">${s.clientName || 'Anonymous'}</b>
+                  <div class="small faint" style="font-size: 11px; margin-top: 3px;">Token: <span class="code" style="font-size: 11px;">${s.tokenCode || '-'}</span></div>
+                </td>
                 <td><span class="code" style="font-size: 13px;">${s.universeId}</span></td>
-                <td><span class="badge badge-accent">${s.platform.toUpperCase()}</span></td>
-                <td><span class="badge badge-gold">${s.plan.toUpperCase()}</span></td>
+                <td><span class="badge badge-accent">${(s.platform || 'Saweria').toUpperCase()}</span></td>
+                <td><span class="badge badge-gold">${(s.plan || 'Lifetime').toUpperCase()}</span></td>
                 <td><span class="badge badge-live">${s.status}</span></td>
                 <td><b style="color: #34D399;">${s.donationCount || 0}</b> <span class="small faint">(${formatRupiah(s.totalDonationsAmount || 0)})</span></td>
                 <td>
-                  <div class="row" style="gap: 6px;">
-                    <button class="btn btn-sm btn-cyan" onclick="testServiceRoblox('${s.universeId}', '${s.robloxApiKey}')">⚡ Test</button>
+                  <div class="row" style="gap: 6px; flex-wrap: wrap;">
+                    <button class="btn btn-sm btn-cyan" onclick="copyText('${whUrl}', this)" title="Salin Webhook URL untuk Saweria/BagiBagi/SociaBuzz">🌐 Webhook</button>
+                    <button class="btn btn-sm btn-ghost" onclick="copyText('${pollUrl}', this)" title="Salin Polling URL untuk Roblox Studio">📡 Polling</button>
+                    <button class="btn btn-sm btn-primary" onclick="testServiceRoblox('${s.universeId}', '${s.robloxApiKey}')">⚡ Test</button>
                     <button class="btn btn-sm btn-danger" onclick="deleteService('${s.id}')">Hapus</button>
                   </div>
                 </td>

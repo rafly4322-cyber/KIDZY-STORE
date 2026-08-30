@@ -161,23 +161,32 @@
       try {
         const res = await API.get('/api/admin/tokens');
         const tbody = document.getElementById('tokens-table-body');
+        const origin = window.location.origin;
         
         if (res.success && res.tokens.length > 0) {
           tbody.innerHTML = res.tokens.map(tok => {
             const isUsed = tok.status === 'active' || tok.status === 'expired';
             const badgeClass = isUsed ? 'badge' : 'badge badge-live';
             const badgeText = isUsed ? 'Digunakan' : 'Tersedia';
+            const slug = tok.slug || tok.code;
+            const whUrl = `${origin}/api/webhook/${slug}`;
+            const pollUrl = `${origin}/api/poll/${slug}`;
 
             return `
               <tr>
-                <td><span class="code" style="font-size: 13px;">${tok.code}</span></td>
+                <td>
+                  <div style="font-family: var(--mono); font-weight: 700; color: #FFFFFF; font-size: 13.5px;">${tok.code}</div>
+                  <div class="small faint" style="font-size: 11px; margin-top: 4px;">Slug: <span class="code" style="font-size: 11px;">${slug}</span></div>
+                </td>
                 <td><span class="badge badge-accent">${tok.platform.toUpperCase()}</span></td>
                 <td><span class="${badgeClass}">${badgeText}</span></td>
-                <td style="color: var(--text-secondary);">${tok.note || '-'}</td>
-                <td style="color: var(--muted); font-size: 13px;">${formatDate(tok.createdAt)}</td>
+                <td style="color: var(--text-secondary); max-width: 180px;">${tok.note || '-'}</td>
+                <td style="color: var(--muted); font-size: 12.5px;">${formatDate(tok.createdAt)}</td>
                 <td>
-                  <div class="row" style="gap: 6px;">
-                    <button class="btn btn-sm btn-cyan" onclick="copyText('${tok.code}', this)">Salin</button>
+                  <div class="row" style="gap: 6px; flex-wrap: wrap;">
+                    <button class="btn btn-sm btn-cyan" onclick="copyText('${tok.code}', this)" title="Salin Kode Token">🔑 Token</button>
+                    <button class="btn btn-sm btn-ghost" onclick="copyText('${whUrl}', this)" title="Salin Webhook URL">🌐 Webhook</button>
+                    <button class="btn btn-sm btn-ghost" onclick="copyText('${pollUrl}', this)" title="Salin Polling URL">📡 Polling</button>
                     <button class="btn btn-sm btn-danger" onclick="deleteToken('${tok.id}')">Hapus</button>
                   </div>
                 </td>
@@ -204,12 +213,19 @@
         if (res.success && res.token) {
           const tok = res.token;
           const origin = window.location.origin;
+          const slug = tok.slug || tok.code;
+          const whUrl = `${origin}/api/webhook/${slug}`;
+          const pollUrl = `${origin}/api/poll/${slug}`;
+          const actUrl = `${origin}/activation.html?token=${tok.code}`;
+
           const msg = `🎁 **SELAMAT! KAMU MEMENANGKAN TOKEN SAWERIA LIFETIME!** 🎁\n\n` +
                       `🔑 **Kode Token:** \`${tok.code}\`\n` +
                       `📦 **Paket:** LIFETIME ACCESS (Permanen)\n` +
-                      `🎮 **Platform:** Saweria Roblox Gateway\n` +
-                      `🌐 **Link Aktivasi:** ${origin}/activation.html?token=${tok.code}\n\n` +
-                      `*Cara Aktivasi:* Buka link di atas & masukkan Roblox Universe ID game kamu!`;
+                      `🎮 **Platform:** Saweria / BagiBagi / SociaBuzz Roblox Gateway\n` +
+                      `🌐 **Link Aktivasi Otomatis:** ${actUrl}\n\n` +
+                      `🔗 **Direct Webhook URL:** ${whUrl}\n` +
+                      `📡 **Direct Polling URL:** ${pollUrl}\n\n` +
+                      `*Cara Aktivasi:* Buka link aktivasi di atas & masukkan Roblox Universe ID game kamu!`;
           
           document.getElementById('giveaway-text').value = msg;
           document.getElementById('giveaway-result').style.display = 'block';

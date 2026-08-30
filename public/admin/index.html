@@ -272,20 +272,30 @@
 
     function renderRecentTokens(tokens) {
       const tbody = document.getElementById('dash-tokens-tbody');
+      const origin = window.location.origin;
       if (tokens && tokens.length > 0) {
         tbody.innerHTML = tokens.map(tok => {
           const isUsed = tok.status === 'active' || tok.status === 'expired';
           const badgeClass = isUsed ? 'badge' : 'badge badge-live';
           const badgeText = isUsed ? 'Digunakan' : 'Tersedia';
+          const slug = tok.slug || tok.code;
+          const whUrl = `${origin}/api/webhook/${slug}`;
+          const pollUrl = `${origin}/api/poll/${slug}`;
 
           return `
             <tr>
-              <td><span class="code" style="font-size: 13px;">${tok.code}</span></td>
+              <td>
+                <span class="code" style="font-size: 13px; font-weight: 700; color: #FFFFFF;">${tok.code}</span>
+              </td>
               <td><span class="badge badge-accent">${tok.platform.toUpperCase()}</span></td>
               <td><span class="${badgeClass}">${badgeText}</span></td>
-              <td style="color: var(--text-secondary);">${tok.note || '-'}</td>
+              <td style="color: var(--text-secondary); max-width: 160px;">${tok.note || '-'}</td>
               <td>
-                <button class="btn btn-sm btn-cyan" onclick="copyText('${tok.code}', this)">📋 Salin</button>
+                <div class="row" style="gap: 6px; flex-wrap: wrap;">
+                  <button class="btn btn-sm btn-cyan" onclick="copyText('${tok.code}', this)" title="Salin Kode Token">🔑 Token</button>
+                  <button class="btn btn-sm btn-ghost" onclick="copyText('${whUrl}', this)" title="Salin Webhook URL">🌐 Webhook</button>
+                  <button class="btn btn-sm btn-ghost" onclick="copyText('${pollUrl}', this)" title="Salin Polling URL">📡 Polling</button>
+                </div>
               </td>
             </tr>
           `;
