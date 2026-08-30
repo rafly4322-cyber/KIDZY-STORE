@@ -2,7 +2,7 @@
 
 Sistem lengkap Webhook Gateway & Toko Publik untuk integrasi donasi Roblox dengan fitur modern:
 - **Live Vercel Gateway**: `https://kidzy-store.vercel.app`
-- **Dashboard Admin**: `https://kidzy-store.vercel.app/login.html` (Akun: `rafly4322@gmail.com` / `Sumbawa12345`)
+- **Dashboard Admin**: `https://kidzy-store.vercel.app/admin` (Akses Khusus Administrator)
 - **Roblox Open Cloud DataStore Integration**: Auto-sync `SaweriaDonations / AllDonations`
 - **In-Game Roblox Studio Features**:
   - ✨ Luxury `CanvasGroup` Glassmorphism Donation UI
