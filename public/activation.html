@@ -170,26 +170,44 @@
           showToast('Layanan berhasil diaktifkan!', 'success');
           
           resultBox.innerHTML = `
-            <div class="alert alert-success" style="flex-direction: column; align-items: flex-start; gap: 14px; margin-bottom: 24px; padding: 22px; border-radius: var(--r);">
-              <div>
-                <h3 class="h3" style="color: #A7F3D0; margin-bottom: 4px;">🎉 Aktivasi Berhasil!</h3>
-                <p class="small" style="color: #D1FAE5;">Layanan donasi game kamu sudah aktif dan siap menerima donasi realtime.</p>
-              </div>
-              
-              <div class="field" style="width: 100%; margin-top: 6px;">
-                <label style="color: #A7F3D0;">⚡ Webhook URL (Tempel di Akun Saweria/BagiBagi kamu):</label>
-                <div class="row" style="gap: 8px;">
-                  <input class="input mono" readonly value="${svc.webhookUrl}" id="copy-wh-input" style="background: rgba(0,0,0,0.5);" />
-                  <button class="btn btn-sm btn-cyan" onclick="copyText('${svc.webhookUrl}', this)">Salin URL</button>
+            <div class="card" style="border: 1px solid var(--ok); background: linear-gradient(160deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 20, 31, 0.98) 100%); margin-bottom: 24px; padding: 24px;">
+              <div class="row between" style="margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <div>
+                  <span class="badge badge-live">🎉 AKTIVASI BERHASIL 100%</span>
+                  <h2 class="h2" style="color: #A7F3D0; margin-top: 6px;">Webhook & Polling URL Siap Digunakan!</h2>
                 </div>
+                <span class="badge badge-accent">Paket Lifetime Permanen</span>
+              </div>
+              <p class="small" style="color: #D1FAE5; margin-bottom: 20px;">Layanan donasi untuk Universe ID <b style="color: #FFFFFF; font-family: var(--mono);">${svc.universeId}</b> telah aktif.</p>
+              
+              <!-- 1. UNTUK SAWERIA / BAGIBAGI / SOCIABUZZ -->
+              <div class="card soft" style="margin-bottom: 16px; border-color: rgba(99, 102, 241, 0.4);">
+                <div class="row between" style="margin-bottom: 6px;">
+                  <b style="color: #A5B4FC; font-size: 15px;">1️⃣ Link Webhook (Tempel di Web Saweria / BagiBagi / SociaBuzz)</b>
+                  <button class="btn btn-sm btn-cyan" onclick="copyText('${svc.webhookUrl}', this)">📋 Salin Webhook URL</button>
+                </div>
+                <p class="small faint" style="margin-bottom: 10px;">Buka dashboard Saweria/BagiBagi/SociaBuzz &rarr; Webhook Setting &rarr; Tempel link di bawah:</p>
+                <input class="input mono" readonly value="${svc.webhookUrl}" id="copy-wh-input" style="font-size: 13.5px; font-weight: 700; color: #A5B4FC; background: #030407;" />
               </div>
 
-              <div class="field" style="width: 100%;">
-                <label style="color: #A7F3D0;">📡 Polling URL (Roblox Studio HttpService Gateway):</label>
-                <div class="row" style="gap: 8px;">
-                  <input class="input mono" readonly value="${svc.pollUrl}" id="copy-poll-input" style="background: rgba(0,0,0,0.5);" />
-                  <button class="btn btn-sm btn-cyan" onclick="copyText('${svc.pollUrl}', this)">Salin URL</button>
+              <!-- 2. UNTUK ROBLOX STUDIO -->
+              <div class="card soft" style="margin-bottom: 16px; border-color: rgba(16, 185, 129, 0.4);">
+                <div class="row between" style="margin-bottom: 6px;">
+                  <b style="color: #34D399; font-size: 15px;">2️⃣ Link Polling (Tempel di Script Roblox Studio)</b>
+                  <button class="btn btn-sm btn-cyan" onclick="copyText('${svc.pollUrl}', this)">📋 Salin Polling URL</button>
                 </div>
+                <p class="small faint" style="margin-bottom: 10px;">Buka script konfigurasi donasi di Roblox Studio &rarr; Tempel link di bawah:</p>
+                <input class="input mono" readonly value="${svc.pollUrl}" id="copy-poll-input" style="font-size: 13.5px; font-weight: 700; color: #34D399; background: #030407;" />
+              </div>
+
+              <!-- 3. DOWNLOAD SCRIPT ROBLOX -->
+              <div class="row between" style="margin-top: 14px; flex-wrap: wrap; gap: 10px;">
+                <a class="btn btn-primary" href="/downloads/Saweria_lifetime.zip" download>
+                  📦 Download Script & Model Roblox (.ZIP)
+                </a>
+                <button class="btn btn-ghost" onclick="window.location.reload()">
+                  🔄 Aktivasi Token Lain
+                </button>
               </div>
             </div>
           `;
