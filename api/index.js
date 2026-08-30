@@ -105,9 +105,6 @@ function sanitizeText(str) {
         .replace(/'/g, '&#039;');
 }
 
-// Memory queue for in-game polling
-let donationQueue = [];
-
 // Auth Middleware Helper
 function authenticate(req, res, next) {
     const authHeader = req.headers.authorization;
@@ -326,19 +323,23 @@ app.post('/api/auth/change-password', authenticate, (req, res) => {
 // ============================================
 
 async function handleIncomingDonation(donationData, platform = 'saweria') {
+    // ⚡ 1. INSTANT LOCAL DB SAVE (< 1ms) - Available immediately for Roblox Polling
+    const savedDonation = db.addDonation({
+        ...donationData,
+        platform,
+        status: 'success'
+    });
+
+    console.log(`\n⚡ [${platform.toUpperCase()}] Instant Donation Ingested: ${donationData.nama} - Rp ${Number(donationData.amount).toLocaleString('id-ID')}`);
+
     const settings = db.getSettings() || {};
-    // Include services configured for this platform, all platforms, or default saweria
     const activeServices = db.getServices().filter(s => s.status === 'active' && (!s.platform || s.platform === platform || s.platform === 'saweria' || s.platform === 'all'));
-    
-    // Also include default global settings if configured
     const globalRobloxApiKey = settings.robloxApiKey || process.env.ROBLOX_API_KEY || '';
     const globalUniverseIds = settings.universeIds || (process.env.UNIVERSE_IDS ? process.env.UNIVERSE_IDS.split(',') : []);
 
     const universesToUpdate = [];
-
-    // Add registered services
     activeServices.forEach(s => {
-        if (s.universeId && s.robloxApiKey) {
+        if (s.universeId && s.robloxApiKey && s.robloxApiKey !== 'default-global-key' && s.robloxApiKey.length > 20) {
             universesToUpdate.push({
                 serviceId: s.id,
                 universeId: s.universeId,
@@ -347,8 +348,7 @@ async function handleIncomingDonation(donationData, platform = 'saweria') {
         }
     });
 
-    // Add global default if not already included
-    if (globalRobloxApiKey && Array.isArray(globalUniverseIds)) {
+    if (globalRobloxApiKey && globalRobloxApiKey.length > 20 && Array.isArray(globalUniverseIds)) {
         globalUniverseIds.forEach(uId => {
             const trimmed = String(uId).trim();
             if (trimmed && !universesToUpdate.some(u => u.universeId === trimmed)) {
@@ -361,45 +361,32 @@ async function handleIncomingDonation(donationData, platform = 'saweria') {
         });
     }
 
-    console.log(`\n📥 [${platform.toUpperCase()}] Processing donation: ${donationData.nama} - Rp ${donationData.amount.toLocaleString('id-ID')}`);
-    console.log(`Target universes count: ${universesToUpdate.length}`);
-
-    const results = [];
-    for (const target of universesToUpdate) {
-        try {
-            const res = await saveDonationToUniverse(target.universeId, target.apiKey, donationData);
-            results.push(res);
-            if (target.serviceId !== 'global' && res.success) {
-                const s = db.getServiceById(target.serviceId);
-                if (s) {
-                    db.updateService(target.serviceId, {
-                        lastDonationAt: new Date().toISOString(),
-                        donationCount: (s.donationCount || 0) + 1,
-                        totalDonationsAmount: (s.totalDonationsAmount || 0) + donationData.amount
-                    });
+    // ⚡ 2. Parallel non-blocking Open Cloud update if valid keys exist
+    if (universesToUpdate.length > 0) {
+        Promise.allSettled(universesToUpdate.map(async (target) => {
+            try {
+                const res = await saveDonationToUniverse(target.universeId, target.apiKey, donationData);
+                if (target.serviceId !== 'global' && res && res.success) {
+                    const s = db.getServiceById(target.serviceId);
+                    if (s) {
+                        db.updateService(target.serviceId, {
+                            lastDonationAt: new Date().toISOString(),
+                            donationCount: (s.donationCount || 0) + 1,
+                            totalDonationsAmount: (s.totalDonationsAmount || 0) + donationData.amount
+                        });
+                    }
                 }
+                return res;
+            } catch (err) {
+                return { universeId: target.universeId, success: false, error: err.message };
             }
-        } catch (err) {
-            results.push({ universeId: target.universeId, success: false, error: err.message });
-        }
+        })).catch(() => {});
     }
-
-    // Save to local database
-    const savedDonation = db.addDonation({
-        ...donationData,
-        platform,
-        status: results.some(r => r.success) || universesToUpdate.length === 0 ? 'success' : 'failed',
-        details: { targetUniverses: universesToUpdate.length, results }
-    });
-
-    // Push to polling queue
-    donationQueue.push(donationData);
 
     return {
         donation: savedDonation,
-        universesUpdated: results.filter(r => r.success).length,
-        totalUniverses: universesToUpdate.length,
-        results
+        universesUpdated: universesToUpdate.length,
+        totalUniverses: universesToUpdate.length
     };
 }
 
@@ -457,42 +444,42 @@ app.post(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi
 });
 
 // Polling Endpoints (supports /api/poll/:token, /api/poll, /api/saweria/get-donations)
+// ⚡ DB-based polling — reliable across Vercel serverless instances
 app.get(['/api/poll', '/api/poll/:token', '/api/saweria/get-donations', '/api/webhook/get-donations'], (req, res) => {
-    const donations = [...donationQueue];
-    donationQueue = [];
+    try {
+        // Ambil semua donasi yang belum di-poll dalam 120 detik terakhir dari DB
+        const unpolled = db.getUnpolledDonations(120);
 
-    // Also check DB for unpolled donations from last 60 seconds (resilient to serverless cold starts)
-    const recent = db.getDonations(20);
-    const now = Date.now();
-    let updatedDb = false;
-
-    for (const d of recent) {
-        const timeDiff = now - new Date(d.timestamp).getTime();
-        if (timeDiff >= 0 && timeDiff < 60000 && !d.polled && !donations.some(x => x.id === d.id || (x.nama === d.nama && x.amount === d.amount && Math.abs(new Date(x.timestamp).getTime() - new Date(d.timestamp).getTime()) < 2000))) {
-            d.polled = true;
-            updatedDb = true;
-            donations.push({
-                nama: d.nama,
-                donorName: d.nama,
-                name: d.nama,
-                amount: d.amount,
-                amountFormatted: 'Rp ' + Number(d.amount).toLocaleString('id-ID'),
-                formattedAmount: 'Rp ' + Number(d.amount).toLocaleString('id-ID'),
-                message: d.message,
-                pesan: d.message,
-                platform: d.platform,
-                timestamp: d.timestamp,
-                id: d.id
-            });
+        if (unpolled.length === 0) {
+            return res.json({ success: true, count: 0, donations: [] });
         }
-    }
 
-    if (updatedDb) {
-        db.save();
-    }
+        // Tandai sebagai sudah di-poll (atomic update)
+        const ids = unpolled.map(d => d.id);
+        db.markDonationsAsPolled(ids);
 
-    res.json({ success: true, count: donations.length, donations: donations });
+        // Format response sesuai yang diharapkan Roblox script
+        const formatted = unpolled.map(d => ({
+            id: d.id,
+            nama: d.nama,
+            donorName: d.nama,
+            name: d.nama,
+            amount: d.amount,
+            amountFormatted: 'Rp ' + Number(d.amount).toLocaleString('id-ID'),
+            formattedAmount: 'Rp ' + Number(d.amount).toLocaleString('id-ID'),
+            message: d.message,
+            pesan: d.message,
+            platform: d.platform,
+            timestamp: d.timestamp
+        }));
+
+        res.json({ success: true, count: formatted.length, donations: formatted });
+    } catch (err) {
+        console.error('❌ Poll Error:', err);
+        res.json({ success: true, count: 0, donations: [] });
+    }
 });
+
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -501,10 +488,10 @@ app.get('/api/health', (req, res) => {
         status: 'OK',
         timestamp: new Date().toISOString(),
         service: 'KIDZY Saweria Roblox Webhook Gateway',
-        version: '2.5.0',
+        version: '3.0.0',
         activeServices: db.getServices().filter(s => s.status === 'active').length,
         hasGlobalRobloxApiKey: !!(settings.robloxApiKey || process.env.ROBLOX_API_KEY),
-        queue: donationQueue.length
+        unpolledDonations: db.getUnpolledDonations(120).length
     });
 });
 

@@ -30,6 +30,19 @@
   },
   "tokens": [
     {
+      "id": "tok_auto_1788121294653_411",
+      "code": "KZ-TEST-NEW-TOKEN-2026",
+      "slug": "BlppMhasTgbHAaEaJlaBLe7SvVBe05ue",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "active",
+      "note": "Auto-validated Token",
+      "createdAt": "2026-08-30T20:21:34.653Z",
+      "usedAt": "2026-08-30T20:21:34.654Z",
+      "usedBy": "Auditor_Test_Game",
+      "serviceId": "svc_1788121294654_431"
+    },
+    {
       "id": "tok_auto_1788118012705_181",
       "code": "KZ-SAW-TEST-9999-FREE",
       "slug": "99OEJEAdTZdVUZNIcvC2oLIPTPHxtlCp",
@@ -136,6 +149,25 @@
   ],
   "services": [
     {
+      "id": "svc_1788121294654_431",
+      "tokenCode": "KZ-TEST-NEW-TOKEN-2026",
+      "slug": "BlppMhasTgbHAaEaJlaBLe7SvVBe05ue",
+      "webhookSlug": "BlppMhasTgbHAaEaJlaBLe7SvVBe05ue",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "10742273346",
+      "robloxApiKey": "default-global-key",
+      "clientName": "Auditor_Test_Game",
+      "status": "active",
+      "activatedAt": "2026-08-30T20:21:34.654Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0,
+      "webhookUrl": "http://localhost:4899/api/webhook/BlppMhasTgbHAaEaJlaBLe7SvVBe05ue",
+      "pollUrl": "http://localhost:4899/api/poll/BlppMhasTgbHAaEaJlaBLe7SvVBe05ue"
+    },
+    {
       "id": "svc_1788118589010_927",
       "tokenCode": "KIDZY-SAWERIA-LIFETIME-VIP",
       "slug": "VJON7CCA9soIpdNA5jZgtU8SeJNwsmlF",
@@ -148,9 +180,9 @@
       "status": "active",
       "activatedAt": "2026-08-30T19:36:29.010Z",
       "expiresAt": null,
-      "lastDonationAt": null,
-      "totalDonationsAmount": 0,
-      "donationCount": 0
+      "lastDonationAt": "2026-08-30T20:21:50.664Z",
+      "totalDonationsAmount": 625000,
+      "donationCount": 4
     },
     {
       "id": "svc_1788118012706_170",
@@ -181,12 +213,276 @@
       "status": "active",
       "activatedAt": "2026-08-29T06:50:00.000Z",
       "expiresAt": null,
-      "lastDonationAt": null,
-      "totalDonationsAmount": 0,
-      "donationCount": 0
+      "lastDonationAt": "2026-08-30T20:21:50.669Z",
+      "totalDonationsAmount": 975000,
+      "donationCount": 5
     }
   ],
   "donations": [
+    {
+      "id": "wh_1788121309872",
+      "nama": "Sultan Tester BagiBagi",
+      "amount": 75000,
+      "message": "Test donasi BagiBagi 75rb jos!",
+      "platform": "bagibagi",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-30T20:21:49.872Z",
+      "details": {},
+      "polled": true
+    },
+    {
+      "id": "wh_1788121309861",
+      "nama": "Sultan Tester SociaBuzz",
+      "amount": 150000,
+      "message": "Test donasi SociaBuzz 150rb mantap!",
+      "platform": "sociabuzz",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-30T20:21:49.861Z",
+      "details": {},
+      "polled": true
+    },
+    {
+      "id": "wh_1788121309785",
+      "nama": "Sultan Tester Saweria",
+      "amount": 250000,
+      "message": "Test donasi Saweria 250rb lancar!",
+      "platform": "saweria",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-30T20:21:49.785Z",
+      "details": {},
+      "polled": true
+    },
+    {
+      "id": "wh_1788121300045",
+      "nama": "Sultan Tester BagiBagi",
+      "amount": 75000,
+      "message": "Test donasi BagiBagi 75rb jos!",
+      "platform": "bagibagi",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-30T20:21:40.045Z",
+      "details": {
+        "targetUniverses": 4,
+        "results": [
+          {
+            "success": false,
+            "universeId": "10742273346",
+            "error": {
+              "errors": [
+                {
+                  "code": 0,
+                  "message": "Invalid API Key"
+                }
+              ]
+            }
+          },
+          {
+            "success": true,
+            "universeId": "10742273346",
+            "totalDonors": 3,
+            "totalAmount": 475000,
+            "updated": false,
+            "version": "08DF06CF656500B7.000000000C.08DF06D44D7536DD.01"
+          },
+          {
+            "success": false,
+            "universeId": "10764300084",
+            "error": {
+              "errors": [
+                {
+                  "code": 0,
+                  "message": "Invalid API Key"
+                }
+              ]
+            }
+          },
+          {
+            "success": true,
+            "universeId": "10764300084",
+            "totalDonors": 15,
+            "totalAmount": 4323840,
+            "updated": false,
+            "version": "08DF05DF8CFB24E7.0000000030.08DF06D44E30E518.01"
+          }
+        ]
+      },
+      "polled": true
+    },
+    {
+      "id": "wh_1788121297544",
+      "nama": "Sultan Tester SociaBuzz",
+      "amount": 150000,
+      "message": "Test donasi SociaBuzz 150rb mantap!",
+      "platform": "sociabuzz",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-30T20:21:37.544Z",
+      "details": {
+        "targetUniverses": 4,
+        "results": [
+          {
+            "success": false,
+            "universeId": "10742273346",
+            "error": {
+              "errors": [
+                {
+                  "code": 0,
+                  "message": "Invalid API Key"
+                }
+              ]
+            }
+          },
+          {
+            "success": true,
+            "universeId": "10742273346",
+            "totalDonors": 2,
+            "totalAmount": 400000,
+            "updated": false,
+            "version": "08DF06CF656500B7.000000000B.08DF06D44BF79EED.01"
+          },
+          {
+            "success": false,
+            "universeId": "10764300084",
+            "error": {
+              "errors": [
+                {
+                  "code": 0,
+                  "message": "Invalid API Key"
+                }
+              ]
+            }
+          },
+          {
+            "success": true,
+            "universeId": "10764300084",
+            "totalDonors": 14,
+            "totalAmount": 4248840,
+            "updated": false,
+            "version": "08DF05DF8CFB24E7.000000002F.08DF06D44CBB92E4.01"
+          }
+        ]
+      },
+      "polled": true
+    },
+    {
+      "id": "wh_1788121294661",
+      "nama": "Sultan Tester Saweria",
+      "amount": 250000,
+      "message": "Test donasi Saweria 250rb lancar!",
+      "platform": "saweria",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-30T20:21:34.661Z",
+      "details": {
+        "targetUniverses": 4,
+        "results": [
+          {
+            "success": false,
+            "universeId": "10742273346",
+            "error": {
+              "errors": [
+                {
+                  "code": 0,
+                  "message": "Invalid API Key"
+                }
+              ]
+            }
+          },
+          {
+            "success": true,
+            "universeId": "10742273346",
+            "totalDonors": 1,
+            "totalAmount": 250000,
+            "updated": false,
+            "version": "08DF06CF656500B7.000000000A.08DF06D44A7465DC.01"
+          },
+          {
+            "success": false,
+            "universeId": "10764300084",
+            "error": {
+              "errors": [
+                {
+                  "code": 0,
+                  "message": "Invalid API Key"
+                }
+              ]
+            }
+          },
+          {
+            "success": true,
+            "universeId": "10764300084",
+            "totalDonors": 13,
+            "totalAmount": 4098840,
+            "updated": false,
+            "version": "08DF05DF8CFB24E7.000000002E.08DF06D44B2F9B92.01"
+          }
+        ]
+      },
+      "polled": true
+    },
+    {
+      "id": "wh_1788119178047",
+      "nama": "Rafly Sultan Test",
+      "amount": 250000,
+      "message": "Tes popup langsung",
+      "platform": "saweria",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-30T19:46:18.047Z",
+      "details": {
+        "targetUniverses": 3,
+        "results": [
+          {
+            "success": false,
+            "universeId": "10742273346",
+            "error": "The api key does not have sufficient scope to perform this operation."
+          },
+          {
+            "success": false,
+            "universeId": "10764300084",
+            "error": {
+              "errors": [
+                {
+                  "code": 0,
+                  "message": "Invalid API Key"
+                }
+              ]
+            }
+          },
+          {
+            "success": true,
+            "universeId": "10764300084",
+            "totalDonors": 8,
+            "totalAmount": 3250000,
+            "updated": false,
+            "version": "08DF05DF8CFB24E7.0000000028.08DF06CF5D378A56.01"
+          }
+        ]
+      }
+    },
+    {
+      "id": "test_123",
+      "nama": "Rafly Test",
+      "amount": 50000,
+      "message": "Test local",
+      "platform": "saweria",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-30T19:45:59.000Z",
+      "details": {},
+      "polled": true
+    },
     {
       "id": "sim_1787982653048",
       "nama": "Muhammad Rafly Test",

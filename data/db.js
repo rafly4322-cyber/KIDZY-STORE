@@ -416,7 +416,8 @@ class Database {
             email: donation.email || '',
             status: donation.status || 'success',
             timestamp: donation.timestamp || new Date().toISOString(),
-            details: donation.details || {}
+            details: donation.details || {},
+            polled: false  // Flag untuk polling - belum dikonsumsi Roblox
         };
 
         this.data.donations.unshift(newDonation);
@@ -432,6 +433,51 @@ class Database {
         this.save();
         return true;
     }
+
+    // Ambil donasi yang belum di-poll dalam window detik terakhir
+    getUnpolledDonations(windowSeconds = 120) {
+        // Sync from disk if on serverless to ensure fresh data across invocations
+        if (fs.existsSync(WRITABLE_DB_PATH)) {
+            try {
+                const diskData = JSON.parse(fs.readFileSync(WRITABLE_DB_PATH, 'utf-8'));
+                if (diskData && Array.isArray(diskData.donations)) {
+                    this.data.donations = diskData.donations;
+                }
+            } catch (e) {}
+        }
+
+        const now = Date.now();
+        return this.data.donations.filter(d => {
+            if (d.polled) return false;
+            const age = now - new Date(d.timestamp).getTime();
+            return age >= 0 && age <= windowSeconds * 1000;
+        });
+    }
+
+    // Tandai donasi sebagai sudah di-poll
+    markDonationsAsPolled(ids) {
+        if (!ids || ids.length === 0) return false;
+        
+        if (fs.existsSync(WRITABLE_DB_PATH)) {
+            try {
+                const diskData = JSON.parse(fs.readFileSync(WRITABLE_DB_PATH, 'utf-8'));
+                if (diskData && Array.isArray(diskData.donations)) {
+                    this.data.donations = diskData.donations;
+                }
+            } catch (e) {}
+        }
+
+        let changed = false;
+        for (const d of this.data.donations) {
+            if (ids.includes(d.id) && !d.polled) {
+                d.polled = true;
+                changed = true;
+            }
+        }
+        if (changed) this.save();
+        return changed;
+    }
+
 
     getSettings() {
         return this.data.settings;
