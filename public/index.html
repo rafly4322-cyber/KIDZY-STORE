@@ -45,19 +45,17 @@
   <main>
     <!-- Hero Section -->
     <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <div class="row">
+      <div class="container" style="max-width: 860px; text-align: center; margin: 0 auto;">
+        <div class="hero-content" style="align-items: center;">
+          <div class="row" style="justify-content: center;">
             <span class="badge badge-live">Live Gateway Online</span>
             <span class="badge badge-accent">Lifetime Edition</span>
           </div>
 
-          <h1 class="h1">Integrasi Donasi Realtime untuk <span class="gradient-text">Game Roblox</span>.</h1>
-          <p class="lead">Hubungkan webhook <b>Saweria</b>, <b>BagiBagi</b>, dan <b>SociaBuzz</b> langsung ke Roblox
-            Studio dengan notifikasi in-game, efek partikel, kamera sinematik 360&deg;, dan leaderboard DataStore
-            otomatis.</p>
+          <h1 class="h1" style="font-size: 42px; line-height: 1.2;">SISTEM SAWERIA, SOCIABUZZ, BAGI BAGI TO <span class="gradient-text">ROBLOX BY KIDZY</span></h1>
+          <p class="lead" style="max-width: 680px; margin: 0 auto;">Hubungkan webhook <b>Saweria</b>, <b>BagiBagi</b>, dan <b>SociaBuzz</b> langsung ke Roblox Studio dengan notifikasi in-game, efek partikel, kamera sinematik 360&deg;, dan leaderboard DataStore otomatis.</p>
 
-          <div class="hero-actions">
+          <div class="hero-actions" style="justify-content: center;">
             <button class="btn btn-primary btn-lg" onclick="openOrderModal('Saweria Lifetime', 'Rp 450.000')">
               Order Lisensi Lifetime (Rp 450k)
             </button>
@@ -66,7 +64,7 @@
             </a>
           </div>
 
-          <div class="hero-stats">
+          <div class="hero-stats" style="width: 100%; max-width: 680px; margin-top: 28px;">
             <div>
               <div class="hero-stat-num cyan-text">Rp 500M+</div>
               <div class="hero-stat-label">Donasi Diproses</div>
@@ -79,40 +77,6 @@
               <div class="hero-stat-num accent-text">&lt; 1 Detik</div>
               <div class="hero-stat-label">Kecepatan Alert In-Game</div>
             </div>
-          </div>
-        </div>
-
-        <!-- Interactive Live Roblox Alert Simulator Widget -->
-        <div class="sim-container">
-          <div class="sim-header">
-            <div>
-              <span class="badge badge-cyan" style="margin-bottom: 4px;">Interactive Live Demo</span>
-              <h3 class="h3" style="font-size: 16px;">Simulasi Alert In-Game Roblox</h3>
-            </div>
-            <span class="badge badge-live">Online</span>
-          </div>
-
-          <div class="sim-screen" id="sim-screen-container">
-            <div class="roblox-notif">
-              <div class="roblox-notif-title">⭐ SAWERIA DONATION ALERT ⭐</div>
-              <div class="roblox-notif-donor">SultanRoblox_VIP</div>
-              <div class="roblox-notif-amount">Rp 100.000</div>
-              <div class="roblox-notif-msg">"Semoga gamenya makin rame bang! 🔥"</div>
-              <div style="margin-top: 8px; font-size: 11px; color: #94A3B8;">✨ Orbit Camera VFX &amp; Leaderboard
-                Synced!</div>
-            </div>
-          </div>
-
-          <div class="stack" style="margin-top: 16px; gap: 10px;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <input class="input mono" id="sim-donor-input" placeholder="Nama Donatur" value="SultanRoblox_VIP" />
-              <input class="input mono" id="sim-amount-input" type="number" placeholder="Nominal Rp" value="100000" />
-            </div>
-            <input class="input" id="sim-msg-input" placeholder="Pesan Donasi"
-              value="Semoga gamenya makin rame bang! 🔥" />
-            <button class="btn btn-cyan btn-block" onclick="runSimAlert()">
-              ⚡ Uji Coba Simulasi Notifikasi
-            </button>
           </div>
         </div>
       </div>
