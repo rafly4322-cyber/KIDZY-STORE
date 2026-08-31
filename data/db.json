@@ -35,6 +35,15 @@
       "name": "QA Tester",
       "passwordHash": "df0782e41d36e30b5fd28d8e50df0128cb03a358cb5e359fdebbf7a7923c799ba03b1d63723242684295cb3e9771317571e05a4237cab18eab41855426c60908",
       "passwordSalt": "cb364a14efa99487fb128590b597e327"
+    },
+    {
+      "id": "usr_1788194158469_635",
+      "createdAt": "2026-08-31T16:35:58.469Z",
+      "role": "client",
+      "email": "qa_tester_1788194158461@test.com",
+      "name": "QA Tester",
+      "passwordHash": "86fc0621d5c3fb9da1f8b2088b2a96738646d04cacdac8cb2a9f74bed31671d709ff10060614f02946fe37d8edc8dca52709069d8c0abaa8a7ab30f98a616871",
+      "passwordSalt": "9c957134b65bbe08b26b007ea7234b9f"
     }
   ],
   "sessions": {
@@ -117,9 +126,155 @@
       "name": "Muhammad Rafly (Admin)",
       "createdAt": "2026-08-31T09:36:43.971Z",
       "expiresAt": "2026-09-07T09:36:43.971Z"
+    },
+    "8dcbad4bdb7bc253b5d424518766990c6ba2e6cabd4ede4d2db4c2b366729063": {
+      "userId": "usr_admin_1",
+      "email": "rafly4322@gmail.com",
+      "role": "admin",
+      "name": "Muhammad Rafly (Admin)",
+      "createdAt": "2026-08-31T16:35:58.446Z",
+      "expiresAt": "2026-09-07T16:35:58.446Z"
+    },
+    "ff21bbedfb270d83862bf0541d78d76baae2864b16a88bb3779e83cdacaba77c": {
+      "userId": "usr_1788194158469_635",
+      "email": "qa_tester_1788194158461@test.com",
+      "role": "client",
+      "name": "QA Tester",
+      "createdAt": "2026-08-31T16:35:58.472Z",
+      "expiresAt": "2026-09-07T16:35:58.472Z"
     }
   },
   "tokens": [
+    {
+      "id": "tok_auto_1788194158667_696",
+      "code": "KZ-GW-444441",
+      "slug": "bvyHNtGaHua6xw0d6Wg6s4jYLcu9i6oi",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "active",
+      "note": "Auto-validated Token",
+      "createdAt": "2026-08-31T16:35:58.667Z",
+      "usedAt": "2026-08-31T16:35:58.669Z",
+      "usedBy": "Giveaway Drop #3 (5544332211)",
+      "serviceId": "svc_1788194158669_83"
+    },
+    {
+      "id": "tok_auto_1788194158663_415",
+      "code": "KZ-GW-368928",
+      "slug": "41TRoY1JSLq9hOKuzsh1irJtPkz4O9RU",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "active",
+      "note": "Auto-validated Token",
+      "createdAt": "2026-08-31T16:35:58.663Z",
+      "usedAt": "2026-08-31T16:35:58.665Z",
+      "usedBy": "Giveaway Drop #2 (118749454354)",
+      "serviceId": "svc_1788194158665_8"
+    },
+    {
+      "id": "tok_auto_1788194158657_98",
+      "code": "KZ-GW-505914",
+      "slug": "Pw9EwOH81vBtz3ZCfM7qFCe2pvIgeMta",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "active",
+      "note": "Auto-validated Token",
+      "createdAt": "2026-08-31T16:35:58.657Z",
+      "usedAt": "2026-08-31T16:35:58.661Z",
+      "usedBy": "Giveaway Drop #1 (10742273346)",
+      "serviceId": "svc_1788194158661_113"
+    },
+    {
+      "id": "tok_auto_1788194158645_484",
+      "code": "KZ-ADM-957875",
+      "slug": "XoGNYrvhyP3XYx8mGU13UNz6YpauofbL",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "active",
+      "note": "Auto-validated Token",
+      "createdAt": "2026-08-31T16:35:58.645Z",
+      "usedAt": "2026-08-31T16:35:58.648Z",
+      "usedBy": "Direct Universe Test Game",
+      "serviceId": "svc_1788194158648_781"
+    },
+    {
+      "id": "tok_1788194158619_600",
+      "code": "KZ-SAW-EF1A-2B73-2DEB",
+      "slug": "vaYF9rrKTwFob6vvvFzAkBydeeuATeud",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "unused",
+      "note": "Bulk Giveaway #5 (1/9/2026)",
+      "createdAt": "2026-08-31T16:35:58.619Z",
+      "usedAt": null,
+      "usedBy": null,
+      "serviceId": null
+    },
+    {
+      "id": "tok_1788194158616_578",
+      "code": "KZ-SAW-FF5E-FE7D-2FBE",
+      "slug": "zcbsvS7b8fGdDl2aDrNuk68x20OvMdcl",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "unused",
+      "note": "Bulk Giveaway #4 (1/9/2026)",
+      "createdAt": "2026-08-31T16:35:58.616Z",
+      "usedAt": null,
+      "usedBy": null,
+      "serviceId": null
+    },
+    {
+      "id": "tok_1788194158614_400",
+      "code": "KZ-SAW-A789-0A36-94CD",
+      "slug": "q1Y7m1d3aperNhs3GqFhPXP8FJnYR0lr",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "unused",
+      "note": "Bulk Giveaway #3 (1/9/2026)",
+      "createdAt": "2026-08-31T16:35:58.614Z",
+      "usedAt": null,
+      "usedBy": null,
+      "serviceId": null
+    },
+    {
+      "id": "tok_1788194158612_584",
+      "code": "KZ-SAW-C47A-0B6C-8742",
+      "slug": "5iSVTZFSoh7uaLG3I2uo9uYL8HHcDHcK",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "unused",
+      "note": "Bulk Giveaway #2 (1/9/2026)",
+      "createdAt": "2026-08-31T16:35:58.612Z",
+      "usedAt": null,
+      "usedBy": null,
+      "serviceId": null
+    },
+    {
+      "id": "tok_1788194158609_750",
+      "code": "KZ-SAW-8209-6715-661E",
+      "slug": "pBYvFdco3NBPAOtcC1IWGzcCe3XrJEL2",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "unused",
+      "note": "Bulk Giveaway #1 (1/9/2026)",
+      "createdAt": "2026-08-31T16:35:58.609Z",
+      "usedAt": null,
+      "usedBy": null,
+      "serviceId": null
+    },
+    {
+      "id": "tok_1788194158490_184",
+      "code": "KZ-SAW-5799-9AA0-5F6F",
+      "slug": "rqQQuhxqz2mnVctwJDxortHDpHItyUAZ",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "active",
+      "note": "QA Test Token",
+      "createdAt": "2026-08-31T16:35:58.490Z",
+      "usedAt": "2026-08-31T16:35:58.629Z",
+      "usedBy": "Game QA Test Place",
+      "serviceId": "svc_1788194158629_788"
+    },
     {
       "id": "tok_auto_1788165796161_274",
       "code": "KZ-GW-475962",
@@ -669,6 +824,95 @@
   ],
   "services": [
     {
+      "id": "svc_1788194158669_83",
+      "tokenCode": "KZ-GW-444441",
+      "slug": "bvyHNtGaHua6xw0d6Wg6s4jYLcu9i6oi",
+      "webhookSlug": "bvyHNtGaHua6xw0d6Wg6s4jYLcu9i6oi",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "5544332211",
+      "robloxApiKey": "dF31hM0QVUKE9Dwaco1yYQVZByI5N1OKh2CZ0qKlGeanKnAAZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SW1SR016Rm9UVEJSVmxWTFJUbEVkMkZqYnpGNVdWRldXa0o1U1RWT01VOUxhREpEV2pCeFMyeEhaV0Z1UzI1QlFTSXNJbTkzYm1WeVNXUWlPaUk0T0RBNU16VTRNRGc1SWl3aVpYaHdJam94TnpnNE1USXlNVGMxTENKcFlYUWlPakUzT0RneE1UZzFOelVzSW01aVppSTZNVGM0T0RFeE9EVTNOWDAuaHVxSnE1N054TkZQWktjaG5KNGtpSjBIUmY3N1BsSnM2LVdScUV4ZTAwdFBQSmt4YWVkUDVaOGRlNGNza1RrTlVqTi16eVdlY0R4M2loSjZSSzU2ejRCYzhCVERsQzYydWFMTnE4YnpOb0dORzlzVWJYbDAzMGp0cEtOalZEa0VZaTZqaVVmSlZjSDQ2WTFySHlwdzBmVFNFR2xwZVhPY0VIbGZ3cmg1TkZ0NTZQQ3JpbElHTHdob2ppcEJMWjlQRGpuMFYzWXhtNDVFZENyZGE1VEpvcmFhWHloV0pVRTV6Nm9xUjRuXzY3X0p3amhWcTFrQmI2TlpmLTlmNkJ1QVQ2bDBycm1ZdzB4blc0VWxDeWhrNWFSY3p3NXVHV3Z6bWprVi15bDFFYWZzaHBGVVgxcWhaQzNoT0xUQTNMdjhwaVNQd3dveDNIOGVHbERBMHFVeExn",
+      "clientName": "Giveaway Drop #3 (5544332211)",
+      "status": "active",
+      "activatedAt": "2026-08-31T16:35:58.669Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0
+    },
+    {
+      "id": "svc_1788194158665_8",
+      "tokenCode": "KZ-GW-368928",
+      "slug": "41TRoY1JSLq9hOKuzsh1irJtPkz4O9RU",
+      "webhookSlug": "41TRoY1JSLq9hOKuzsh1irJtPkz4O9RU",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "118749454354",
+      "robloxApiKey": "dF31hM0QVUKE9Dwaco1yYQVZByI5N1OKh2CZ0qKlGeanKnAAZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SW1SR016Rm9UVEJSVmxWTFJUbEVkMkZqYnpGNVdWRldXa0o1U1RWT01VOUxhREpEV2pCeFMyeEhaV0Z1UzI1QlFTSXNJbTkzYm1WeVNXUWlPaUk0T0RBNU16VTRNRGc1SWl3aVpYaHdJam94TnpnNE1USXlNVGMxTENKcFlYUWlPakUzT0RneE1UZzFOelVzSW01aVppSTZNVGM0T0RFeE9EVTNOWDAuaHVxSnE1N054TkZQWktjaG5KNGtpSjBIUmY3N1BsSnM2LVdScUV4ZTAwdFBQSmt4YWVkUDVaOGRlNGNza1RrTlVqTi16eVdlY0R4M2loSjZSSzU2ejRCYzhCVERsQzYydWFMTnE4YnpOb0dORzlzVWJYbDAzMGp0cEtOalZEa0VZaTZqaVVmSlZjSDQ2WTFySHlwdzBmVFNFR2xwZVhPY0VIbGZ3cmg1TkZ0NTZQQ3JpbElHTHdob2ppcEJMWjlQRGpuMFYzWXhtNDVFZENyZGE1VEpvcmFhWHloV0pVRTV6Nm9xUjRuXzY3X0p3amhWcTFrQmI2TlpmLTlmNkJ1QVQ2bDBycm1ZdzB4blc0VWxDeWhrNWFSY3p3NXVHV3Z6bWprVi15bDFFYWZzaHBGVVgxcWhaQzNoT0xUQTNMdjhwaVNQd3dveDNIOGVHbERBMHFVeExn",
+      "clientName": "Giveaway Drop #2 (118749454354)",
+      "status": "active",
+      "activatedAt": "2026-08-31T16:35:58.665Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0
+    },
+    {
+      "id": "svc_1788194158661_113",
+      "tokenCode": "KZ-GW-505914",
+      "slug": "Pw9EwOH81vBtz3ZCfM7qFCe2pvIgeMta",
+      "webhookSlug": "Pw9EwOH81vBtz3ZCfM7qFCe2pvIgeMta",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "10742273346",
+      "robloxApiKey": "dF31hM0QVUKE9Dwaco1yYQVZByI5N1OKh2CZ0qKlGeanKnAAZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SW1SR016Rm9UVEJSVmxWTFJUbEVkMkZqYnpGNVdWRldXa0o1U1RWT01VOUxhREpEV2pCeFMyeEhaV0Z1UzI1QlFTSXNJbTkzYm1WeVNXUWlPaUk0T0RBNU16VTRNRGc1SWl3aVpYaHdJam94TnpnNE1USXlNVGMxTENKcFlYUWlPakUzT0RneE1UZzFOelVzSW01aVppSTZNVGM0T0RFeE9EVTNOWDAuaHVxSnE1N054TkZQWktjaG5KNGtpSjBIUmY3N1BsSnM2LVdScUV4ZTAwdFBQSmt4YWVkUDVaOGRlNGNza1RrTlVqTi16eVdlY0R4M2loSjZSSzU2ejRCYzhCVERsQzYydWFMTnE4YnpOb0dORzlzVWJYbDAzMGp0cEtOalZEa0VZaTZqaVVmSlZjSDQ2WTFySHlwdzBmVFNFR2xwZVhPY0VIbGZ3cmg1TkZ0NTZQQ3JpbElHTHdob2ppcEJMWjlQRGpuMFYzWXhtNDVFZENyZGE1VEpvcmFhWHloV0pVRTV6Nm9xUjRuXzY3X0p3amhWcTFrQmI2TlpmLTlmNkJ1QVQ2bDBycm1ZdzB4blc0VWxDeWhrNWFSY3p3NXVHV3Z6bWprVi15bDFFYWZzaHBGVVgxcWhaQzNoT0xUQTNMdjhwaVNQd3dveDNIOGVHbERBMHFVeExn",
+      "clientName": "Giveaway Drop #1 (10742273346)",
+      "status": "active",
+      "activatedAt": "2026-08-31T16:35:58.661Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0
+    },
+    {
+      "id": "svc_1788194158648_781",
+      "tokenCode": "KZ-ADM-957875",
+      "slug": "XoGNYrvhyP3XYx8mGU13UNz6YpauofbL",
+      "webhookSlug": "XoGNYrvhyP3XYx8mGU13UNz6YpauofbL",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "9988776655",
+      "robloxApiKey": "dF31hM0QVUKE9Dwaco1yYQVZByI5N1OKh2CZ0qKlGeanKnAAZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SW1SR016Rm9UVEJSVmxWTFJUbEVkMkZqYnpGNVdWRldXa0o1U1RWT01VOUxhREpEV2pCeFMyeEhaV0Z1UzI1QlFTSXNJbTkzYm1WeVNXUWlPaUk0T0RBNU16VTRNRGc1SWl3aVpYaHdJam94TnpnNE1USXlNVGMxTENKcFlYUWlPakUzT0RneE1UZzFOelVzSW01aVppSTZNVGM0T0RFeE9EVTNOWDAuaHVxSnE1N054TkZQWktjaG5KNGtpSjBIUmY3N1BsSnM2LVdScUV4ZTAwdFBQSmt4YWVkUDVaOGRlNGNza1RrTlVqTi16eVdlY0R4M2loSjZSSzU2ejRCYzhCVERsQzYydWFMTnE4YnpOb0dORzlzVWJYbDAzMGp0cEtOalZEa0VZaTZqaVVmSlZjSDQ2WTFySHlwdzBmVFNFR2xwZVhPY0VIbGZ3cmg1TkZ0NTZQQ3JpbElHTHdob2ppcEJMWjlQRGpuMFYzWXhtNDVFZENyZGE1VEpvcmFhWHloV0pVRTV6Nm9xUjRuXzY3X0p3amhWcTFrQmI2TlpmLTlmNkJ1QVQ2bDBycm1ZdzB4blc0VWxDeWhrNWFSY3p3NXVHV3Z6bWprVi15bDFFYWZzaHBGVVgxcWhaQzNoT0xUQTNMdjhwaVNQd3dveDNIOGVHbERBMHFVeExn",
+      "clientName": "Direct Universe Test Game",
+      "status": "active",
+      "activatedAt": "2026-08-31T16:35:58.648Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0,
+      "webhookUrl": "http://localhost:5999/api/webhook/XoGNYrvhyP3XYx8mGU13UNz6YpauofbL",
+      "pollUrl": "http://localhost:5999/api/poll/XoGNYrvhyP3XYx8mGU13UNz6YpauofbL"
+    },
+    {
+      "id": "svc_1788194158629_788",
+      "tokenCode": "KZ-SAW-5799-9AA0-5F6F",
+      "slug": "rqQQuhxqz2mnVctwJDxortHDpHItyUAZ",
+      "webhookSlug": "rqQQuhxqz2mnVctwJDxortHDpHItyUAZ",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "118749454354",
+      "robloxApiKey": "default-global-key",
+      "clientName": "Game QA Test Place Updated",
+      "status": "active",
+      "activatedAt": "2026-08-31T16:35:58.629Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0,
+      "webhookUrl": "http://localhost:5999/api/webhook/rqQQuhxqz2mnVctwJDxortHDpHItyUAZ",
+      "pollUrl": "http://localhost:5999/api/poll/rqQQuhxqz2mnVctwJDxortHDpHItyUAZ"
+    },
+    {
       "id": "svc_1788165796166_7",
       "tokenCode": "KZ-GW-475962",
       "slug": "JBRSQrdi1YWcHQLSvVkegXvFCqiQJcpT",
@@ -1053,12 +1297,51 @@
       "status": "active",
       "activatedAt": "2026-08-29T06:50:00.000Z",
       "expiresAt": null,
-      "lastDonationAt": "2026-08-31T08:43:18.109Z",
-      "totalDonationsAmount": 2025000,
-      "donationCount": 12
+      "lastDonationAt": "2026-08-31T16:35:59.983Z",
+      "totalDonationsAmount": 2275000,
+      "donationCount": 13
     }
   ],
   "donations": [
+    {
+      "id": "wh_1788194158960",
+      "nama": "BagiBagi_User",
+      "amount": 50000,
+      "message": "Semangat terus!",
+      "platform": "bagibagi",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-31T16:35:58.960Z",
+      "details": {},
+      "polled": true
+    },
+    {
+      "id": "wh_1788194158864",
+      "nama": "SociaBuzz_Fan",
+      "amount": 100000,
+      "message": "Halo bang!",
+      "platform": "sociabuzz",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-31T16:35:58.861Z",
+      "details": {},
+      "polled": true
+    },
+    {
+      "id": "wh_1788194158682",
+      "nama": "SuperDonator_QA",
+      "amount": 250000,
+      "message": "Donasi test end-to-end!",
+      "platform": "saweria",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-31T16:35:58.679Z",
+      "details": {},
+      "polled": true
+    },
     {
       "id": "wh_1788165796553",
       "nama": "BagiBagi_User",
@@ -1574,6 +1857,67 @@
         "playerId": 12345678,
         "messageType": "chat",
         "avatarUrl": "https://www.roblox.com/headshot-thumbnail/image?userId=12345678&width=150&height=150&format=png"
+      }
+    },
+    {
+      "id": "chat_1788194159304_804",
+      "sender": "👑 KIDZY (Owner)",
+      "senderType": "admin",
+      "text": "Halo semua player! Event donasi 50% aktif!",
+      "universeId": "10742273346",
+      "targetPlayer": "all",
+      "isBroadcast": true,
+      "timestamp": "2026-08-31T16:35:59.304Z",
+      "polled": true,
+      "details": {
+        "adminEmail": "rafly4322@gmail.com",
+        "adminName": "Muhammad Rafly (Admin)"
+      }
+    },
+    {
+      "id": "chat_1788194159320_777",
+      "sender": "SuperGamer_VIP",
+      "senderType": "player",
+      "text": "Halo bang Rafly! Gamenya keren banget!",
+      "universeId": "10742273346",
+      "targetPlayer": "admin",
+      "isBroadcast": false,
+      "timestamp": "2026-08-31T16:35:59.320Z",
+      "polled": false,
+      "details": {
+        "playerId": 998811,
+        "messageType": "chat",
+        "avatarUrl": "https://www.roblox.com/headshot-thumbnail/image?userId=998811&width=150&height=150&format=png"
+      }
+    },
+    {
+      "id": "chat_1788194159333_929",
+      "sender": "Calon Pembeli VIP",
+      "senderType": "visitor",
+      "text": "Halo, paket lifetime ready?",
+      "universeId": "web_store",
+      "targetPlayer": "admin",
+      "isBroadcast": false,
+      "timestamp": "2026-08-31T16:35:59.333Z",
+      "polled": false,
+      "details": {
+        "email": ""
+      }
+    },
+    {
+      "id": "chat_1788194159352_656",
+      "sender": "Hacker&lt;script&gt;alert(1)&lt;/script&gt;",
+      "senderType": "player",
+      "text": "&lt;script&gt;document.cookie&lt;/script&gt;Test text",
+      "universeId": "10742273346",
+      "targetPlayer": "admin",
+      "isBroadcast": false,
+      "timestamp": "2026-08-31T16:35:59.352Z",
+      "polled": false,
+      "details": {
+        "playerId": 112233,
+        "messageType": "chat",
+        "avatarUrl": "https://www.roblox.com/headshot-thumbnail/image?userId=112233&width=150&height=150&format=png"
       }
     }
   ]

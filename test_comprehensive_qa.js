@@ -5,7 +5,7 @@ const { db } = require('./data/db');
 
 async function runComprehensiveQA() {
   console.log('================================================================');
-  console.log('  KIDZY STORE — END-TO-END QA & DEBUGGING TEST SUITE');
+  console.log('  KIDZY STORE — END-TO-END QA & DEBUGGING TEST SUITE (v3.0.0)');
   console.log('================================================================\n');
 
   let passed = 0;
@@ -41,6 +41,7 @@ async function runComprehensiveQA() {
       'p/bagibagi.html',
       'p/sociabuzz.html',
       'admin/index.html',
+      'admin/chat.html',
       'admin/services.html',
       'admin/tokens.html',
       'admin/settings.html',
@@ -64,11 +65,14 @@ async function runComprehensiveQA() {
     const styleCss = fs.readFileSync(path.join(publicDir, 'assets/style.css'), 'utf-8');
     assert(styleCss.includes('.modal-backdrop'), 'CSS: Modal Backdrop System Present');
     assert(styleCss.includes('.faq-item'), 'CSS: FAQ Accordion System Present');
+    assert(styleCss.includes('.live-chat-bubble-btn'), 'CSS: Live Chat Floating Button Styles Present');
+    assert(styleCss.includes('.live-chat-box'), 'CSS: Live Chat Popup Container Styles Present');
     assert(styleCss.includes('@media (max-width:'), 'CSS: Responsive Breakpoints Present');
 
     const appJs = fs.readFileSync(path.join(publicDir, 'assets/app.js'), 'utf-8');
     assert(appJs.includes('window.copyText'), 'JS: copyText Attached to Window');
     assert(appJs.includes('window.openOrderModal'), 'JS: openOrderModal Attached to Window');
+    assert(appJs.includes('window.toggleLiveChatBox'), 'JS: toggleLiveChatBox Attached to Window');
     assert(appJs.includes('window.API'), 'JS: API Client Attached to Window');
 
     // -------------------------------------------------------------
@@ -286,9 +290,78 @@ async function runComprehensiveQA() {
     assert(pollAgainRes.status === 200 && pollAgainData.count === 0, 'Polling Idempotency: Consumed Donations are Not Duplicated (count = 0)');
 
     // -------------------------------------------------------------
-    // SECTION 7: SECURITY & DEFENSE MECHANISMS
+    // SECTION 7: LIVE CHAT (WEB ⟷ ROBLOX IN-GAME BRIDGE)
     // -------------------------------------------------------------
-    console.log('\n--- [SECTION 7] Security & OWASP Defense ---');
+    console.log('\n--- [SECTION 7] Live Chat (Web ⟷ Roblox In-Game Bridge) ---');
+
+    // 1. Admin sends broadcast message to Game
+    const chatSendRes = await fetch(`${BASE_URL}/api/chat/send-to-game`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}` },
+      body: JSON.stringify({
+        text: 'Halo semua player! Event donasi 50% aktif!',
+        sender: '👑 KIDZY (Owner)',
+        universeId: '10742273346',
+        isBroadcast: true
+      })
+    });
+    const chatSendData = await chatSendRes.json();
+    assert(chatSendRes.status === 200 && chatSendData.success && chatSendData.chat?.id, 'Admin Sends Live Chat Broadcast to Game');
+
+    // 2. Roblox Server Polling Chat
+    const chatPollRes = await fetch(`${BASE_URL}/api/chat/poll-game/10742273346`);
+    const chatPollData = await chatPollRes.json();
+    assert(chatPollRes.status === 200 && chatPollData.count >= 1 && chatPollData.messages[0].text.includes('Event donasi'), 'Roblox In-Game Script Polls Admin Chat Successfully');
+
+    // 3. Roblox In-Game Player Sends Message to Web Admin
+    const chatPlayerRes = await fetch(`${BASE_URL}/api/chat/from-game`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        playerName: 'SuperGamer_VIP',
+        playerId: 998811,
+        text: 'Halo bang Rafly! Gamenya keren banget!',
+        universeId: '10742273346'
+      })
+    });
+    const chatPlayerData = await chatPlayerRes.json();
+    assert(chatPlayerRes.status === 200 && chatPlayerData.success, 'Roblox In-Game Player Sends Chat to Web Admin');
+
+    // 4. Web Visitor Support Message
+    const chatSupportRes = await fetch(`${BASE_URL}/api/chat/web-support`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'Calon Pembeli VIP',
+        message: 'Halo, paket lifetime ready?'
+      })
+    });
+    const chatSupportData = await chatSupportRes.json();
+    assert(chatSupportRes.status === 200 && chatSupportData.success, 'Website Visitor Sends Support Message to Owner');
+
+    // 5. Chat History Feed Retrieval
+    const chatHistoryRes = await fetch(`${BASE_URL}/api/chat/history`);
+    const chatHistoryData = await chatHistoryRes.json();
+    assert(chatHistoryRes.status === 200 && chatHistoryData.count >= 3, 'Chat Feed History Contains All Realtime Message Layers');
+
+    // 6. XSS Injection Prevention in Chat
+    const chatXssRes = await fetch(`${BASE_URL}/api/chat/from-game`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        playerName: 'Hacker<script>alert(1)</script>',
+        playerId: 112233,
+        text: '<script>document.cookie</script>Test text',
+        universeId: '10742273346'
+      })
+    });
+    const chatXssData = await chatXssRes.json();
+    assert(chatXssRes.status === 200 && !chatXssData.chat.text.includes('<script>'), 'Chat Sanitizer Blocks XSS Scripts');
+
+    // -------------------------------------------------------------
+    // SECTION 8: SECURITY & DEFENSE MECHANISMS
+    // -------------------------------------------------------------
+    console.log('\n--- [SECTION 8] Security & OWASP Defense ---');
 
     // 1. Prototype Pollution Attempt (Raw HTTP Payload)
     const protoPolluteRes = await fetch(`${BASE_URL}/api/auth/login`, {
@@ -304,9 +377,9 @@ async function runComprehensiveQA() {
     assert(healthRes.headers.get('x-xss-protection') === '1; mode=block', 'Security Header: X-XSS-Protection Present');
 
     // -------------------------------------------------------------
-    // SECTION 8: ASSET DOWNLOADS
+    // SECTION 9: ASSET DOWNLOADS
     // -------------------------------------------------------------
-    console.log('\n--- [SECTION 8] Asset Downloads ---');
+    console.log('\n--- [SECTION 9] Asset Downloads ---');
     const dlZipRes = await fetch(`${BASE_URL}/api/download/zip`);
     assert(dlZipRes.status === 200, 'Download Endpoint: /api/download/zip returns 200');
 
@@ -315,6 +388,9 @@ async function runComprehensiveQA() {
 
     const dlScriptRes = await fetch(`${BASE_URL}/api/download/script`);
     assert(dlScriptRes.status === 200, 'Download Endpoint: /api/download/script returns 200');
+
+    const dlChatRes = await fetch(`${BASE_URL}/downloads/KidzyLiveChatServer.lua`);
+    assert(dlChatRes.status === 200, 'Download Endpoint: /downloads/KidzyLiveChatServer.lua returns 200');
 
     console.log('\n================================================================');
     console.log(`  FINAL QA SUMMARY: ${passed} PASSED, ${failed} FAILED`);
