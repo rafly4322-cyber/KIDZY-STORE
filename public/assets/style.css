@@ -135,6 +135,42 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* ---------- Background Watermark (KIDZYY) ---------- */
+.site-watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85vw;
+  max-width: 950px;
+  height: auto;
+  opacity: 0.055;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+  filter: drop-shadow(0 0 50px rgba(239, 68, 68, 0.4));
+  animation: pulseWatermark 8s ease-in-out infinite alternate;
+}
+
+@keyframes pulseWatermark {
+  0% { transform: translate(-50%, -50%) scale(0.96); opacity: 0.045; }
+  100% { transform: translate(-50%, -50%) scale(1.02); opacity: 0.075; }
+}
+
+.brand-logo-img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.brand:hover .brand-logo-img {
+  transform: scale(1.06) rotate(-2deg);
+  filter: drop-shadow(0 0 18px rgba(239, 68, 68, 0.8));
 }
 
 main {
