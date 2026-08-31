@@ -26,9 +26,56 @@
       "name": "Muhammad Rafly (Admin)",
       "createdAt": "2026-08-29T05:48:27.769Z",
       "expiresAt": "2026-09-05T05:48:27.769Z"
+    },
+    "cb7ab99e86a4b512e145572c53ca9c5cb7bab8e64a3555d96f4f06e59aef7311": {
+      "userId": "usr_admin_1",
+      "email": "rafly4322@gmail.com",
+      "role": "admin",
+      "name": "Muhammad Rafly (Admin)",
+      "createdAt": "2026-08-31T08:38:08.427Z",
+      "expiresAt": "2026-09-07T08:38:08.427Z"
     }
   },
   "tokens": [
+    {
+      "id": "tok_auto_1788165488473_713",
+      "code": "KZ-GW-877360",
+      "slug": "PiEGGpxwRFx1lMlaWiOT0SYXDBE5HMYk",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "active",
+      "note": "Auto-validated Token",
+      "createdAt": "2026-08-31T08:38:08.473Z",
+      "usedAt": "2026-08-31T08:38:08.474Z",
+      "usedBy": "Giveaway TikTok #2 (118749454354)",
+      "serviceId": "svc_1788165488474_31"
+    },
+    {
+      "id": "tok_auto_1788165488471_616",
+      "code": "KZ-GW-807406",
+      "slug": "W6W5L2llHDGndSkDkPerrFmJCliN9ZHt",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "active",
+      "note": "Auto-validated Token",
+      "createdAt": "2026-08-31T08:38:08.471Z",
+      "usedAt": "2026-08-31T08:38:08.472Z",
+      "usedBy": "Giveaway TikTok #1 (10742273346)",
+      "serviceId": "svc_1788165488472_243"
+    },
+    {
+      "id": "tok_auto_1788165488459_732",
+      "code": "KZ-ADM-163015",
+      "slug": "i8pPMIUT9WTp8kWsCQQEws2MQHSSFlcZ",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "status": "active",
+      "note": "Auto-validated Token",
+      "createdAt": "2026-08-31T08:38:08.460Z",
+      "usedAt": "2026-08-31T08:38:08.460Z",
+      "usedBy": "Kit Klub KIDZY V2",
+      "serviceId": "svc_1788165488460_385"
+    },
     {
       "id": "tok_auto_1788121294653_411",
       "code": "KZ-TEST-NEW-TOKEN-2026",
@@ -149,6 +196,59 @@
   ],
   "services": [
     {
+      "id": "svc_1788165488474_31",
+      "tokenCode": "KZ-GW-877360",
+      "slug": "PiEGGpxwRFx1lMlaWiOT0SYXDBE5HMYk",
+      "webhookSlug": "PiEGGpxwRFx1lMlaWiOT0SYXDBE5HMYk",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "118749454354",
+      "robloxApiKey": "dF31hM0QVUKE9Dwaco1yYQVZByI5N1OKh2CZ0qKlGeanKnAAZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SW1SR016Rm9UVEJSVmxWTFJUbEVkMkZqYnpGNVdWRldXa0o1U1RWT01VOUxhREpEV2pCeFMyeEhaV0Z1UzI1QlFTSXNJbTkzYm1WeVNXUWlPaUk0T0RBNU16VTRNRGc1SWl3aVpYaHdJam94TnpnNE1USXlNVGMxTENKcFlYUWlPakUzT0RneE1UZzFOelVzSW01aVppSTZNVGM0T0RFeE9EVTNOWDAuaHVxSnE1N054TkZQWktjaG5KNGtpSjBIUmY3N1BsSnM2LVdScUV4ZTAwdFBQSmt4YWVkUDVaOGRlNGNza1RrTlVqTi16eVdlY0R4M2loSjZSSzU2ejRCYzhCVERsQzYydWFMTnE4YnpOb0dORzlzVWJYbDAzMGp0cEtOalZEa0VZaTZqaVVmSlZjSDQ2WTFySHlwdzBmVFNFR2xwZVhPY0VIbGZ3cmg1TkZ0NTZQQ3JpbElHTHdob2ppcEJMWjlQRGpuMFYzWXhtNDVFZENyZGE1VEpvcmFhWHloV0pVRTV6Nm9xUjRuXzY3X0p3amhWcTFrQmI2TlpmLTlmNkJ1QVQ2bDBycm1ZdzB4blc0VWxDeWhrNWFSY3p3NXVHV3Z6bWprVi15bDFFYWZzaHBGVVgxcWhaQzNoT0xUQTNMdjhwaVNQd3dveDNIOGVHbERBMHFVeExn",
+      "clientName": "Giveaway TikTok #2 (118749454354)",
+      "status": "active",
+      "activatedAt": "2026-08-31T08:38:08.474Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0
+    },
+    {
+      "id": "svc_1788165488472_243",
+      "tokenCode": "KZ-GW-807406",
+      "slug": "W6W5L2llHDGndSkDkPerrFmJCliN9ZHt",
+      "webhookSlug": "W6W5L2llHDGndSkDkPerrFmJCliN9ZHt",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "10742273346",
+      "robloxApiKey": "dF31hM0QVUKE9Dwaco1yYQVZByI5N1OKh2CZ0qKlGeanKnAAZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SW1SR016Rm9UVEJSVmxWTFJUbEVkMkZqYnpGNVdWRldXa0o1U1RWT01VOUxhREpEV2pCeFMyeEhaV0Z1UzI1QlFTSXNJbTkzYm1WeVNXUWlPaUk0T0RBNU16VTRNRGc1SWl3aVpYaHdJam94TnpnNE1USXlNVGMxTENKcFlYUWlPakUzT0RneE1UZzFOelVzSW01aVppSTZNVGM0T0RFeE9EVTNOWDAuaHVxSnE1N054TkZQWktjaG5KNGtpSjBIUmY3N1BsSnM2LVdScUV4ZTAwdFBQSmt4YWVkUDVaOGRlNGNza1RrTlVqTi16eVdlY0R4M2loSjZSSzU2ejRCYzhCVERsQzYydWFMTnE4YnpOb0dORzlzVWJYbDAzMGp0cEtOalZEa0VZaTZqaVVmSlZjSDQ2WTFySHlwdzBmVFNFR2xwZVhPY0VIbGZ3cmg1TkZ0NTZQQ3JpbElHTHdob2ppcEJMWjlQRGpuMFYzWXhtNDVFZENyZGE1VEpvcmFhWHloV0pVRTV6Nm9xUjRuXzY3X0p3amhWcTFrQmI2TlpmLTlmNkJ1QVQ2bDBycm1ZdzB4blc0VWxDeWhrNWFSY3p3NXVHV3Z6bWprVi15bDFFYWZzaHBGVVgxcWhaQzNoT0xUQTNMdjhwaVNQd3dveDNIOGVHbERBMHFVeExn",
+      "clientName": "Giveaway TikTok #1 (10742273346)",
+      "status": "active",
+      "activatedAt": "2026-08-31T08:38:08.472Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0
+    },
+    {
+      "id": "svc_1788165488460_385",
+      "tokenCode": "KZ-ADM-163015",
+      "slug": "i8pPMIUT9WTp8kWsCQQEws2MQHSSFlcZ",
+      "webhookSlug": "i8pPMIUT9WTp8kWsCQQEws2MQHSSFlcZ",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "10742273346",
+      "robloxApiKey": "dF31hM0QVUKE9Dwaco1yYQVZByI5N1OKh2CZ0qKlGeanKnAAZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2lZbUZ6WlVGd2FVdGxlU0k2SW1SR016Rm9UVEJSVmxWTFJUbEVkMkZqYnpGNVdWRldXa0o1U1RWT01VOUxhREpEV2pCeFMyeEhaV0Z1UzI1QlFTSXNJbTkzYm1WeVNXUWlPaUk0T0RBNU16VTRNRGc1SWl3aVpYaHdJam94TnpnNE1USXlNVGMxTENKcFlYUWlPakUzT0RneE1UZzFOelVzSW01aVppSTZNVGM0T0RFeE9EVTNOWDAuaHVxSnE1N054TkZQWktjaG5KNGtpSjBIUmY3N1BsSnM2LVdScUV4ZTAwdFBQSmt4YWVkUDVaOGRlNGNza1RrTlVqTi16eVdlY0R4M2loSjZSSzU2ejRCYzhCVERsQzYydWFMTnE4YnpOb0dORzlzVWJYbDAzMGp0cEtOalZEa0VZaTZqaVVmSlZjSDQ2WTFySHlwdzBmVFNFR2xwZVhPY0VIbGZ3cmg1TkZ0NTZQQ3JpbElHTHdob2ppcEJMWjlQRGpuMFYzWXhtNDVFZENyZGE1VEpvcmFhWHloV0pVRTV6Nm9xUjRuXzY3X0p3amhWcTFrQmI2TlpmLTlmNkJ1QVQ2bDBycm1ZdzB4blc0VWxDeWhrNWFSY3p3NXVHV3Z6bWprVi15bDFFYWZzaHBGVVgxcWhaQzNoT0xUQTNMdjhwaVNQd3dveDNIOGVHbERBMHFVeExn",
+      "clientName": "Kit Klub KIDZY V2",
+      "status": "active",
+      "activatedAt": "2026-08-31T08:38:08.460Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0,
+      "webhookUrl": "http://localhost:5123/api/webhook/i8pPMIUT9WTp8kWsCQQEws2MQHSSFlcZ",
+      "pollUrl": "http://localhost:5123/api/poll/i8pPMIUT9WTp8kWsCQQEws2MQHSSFlcZ"
+    },
+    {
       "id": "svc_1788121294654_431",
       "tokenCode": "KZ-TEST-NEW-TOKEN-2026",
       "slug": "BlppMhasTgbHAaEaJlaBLe7SvVBe05ue",
@@ -180,9 +280,9 @@
       "status": "active",
       "activatedAt": "2026-08-30T19:36:29.010Z",
       "expiresAt": null,
-      "lastDonationAt": "2026-08-30T20:21:50.664Z",
-      "totalDonationsAmount": 625000,
-      "donationCount": 4
+      "lastDonationAt": "2026-08-31T08:38:10.023Z",
+      "totalDonationsAmount": 775000,
+      "donationCount": 5
     },
     {
       "id": "svc_1788118012706_170",
@@ -213,12 +313,25 @@
       "status": "active",
       "activatedAt": "2026-08-29T06:50:00.000Z",
       "expiresAt": null,
-      "lastDonationAt": "2026-08-30T20:21:50.669Z",
-      "totalDonationsAmount": 975000,
-      "donationCount": 5
+      "lastDonationAt": "2026-08-31T08:38:10.059Z",
+      "totalDonationsAmount": 1125000,
+      "donationCount": 6
     }
   ],
   "donations": [
+    {
+      "id": "wh_1788165488481",
+      "nama": "Pemenang_Giveaway_VIP",
+      "amount": 150000,
+      "message": "Makasih bang giveawaynya!",
+      "platform": "saweria",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-08-31T08:38:08.481Z",
+      "details": {},
+      "polled": true
+    },
     {
       "id": "wh_1788121309872",
       "nama": "Sultan Tester BagiBagi",

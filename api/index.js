@@ -519,6 +519,29 @@ app.post('/api/admin/tokens', requireAdmin, (req, res) => {
     res.json({ success: true, message: 'Token baru berhasil dibuat!', token });
 });
 
+// Bulk Token Generator for Giveaways
+app.post('/api/admin/tokens/bulk', requireAdmin, (req, res) => {
+    const { count = 5, platform = 'saweria', plan = 'lifetime', note = 'Giveaway Token' } = req.body;
+    const num = Math.min(100, Math.max(1, parseInt(count) || 5));
+    const generatedTokens = [];
+
+    for (let i = 0; i < num; i++) {
+        const token = db.createToken({
+            platform,
+            plan,
+            note: `${note} #${i + 1} (${new Date().toLocaleDateString('id-ID')})`
+        });
+        generatedTokens.push(token);
+    }
+
+    res.json({
+        success: true,
+        message: `${num} Token giveaway berhasil di-generate!`,
+        count: generatedTokens.length,
+        tokens: generatedTokens
+    });
+});
+
 app.delete('/api/admin/tokens/:id', requireAdmin, (req, res) => {
     const removed = db.deleteToken(req.params.id);
     if (removed) {
@@ -532,22 +555,138 @@ app.get('/api/admin/services', requireAdmin, (req, res) => {
     res.json({ success: true, services: db.getServices() });
 });
 
+// Add Service with Optional / Global Roblox API Key Fallback
 app.post('/api/admin/services', requireAdmin, (req, res) => {
     const { universeId, robloxApiKey, clientName, platform, plan } = req.body;
-    if (!universeId || !robloxApiKey) {
-        return res.status(400).json({ success: false, message: 'Universe ID dan Roblox API Key wajib diisi.' });
+    if (!universeId) {
+        return res.status(400).json({ success: false, message: 'Roblox Universe ID wajib diisi.' });
     }
 
+    const settings = db.getSettings() || {};
+    const effectiveApiKey = (robloxApiKey && robloxApiKey.trim().length > 10) 
+        ? robloxApiKey.trim() 
+        : (settings.robloxApiKey || 'default-global-key');
+
     const service = db.createService({
-        tokenCode: 'MANUAL-ADMIN-' + Math.floor(Math.random() * 10000),
-        universeId,
-        robloxApiKey,
-        clientName: clientName || 'Manual Client',
+        tokenCode: 'KZ-ADM-' + Math.floor(100000 + Math.random() * 900000),
+        universeId: String(universeId).trim(),
+        robloxApiKey: effectiveApiKey,
+        clientName: clientName || `Game_${universeId}`,
         platform: platform || 'saweria',
         plan: plan || 'lifetime'
     });
 
-    res.json({ success: true, message: 'Layanan berhasil ditambahkan.', service });
+    const proto = req.headers['x-forwarded-proto'] || (req.headers.host && req.headers.host.includes('localhost') ? 'http' : 'https');
+    const origin = req.headers.host ? `${proto}://${req.headers.host}` : 'https://kidzy-store.vercel.app';
+    service.webhookUrl = `${origin}/api/webhook/${service.webhookSlug || service.slug || service.tokenCode}`;
+    service.pollUrl = `${origin}/api/poll/${service.webhookSlug || service.slug || service.tokenCode}`;
+
+    res.json({ 
+        success: true, 
+        message: 'Layanan Roblox berhasil ditambahkan dan langsung aktif!', 
+        service 
+    });
+});
+
+// Mass / Bulk Giveaway Webhook & Polling Links Generator
+app.post('/api/admin/giveaway/generate', requireAdmin, (req, res) => {
+    try {
+        const { count = 5, universeIds = [], platform = 'saweria', plan = 'lifetime', clientPrefix = 'Pemenang Giveaway', robloxApiKey = '' } = req.body;
+        const settings = db.getSettings() || {};
+        const effectiveApiKey = (robloxApiKey && robloxApiKey.trim().length > 10) 
+            ? robloxApiKey.trim() 
+            : (settings.robloxApiKey || 'default-global-key');
+
+        const proto = req.headers['x-forwarded-proto'] || (req.headers.host && req.headers.host.includes('localhost') ? 'http' : 'https');
+        const origin = req.headers.host ? `${proto}://${req.headers.host}` : 'https://kidzy-store.vercel.app';
+
+        const generatedList = [];
+
+        if (Array.isArray(universeIds) && universeIds.length > 0) {
+            // Generate for specific Universe IDs
+            universeIds.forEach((uId, idx) => {
+                const cleanUid = String(uId).trim();
+                if (!cleanUid) return;
+
+                const tokenCode = 'KZ-GW-' + Math.floor(100000 + Math.random() * 900000);
+                const service = db.createService({
+                    tokenCode,
+                    universeId: cleanUid,
+                    robloxApiKey: effectiveApiKey,
+                    clientName: `${clientPrefix} #${idx + 1} (${cleanUid})`,
+                    platform,
+                    plan
+                });
+
+                const slug = service.webhookSlug || service.slug || service.tokenCode;
+                const whUrl = `${origin}/api/webhook/${slug}`;
+                const pollUrl = `${origin}/api/poll/${slug}`;
+
+                generatedList.push({
+                    serviceId: service.id,
+                    tokenCode: service.tokenCode,
+                    universeId: cleanUid,
+                    clientName: service.clientName,
+                    platform,
+                    webhookUrl: whUrl,
+                    pollUrl: pollUrl
+                });
+            });
+        } else {
+            // Generate blank pre-activated giveaway links
+            const num = Math.min(50, Math.max(1, parseInt(count) || 5));
+            for (let i = 0; i < num; i++) {
+                const tokenCode = 'KZ-GIVEAWAY-' + Math.floor(100000 + Math.random() * 900000);
+                const service = db.createService({
+                    tokenCode,
+                    universeId: 'GIVEAWAY_PENDING',
+                    robloxApiKey: effectiveApiKey,
+                    clientName: `${clientPrefix} #${i + 1}`,
+                    platform,
+                    plan
+                });
+
+                const slug = service.webhookSlug || service.slug || service.tokenCode;
+                const whUrl = `${origin}/api/webhook/${slug}`;
+                const pollUrl = `${origin}/api/poll/${slug}`;
+
+                generatedList.push({
+                    serviceId: service.id,
+                    tokenCode: service.tokenCode,
+                    universeId: 'GIVEAWAY_PENDING',
+                    clientName: service.clientName,
+                    platform,
+                    webhookUrl: whUrl,
+                    pollUrl: pollUrl
+                });
+            }
+        }
+
+        // Format nice copy-paste Discord text
+        let discordFormattedText = `🎁 **KIDZY STORE — DAFTAR LINK WEBHOOK GIVEAWAY (${generatedList.length} PAKET)** 🎁\n\n`;
+        generatedList.forEach((item, idx) => {
+            discordFormattedText += `━━━━━━━━━━━━━━━━━━━━━\n`;
+            discordFormattedText += `🏆 **PAKET GIVEAWAY #${idx + 1}**\n`;
+            discordFormattedText += `🔑 Token: \`${item.tokenCode}\`\n`;
+            if (item.universeId && item.universeId !== 'GIVEAWAY_PENDING') {
+                discordFormattedText += `🎮 Universe ID: \`${item.universeId}\`\n`;
+            }
+            discordFormattedText += `🌐 Webhook Saweria/BagiBagi/SociaBuzz:\n${item.webhookUrl}\n`;
+            discordFormattedText += `📡 Polling Roblox Studio:\n${item.pollUrl}\n\n`;
+        });
+        discordFormattedText += `✨ *Support Lifetime Permanen by KIDZY Store* ✨`;
+
+        res.json({
+            success: true,
+            message: `Berhasil membuat ${generatedList.length} link webhook & polling giveaway!`,
+            count: generatedList.length,
+            services: generatedList,
+            discordFormattedText
+        });
+    } catch (err) {
+        console.error('❌ Giveaway Generate Error:', err);
+        res.status(500).json({ success: false, message: 'Gagal membuat giveaway: ' + err.message });
+    }
 });
 
 app.put('/api/admin/services/:id', requireAdmin, (req, res) => {

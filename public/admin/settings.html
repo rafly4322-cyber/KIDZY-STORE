@@ -95,6 +95,34 @@
             </form>
           </div>
 
+          <!-- Roblox Open Cloud API Key Config -->
+          <div class="card" style="margin-bottom: 24px; border-color: rgba(99, 102, 241, 0.4);">
+            <div class="row between" style="margin-bottom: 12px;">
+              <div>
+                <span class="badge badge-accent">Roblox Open Cloud</span>
+                <h2 class="h2" style="margin-top: 4px;">Kunci API Roblox (Global Fallback)</h2>
+                <p class="small faint">API Key ini otomatis digunakan jika Universe ID tidak memasukkan API Key spesifik.</p>
+              </div>
+            </div>
+
+            <form id="roblox-settings-form" class="stack" onsubmit="handleSaveRobloxSettings(event)">
+              <div class="field">
+                <label for="set-roblox-apikey">Roblox Open Cloud API Key</label>
+                <input class="input mono" id="set-roblox-apikey" type="password" placeholder="Masukkan API Key dari create.roblox.com..." />
+                <span class="small faint">Buat di Creator Dashboard &rarr; Open Cloud &rarr; Standard DataStores API (Read &amp; Write).</span>
+              </div>
+
+              <div class="field">
+                <label for="set-universe-ids">Daftar Default Universe IDs (Pisahkan dengan koma)</label>
+                <input class="input mono" id="set-universe-ids" placeholder="10742273346, 118749454354" />
+              </div>
+
+              <button class="btn btn-cyan" type="submit" style="margin-top: 6px;">
+                ☁️ Simpan Kunci API Roblox
+              </button>
+            </form>
+          </div>
+
           <!-- Change Password -->
           <div class="card">
             <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">Keamanan Akun Admin</h2>
@@ -147,6 +175,13 @@
           if (s.prices && s.prices.saweria) {
             document.getElementById('set-price-lifetime').value = s.prices.saweria.lifetime || 450000;
           }
+
+          if (s.robloxApiKey) {
+            document.getElementById('set-roblox-apikey').value = s.robloxApiKey;
+          }
+          if (s.universeIds && Array.isArray(s.universeIds)) {
+            document.getElementById('set-universe-ids').value = s.universeIds.join(', ');
+          }
         }
       } catch (err) {
         showToast('Gagal memuat pengaturan: ' + err.message, 'error');
@@ -176,6 +211,23 @@
           }
         });
         showToast('Pengaturan toko berhasil disimpan!', 'success');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function handleSaveRobloxSettings(e) {
+      e.preventDefault();
+      const robloxApiKey = document.getElementById('set-roblox-apikey').value.trim();
+      const universeIdsRaw = document.getElementById('set-universe-ids').value.trim();
+      const universeIds = universeIdsRaw ? universeIdsRaw.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+      try {
+        await API.post('/api/admin/settings', {
+          robloxApiKey,
+          universeIds
+        });
+        showToast('Kunci API Roblox & Universe IDs berhasil disimpan!', 'success');
       } catch (err) {
         showToast(err.message, 'error');
       }

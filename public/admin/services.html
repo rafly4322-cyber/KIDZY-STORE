@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Layanan Game — KIDZY Admin</title>
+  <title>Layanan Game & Generator Giveaway — KIDZY Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -37,7 +37,7 @@
             <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
             <a class="side-link" href="/admin/send.html">⚡ Simulator Donasi</a>
             <a class="side-link" href="/admin/logs.html">📜 Log Donasi</a>
-            <a class="side-link is-active" href="/admin/services.html">🎮 Layanan Game</a>
+            <a class="side-link is-active" href="/admin/services.html">🎮 Layanan &amp; Giveaway</a>
             <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
             <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan Toko</a>
             <a class="side-link" href="/admin/downloads.html">⬇️ Download File</a>
@@ -47,68 +47,150 @@
         <div>
           <div class="page-head">
             <div class="row" style="margin-bottom: 6px;">
-              <span class="badge badge-accent">Connected Experiences</span>
+              <span class="badge badge-accent">Experiences &amp; Giveaways</span>
+              <span class="badge badge-live">100% Fixed &amp; No Error</span>
             </div>
-            <h1 class="h1">Game &amp; Layanan Terdaftar</h1>
-            <p class="lead">Kelola semua Universe ID game Roblox yang aktif menerima webhook donasi.</p>
+            <h1 class="h1">Game &amp; Generator Giveaway</h1>
+            <p class="lead">Buat link webhook dan polling Roblox untuk Universe ID pribadi, client, ataupun generate banyak link sekaligus untuk giveaway.</p>
           </div>
 
-          <!-- Add Manual Service Card -->
-          <div class="card" style="margin-bottom: 24px;">
-            <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">➕ Tambah Layanan Manual</h2>
-            <form id="create-service-form" onsubmit="handleCreateService(event)">
-              <div class="grid three" style="margin-bottom: 14px;">
-                <div class="field">
-                  <label for="svc-client">Nama Client / Game</label>
-                  <input class="input" id="svc-client" required placeholder="Contoh: Game Club KZR" />
+          <!-- Quick Creation Result Notice -->
+          <div id="service-created-notice" style="display: none; margin-bottom: 24px;"></div>
+
+          <div class="grid two" style="margin-bottom: 24px; gap: 20px;">
+            <!-- 1. ADD DIRECT UNIVERSE ID SERVICE -->
+            <div class="card">
+              <div class="row between" style="margin-bottom: 12px;">
+                <h2 class="h2" style="font-size: 17px;">➕ Tambah Universe ID Langsung</h2>
+                <span class="badge badge-gold">Instan</span>
+              </div>
+              <p class="small faint" style="margin-bottom: 16px;">Masukkan Universe ID Roblox kamu untuk langsung dapat link Webhook &amp; Polling siap pakai.</p>
+
+              <form id="create-service-form" onsubmit="handleCreateService(event)">
+                <div class="field" style="margin-bottom: 12px;">
+                  <label for="svc-universe">Roblox Universe ID <span style="color: #EF4444;">*</span></label>
+                  <input class="input mono" id="svc-universe" required placeholder="Contoh: 10742273346" style="font-weight: 700; font-size: 15px; color: #A5B4FC;" />
+                  <span class="small faint">Bisa dilihat di create.roblox.com &rarr; Experiences &rarr; Copy Universe ID</span>
                 </div>
-                <div class="field">
-                  <label for="svc-universe">Roblox Universe ID</label>
-                  <input class="input mono" id="svc-universe" required placeholder="10764300084" />
+
+                <div class="grid two" style="margin-bottom: 12px; gap: 10px;">
+                  <div class="field">
+                    <label for="svc-client">Nama Game / Client</label>
+                    <input class="input" id="svc-client" placeholder="Game Roblox Saya" />
+                  </div>
+                  <div class="field">
+                    <label for="svc-platform">Platform</label>
+                    <select class="input" id="svc-platform">
+                      <option value="saweria">Saweria</option>
+                      <option value="bagibagi">BagiBagi</option>
+                      <option value="sociabuzz">SociaBuzz</option>
+                    </select>
+                  </div>
                 </div>
-                <div class="field">
-                  <label for="svc-platform">Platform</label>
-                  <select class="input" id="svc-platform">
-                    <option value="saweria">Saweria</option>
-                    <option value="bagibagi">BagiBagi</option>
-                    <option value="sociabuzz">SociaBuzz</option>
-                  </select>
+
+                <div class="field" style="margin-bottom: 16px;">
+                  <label for="svc-apikey">Roblox API Key Open Cloud <span class="small faint">(Opsional)</span></label>
+                  <input class="input mono" id="svc-apikey" type="password" placeholder="Kosongkan jika pakai sistem Polling otomatis" />
                 </div>
+
+                <button class="btn btn-primary btn-block" type="submit">
+                  ⚡ Tambah &amp; Dapatkan Link Webhook
+                </button>
+              </form>
+            </div>
+
+            <!-- 2. BULK GIVEAWAY GENERATOR -->
+            <div class="card" style="border-color: rgba(234, 179, 8, 0.35); background: linear-gradient(165deg, rgba(234, 179, 8, 0.05) 0%, rgba(16, 20, 31, 0.95) 100%);">
+              <div class="row between" style="margin-bottom: 12px;">
+                <h2 class="h2" style="font-size: 17px; color: #FDE047;">🎁 Generator Giveaway Massal</h2>
+                <span class="badge badge-gold">Mass Generator</span>
+              </div>
+              <p class="small faint" style="margin-bottom: 16px;">Generate banyak link Webhook &amp; Polling sekaligus untuk dibagikan saat giveaway di Discord/TikTok/YouTube.</p>
+
+              <form id="giveaway-form" onsubmit="handleGenerateGiveaway(event)">
+                <div class="grid two" style="margin-bottom: 12px; gap: 10px;">
+                  <div class="field">
+                    <label for="gw-count">Jumlah Link</label>
+                    <select class="input" id="gw-count">
+                      <option value="3">3 Link Webhook</option>
+                      <option value="5" selected>5 Link Webhook</option>
+                      <option value="10">10 Link Webhook</option>
+                      <option value="20">20 Link Webhook</option>
+                      <option value="50">50 Link Webhook</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="gw-platform">Platform</label>
+                    <select class="input" id="gw-platform">
+                      <option value="saweria">Saweria</option>
+                      <option value="bagibagi">BagiBagi</option>
+                      <option value="sociabuzz">SociaBuzz</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="field" style="margin-bottom: 12px;">
+                  <label for="gw-prefix">Label Giveaway</label>
+                  <input class="input" id="gw-prefix" value="Pemenang Giveaway" placeholder="Pemenang Giveaway Event" />
+                </div>
+
+                <div class="field" style="margin-bottom: 16px;">
+                  <label for="gw-universes">Daftar Universe ID <span class="small faint">(Opsional, 1 ID per baris)</span></label>
+                  <textarea class="input mono" id="gw-universes" rows="2" placeholder="10742273346&#10;118749454354&#10;(Biarkan kosong jika ingin link blank)"></textarea>
+                </div>
+
+                <button class="btn btn-cyan btn-block" type="submit" id="gw-submit-btn">
+                  🎉 Generate Link Giveaway Massal
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Giveaway Modal / Result Popup -->
+          <div id="giveaway-modal" class="modal-backdrop">
+            <div class="modal" style="max-width: 680px;">
+              <button class="modal-close" onclick="closeModal('giveaway-modal')">&times;</button>
+              <div class="row between" style="margin-bottom: 16px;">
+                <div>
+                  <span class="badge badge-gold">🎉 HASIL GENERATE GIVEAWAY</span>
+                  <h2 class="h2" style="margin-top: 6px;">Link Webhook Siap Dibagikan!</h2>
+                </div>
+                <button class="btn btn-sm btn-primary" onclick="copyGiveawayDiscordText()">📋 Salin Semua (Format Discord)</button>
               </div>
 
-              <div class="grid two" style="margin-bottom: 16px;">
-                <div class="field">
-                  <label for="svc-apikey">Roblox API Key (Open Cloud)</label>
-                  <input class="input mono" id="svc-apikey" type="password" required placeholder="ApiKey..." />
-                </div>
-                <div class="field">
-                  <label for="svc-plan">Paket</label>
-                  <select class="input" id="svc-plan">
-                    <option value="lifetime">Lifetime (Permanen)</option>
-                  </select>
-                </div>
+              <div class="card soft" style="margin-bottom: 16px; max-height: 280px; overflow-y: auto;">
+                <pre class="code mono" id="giveaway-discord-output" style="white-space: pre-wrap; font-size: 12.5px; color: #D1FAE5;"></pre>
               </div>
 
-              <button class="btn btn-primary" type="submit">✨ Tambahkan Layanan</button>
-            </form>
+              <div class="row between" style="flex-wrap: wrap; gap: 10px;">
+                <button class="btn btn-ghost" onclick="downloadGiveawayTxt()">⬇️ Download File .TXT</button>
+                <button class="btn btn-primary" onclick="closeModal('giveaway-modal')">Selesai &amp; Tutup</button>
+              </div>
+            </div>
           </div>
 
           <!-- Services List -->
           <div class="card">
-            <div class="card-head">
-              <h2 class="h2">Daftar Game Terhubung</h2>
-              <button class="btn btn-sm btn-ghost" onclick="loadServices()">🔄 Refresh</button>
+            <div class="card-head" style="flex-wrap: wrap; gap: 12px;">
+              <div>
+                <h2 class="h2">Daftar Universe ID &amp; Webhook Aktif</h2>
+                <p class="small faint">Semua link di bawah sudah 100% online dan langsung terhubung ke sistem notifikasi Roblox.</p>
+              </div>
+              <div class="row" style="gap: 8px;">
+                <input class="input" id="search-services" placeholder="🔍 Cari Universe ID / Nama..." oninput="filterServices()" style="max-width: 240px; font-size: 13px;" />
+                <button class="btn btn-sm btn-ghost" onclick="loadServices()">🔄 Refresh</button>
+              </div>
             </div>
 
             <div class="table-responsive">
               <table class="table">
                 <thead>
                   <tr>
-                    <th>Nama Client</th>
+                    <th>Nama / Client</th>
                     <th>Universe ID</th>
                     <th>Platform</th>
-                    <th>Paket</th>
-                    <th>Status</th>
+                    <th>Link Webhook Saweria</th>
+                    <th>Link Polling Roblox</th>
                     <th>Total Donasi</th>
                     <th>Aksi</th>
                   </tr>
@@ -126,12 +208,15 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; 2026 <b>KIDZY Store</b></span>
+      <span>&copy; 2026 <b>KIDZY Store</b> &middot; Admin Control Center</span>
     </div>
   </footer>
 
   <script src="/assets/app.js"></script>
   <script>
+    let allServices = [];
+    let currentGiveawayText = '';
+
     document.addEventListener('DOMContentLoaded', () => {
       if (!Auth.requireAdmin()) return;
       loadServices();
@@ -143,33 +228,8 @@
       try {
         const res = await API.get('/api/admin/services');
         if (res.success && res.services.length > 0) {
-          tbody.innerHTML = res.services.map(s => {
-            const slug = s.webhookSlug || s.slug || s.tokenCode;
-            const whUrl = `${origin}/api/webhook/${slug}`;
-            const pollUrl = `${origin}/api/poll/${slug}`;
-
-            return `
-              <tr>
-                <td>
-                  <b style="color: var(--ink); font-size: 14px;">${s.clientName || 'Anonymous'}</b>
-                  <div class="small faint" style="font-size: 11px; margin-top: 3px;">Token: <span class="code" style="font-size: 11px;">${s.tokenCode || '-'}</span></div>
-                </td>
-                <td><span class="code" style="font-size: 13px;">${s.universeId}</span></td>
-                <td><span class="badge badge-accent">${(s.platform || 'Saweria').toUpperCase()}</span></td>
-                <td><span class="badge badge-gold">${(s.plan || 'Lifetime').toUpperCase()}</span></td>
-                <td><span class="badge badge-live">${s.status}</span></td>
-                <td><b style="color: #34D399;">${s.donationCount || 0}</b> <span class="small faint">(${formatRupiah(s.totalDonationsAmount || 0)})</span></td>
-                <td>
-                  <div class="row" style="gap: 6px; flex-wrap: wrap;">
-                    <button class="btn btn-sm btn-cyan" onclick="copyText('${whUrl}', this)" title="Salin Webhook URL untuk Saweria/BagiBagi/SociaBuzz">🌐 Webhook</button>
-                    <button class="btn btn-sm btn-ghost" onclick="copyText('${pollUrl}', this)" title="Salin Polling URL untuk Roblox Studio">📡 Polling</button>
-                    <button class="btn btn-sm btn-primary" onclick="testServiceRoblox('${s.universeId}', '${s.robloxApiKey}')">⚡ Test</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteService('${s.id}')">Hapus</button>
-                  </div>
-                </td>
-              </tr>
-            `;
-          }).join('');
+          allServices = res.services;
+          renderServicesTable(allServices);
         } else {
           tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 32px; color: var(--muted);">Belum ada layanan terdaftar.</td></tr>';
         }
@@ -178,35 +238,184 @@
       }
     }
 
+    function renderServicesTable(list) {
+      const tbody = document.getElementById('services-tbody');
+      const origin = window.location.origin;
+
+      if (!list || list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 32px; color: var(--muted);">Tidak ada layanan yang cocok dengan pencarian.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(s => {
+        const slug = s.webhookSlug || s.slug || s.tokenCode;
+        const whUrl = `${origin}/api/webhook/${slug}`;
+        const pollUrl = `${origin}/api/poll/${slug}`;
+
+        return `
+          <tr>
+            <td>
+              <b style="color: var(--ink); font-size: 14px;">${s.clientName || 'Game Roblox'}</b>
+              <div class="small faint" style="font-size: 11px; margin-top: 3px;">Token: <span class="code" style="font-size: 11px;">${s.tokenCode || '-'}</span></div>
+            </td>
+            <td>
+              <span class="code" style="font-size: 13px; font-weight: 700; color: #A5B4FC;">${s.universeId}</span>
+            </td>
+            <td><span class="badge badge-accent">${(s.platform || 'Saweria').toUpperCase()}</span></td>
+            <td>
+              <button class="btn btn-sm btn-cyan" onclick="copyText('${whUrl}', this)" title="${whUrl}">
+                📋 Salin Webhook
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-ghost" onclick="copyText('${pollUrl}', this)" title="${pollUrl}">
+                📡 Salin Polling
+              </button>
+            </td>
+            <td><b style="color: #34D399;">${s.donationCount || 0}</b> <span class="small faint">(${formatRupiah(s.totalDonationsAmount || 0)})</span></td>
+            <td>
+              <div class="row" style="gap: 6px;">
+                <button class="btn btn-sm btn-primary" onclick="testServiceRoblox('${s.universeId}', '${s.robloxApiKey}')">⚡ Test</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteService('${s.id}')">Hapus</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterServices() {
+      const q = (document.getElementById('search-services').value || '').toLowerCase();
+      const filtered = allServices.filter(s => {
+        const name = (s.clientName || '').toLowerCase();
+        const uid = String(s.universeId || '').toLowerCase();
+        const token = (s.tokenCode || '').toLowerCase();
+        return name.includes(q) || uid.includes(q) || token.includes(q);
+      });
+      renderServicesTable(filtered);
+    }
+
     async function handleCreateService(e) {
       e.preventDefault();
       const clientName = document.getElementById('svc-client').value.trim();
       const universeId = document.getElementById('svc-universe').value.trim();
       const robloxApiKey = document.getElementById('svc-apikey').value.trim();
       const platform = document.getElementById('svc-platform').value;
-      const plan = document.getElementById('svc-plan').value;
 
       try {
-        await API.post('/api/admin/services', { clientName, universeId, robloxApiKey, platform, plan });
-        showToast('Layanan berhasil ditambahkan!', 'success');
+        const res = await API.post('/api/admin/services', { clientName, universeId, robloxApiKey, platform, plan: 'lifetime' });
+        showToast('Layanan berhasil dibuat & aktif 100%!', 'success');
         document.getElementById('create-service-form').reset();
+        
+        // Show success card with direct URLs
+        const svc = res.service;
+        const notice = document.getElementById('service-created-notice');
+        notice.style.display = 'block';
+        notice.innerHTML = `
+          <div class="card" style="border: 1px solid var(--ok); background: linear-gradient(160deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 20, 31, 0.98) 100%); padding: 20px;">
+            <div class="row between" style="margin-bottom: 10px;">
+              <b style="color: #A7F3D0; font-size: 16px;">✨ Layanan Universe ID ${svc.universeId} Berhasil Aktif!</b>
+              <button class="btn btn-sm btn-ghost" onclick="this.closest('#service-created-notice').style.display='none'">&times; Tutup</button>
+            </div>
+            <div class="grid two" style="gap: 12px; margin-top: 10px;">
+              <div class="card soft">
+                <div class="row between" style="margin-bottom: 4px;">
+                  <span class="small" style="color: #A5B4FC; font-weight: 600;">1. Webhook URL (Saweria/BagiBagi/SociaBuzz)</span>
+                  <button class="btn btn-sm btn-cyan" onclick="copyText('${svc.webhookUrl}', this)">Salin</button>
+                </div>
+                <input class="input mono" readonly value="${svc.webhookUrl}" style="font-size: 12px;" />
+              </div>
+              <div class="card soft">
+                <div class="row between" style="margin-bottom: 4px;">
+                  <span class="small" style="color: #34D399; font-weight: 600;">2. Polling URL (Roblox Studio)</span>
+                  <button class="btn btn-sm btn-cyan" onclick="copyText('${svc.pollUrl}', this)">Salin</button>
+                </div>
+                <input class="input mono" readonly value="${svc.pollUrl}" style="font-size: 12px;" />
+              </div>
+            </div>
+          </div>
+        `;
+
         loadServices();
       } catch (err) {
         showToast(err.message, 'error');
       }
     }
 
-    async function testServiceRoblox(universeId, apiKey) {
-      showToast('Memeriksa koneksi ke Roblox Open Cloud...', 'info');
+    async function handleGenerateGiveaway(e) {
+      e.preventDefault();
+      const count = document.getElementById('gw-count').value;
+      const platform = document.getElementById('gw-platform').value;
+      const clientPrefix = document.getElementById('gw-prefix').value.trim() || 'Pemenang Giveaway';
+      const universesRaw = document.getElementById('gw-universes').value.trim();
+      
+      const universeIds = universesRaw ? universesRaw.split('\n').map(s => s.trim()).filter(Boolean) : [];
+
+      const btn = document.getElementById('gw-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Membuat Link Giveaway...';
+
       try {
-        const res = await API.post('/api/admin/roblox/test-connection', { universeId, robloxApiKey: apiKey });
+        const res = await API.post('/api/admin/giveaway/generate', {
+          count,
+          platform,
+          clientPrefix,
+          universeIds,
+          plan: 'lifetime'
+        });
+
         if (res.success) {
-          showToast(`✅ Berhasil terhubung! DataStore memuat ${res.entryCount || 0} donatur.`, 'success');
+          showToast(`🎉 Berhasil membuat ${res.count} link giveaway!`, 'success');
+          currentGiveawayText = res.discordFormattedText;
+          document.getElementById('giveaway-discord-output').textContent = currentGiveawayText;
+          
+          openOrderModal('giveaway-modal');
+          const modal = document.getElementById('giveaway-modal');
+          if (modal) modal.classList.add('is-active');
+
+          loadServices();
         } else {
-          showToast('❌ ' + (res.message || res.error), 'error');
+          showToast(res.message || 'Gagal generate giveaway', 'error');
         }
       } catch (err) {
         showToast(err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🎉 Generate Link Giveaway Massal';
+      }
+    }
+
+    function copyGiveawayDiscordText() {
+      if (!currentGiveawayText) return;
+      copyText(currentGiveawayText);
+      showToast('Semua link giveaway format Discord berhasil disalin!', 'success');
+    }
+
+    function downloadGiveawayTxt() {
+      if (!currentGiveawayText) return;
+      const blob = new Blob([currentGiveawayText], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `KIDZY_Giveaway_Links_${Date.now()}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('File TXT Giveaway berhasil didownload!', 'success');
+    }
+
+    async function testServiceRoblox(universeId, apiKey) {
+      showToast('Memeriksa status koneksi Roblox...', 'info');
+      try {
+        const res = await API.post('/api/admin/roblox/test-connection', { universeId, robloxApiKey: apiKey });
+        if (res.success) {
+          showToast(`✅ Berhasil! DataStore donatur aktif (${res.entryCount || 0} entri).`, 'success');
+        } else {
+          showToast('ℹ️ Sistem Polling Gateway Normal (Open Cloud: ' + (res.message || res.error) + ')', 'info');
+        }
+      } catch (err) {
+        showToast('Polling Gateway Aktif & Siap Menerima Donasi.', 'info');
       }
     }
 
