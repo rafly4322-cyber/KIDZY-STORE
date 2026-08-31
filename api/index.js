@@ -18,7 +18,19 @@ const app = express();
 // ENTERPRISE SECURITY & RATE LIMITING SHIELDS
 // ============================================
 app.use(cors());
-app.use(bodyParser.json({ limit: '1mb' }));
+app.use(bodyParser.json({ 
+    limit: '1mb',
+    verify: (req, res, buf) => {
+        if (buf && buf.length) {
+            const raw = buf.toString();
+            if (raw.includes('__proto__') || raw.includes('constructor') || raw.includes('prototype')) {
+                const err = new Error('Invalid payload attributes (Security Blocked).');
+                err.status = 400;
+                throw err;
+            }
+        }
+    }
+}));
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
 
 // In-Memory Rate Limiter & IP Tracking Map
@@ -831,6 +843,15 @@ app.get('*', (req, res, next) => {
         return res.status(404).json({ success: false, message: 'Endpoint tidak ditemukan.' });
     }
     next();
+});
+
+// Global Error Handler Middleware
+app.use((err, req, res, next) => {
+    if (err.status === 400 || err.statusCode === 400) {
+        return res.status(400).json({ success: false, message: err.message || 'Invalid request payload (400 Bad Request).' });
+    }
+    console.error('Unhandled Server Error:', err);
+    res.status(500).json({ success: false, message: 'Terjadi kesalahan internal pada server.' });
 });
 
 module.exports = app;
