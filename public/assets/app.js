@@ -277,7 +277,110 @@ const API = {
     }
 };
 
-// Auto close modal on backdrop click
+// Floating Live Chat Widget for Website Support
+function initLiveChatWidget() {
+    if (typeof document === 'undefined') return;
+    if (document.getElementById('kidzy-live-chat-widget') || window.location.pathname.startsWith('/admin')) return;
+
+    const widget = document.createElement('div');
+    widget.id = 'kidzy-live-chat-widget';
+    widget.innerHTML = `
+        <button class="live-chat-bubble-btn" id="chat-toggle-btn" onclick="toggleLiveChatBox()" aria-label="Open Live Chat">
+            <span id="chat-btn-icon">💬</span>
+            <span class="live-chat-ping"></span>
+        </button>
+
+        <div class="live-chat-box" id="live-chat-box">
+            <div class="live-chat-box-head">
+                <div class="row" style="gap: 10px; align-items: center;">
+                    <div class="live-chat-head-avatar">👑</div>
+                    <div>
+                        <b style="font-size: 14px; color: #FFFFFF;">KIDZY Live Support</b>
+                        <div style="font-size: 11px; color: #34D399; display: flex; align-items: center; gap: 4px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; display: inline-block;"></span> Online &bull; Hubungkan ke Owner
+                        </div>
+                    </div>
+                </div>
+                <button class="modal-close" style="position: static; width: 28px; height: 28px; font-size: 16px;" onclick="toggleLiveChatBox()">&times;</button>
+            </div>
+
+            <div class="live-chat-box-body" id="live-chat-feed">
+                <div class="chat-bubble is-admin" style="max-width: 90%;">
+                    <div class="chat-avatar">👑</div>
+                    <div class="chat-bubble-body" style="font-size: 13px;">
+                        Halo! Ada yang bisa kami bantu seputar aktivasi Saweria / BagiBagi Roblox kamu? Silakan tinggalkan pesan di sini! ✨
+                    </div>
+                </div>
+            </div>
+
+            <form class="live-chat-box-footer" onsubmit="handleSendPublicChat(event)">
+                <input class="input" id="live-chat-input" placeholder="Ketik pesan kamu..." style="font-size: 13px; height: 38px;" required autocomplete="off" />
+                <button class="btn btn-primary btn-sm" type="submit" style="height: 38px; padding: 0 14px;">Kirim</button>
+            </form>
+        </div>
+    `;
+
+    document.body.appendChild(widget);
+}
+
+function toggleLiveChatBox() {
+    const box = document.getElementById('live-chat-box');
+    if (box) {
+        box.classList.toggle('is-open');
+        if (box.classList.contains('is-open')) {
+            const input = document.getElementById('live-chat-input');
+            if (input) setTimeout(() => input.focus(), 150);
+        }
+    }
+}
+
+async function handleSendPublicChat(e) {
+    e.preventDefault();
+    const input = document.getElementById('live-chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const feed = document.getElementById('live-chat-feed');
+    input.value = '';
+
+    // Append user message immediately
+    const userBubble = document.createElement('div');
+    userBubble.className = 'chat-bubble';
+    userBubble.style.alignSelf = 'flex-end';
+    userBubble.innerHTML = `
+        <div class="chat-bubble-body" style="background: rgba(99, 102, 241, 0.25); border-color: rgba(99, 102, 241, 0.5); font-size: 13px;">
+            ${text}
+        </div>
+    `;
+    feed.appendChild(userBubble);
+    feed.scrollTop = feed.scrollHeight;
+
+    try {
+        await fetch('/api/chat/web-support', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: 'Pengunjung Web', message: text })
+        });
+
+        // Bot / owner auto-ack
+        setTimeout(() => {
+            const replyBubble = document.createElement('div');
+            replyBubble.className = 'chat-bubble is-admin';
+            replyBubble.innerHTML = `
+                <div class="chat-avatar">👑</div>
+                <div class="chat-bubble-body" style="font-size: 13px;">
+                    Pesan kamu sudah masuk ke Owner! Untuk respon instan, kamu juga bisa langsung DM Discord: <b style="color:#A5B4FC;">kidddzyyaj</b> atau join server kami.
+                </div>
+            `;
+            feed.appendChild(replyBubble);
+            feed.scrollTop = feed.scrollHeight;
+        }, 1000);
+    } catch (err) {
+        showToast('Gagal mengirim pesan chat', 'error');
+    }
+}
+
+// Auto close modal on backdrop click & auto init widget
 if (typeof document !== 'undefined') {
     document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', (e) => {
@@ -285,6 +388,7 @@ if (typeof document !== 'undefined') {
                 e.target.classList.remove('is-active');
             }
         });
+        initLiveChatWidget();
     });
 }
 
@@ -305,4 +409,6 @@ if (typeof window !== 'undefined') {
     window.toggleMobileNav = toggleMobileNav;
     window.toggleTheme = toggleTheme;
     window.runSimAlert = runSimAlert;
+    window.toggleLiveChatBox = toggleLiveChatBox;
+    window.handleSendPublicChat = handleSendPublicChat;
 }

@@ -109,6 +109,14 @@
       "name": "QA Tester",
       "createdAt": "2026-08-31T08:43:15.894Z",
       "expiresAt": "2026-09-07T08:43:15.894Z"
+    },
+    "4f2727c31513d252ca9b9fab26f2ac8342a1e95bbc95ea01a37062ef14d40f27": {
+      "userId": "usr_admin_1",
+      "email": "rafly4322@gmail.com",
+      "role": "admin",
+      "name": "Muhammad Rafly (Admin)",
+      "createdAt": "2026-08-31T09:36:43.971Z",
+      "expiresAt": "2026-09-07T09:36:43.971Z"
     }
   },
   "tokens": [
@@ -1535,5 +1543,38 @@
       "10742273346"
     ],
     "discordUsername": "kidddzyyaj"
-  }
+  },
+  "chatMessages": [
+    {
+      "id": "chat_1788169004044_198",
+      "sender": "👑 KIDZY (Owner)",
+      "senderType": "admin",
+      "text": "Halo semua player di game! Ini pesan dari Web Owner!",
+      "universeId": "10742273346",
+      "targetPlayer": "all",
+      "isBroadcast": true,
+      "timestamp": "2026-08-31T09:36:44.045Z",
+      "polled": true,
+      "details": {
+        "adminEmail": "rafly4322@gmail.com",
+        "adminName": "Muhammad Rafly (Admin)"
+      }
+    },
+    {
+      "id": "chat_1788169004109_664",
+      "sender": "SultanGamer_99",
+      "senderType": "player",
+      "text": "Halo bang Rafly, game nya seru banget!",
+      "universeId": "10742273346",
+      "targetPlayer": "admin",
+      "isBroadcast": false,
+      "timestamp": "2026-08-31T09:36:44.109Z",
+      "polled": false,
+      "details": {
+        "playerId": 12345678,
+        "messageType": "chat",
+        "avatarUrl": "https://www.roblox.com/headshot-thumbnail/image?userId=12345678&width=150&height=150&format=png"
+      }
+    }
+  ]
 }

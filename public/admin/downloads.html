@@ -34,10 +34,11 @@
           <div class="side-title">Menu Utama</div>
           <nav class="side-nav">
             <a class="side-link" href="/admin">📊 Dashboard</a>
+            <a class="side-link" href="/admin/chat.html">💬 Live Chat Roblox</a>
             <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
             <a class="side-link" href="/admin/send.html">⚡ Simulator Donasi</a>
             <a class="side-link" href="/admin/logs.html">📜 Log Donasi</a>
-            <a class="side-link" href="/admin/services.html">🎮 Layanan Game</a>
+            <a class="side-link" href="/admin/services.html">🎮 Layanan &amp; Giveaway</a>
             <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
             <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan Toko</a>
             <a class="side-link is-active" href="/admin/downloads.html">⬇️ Download File</a>
@@ -47,42 +48,59 @@
         <div>
           <div class="page-head">
             <div class="row" style="margin-bottom: 6px;">
-              <span class="badge badge-accent">Resources &amp; Models</span>
+              <span class="badge badge-accent">Assets &amp; Scripts</span>
             </div>
-            <h1 class="h1">Download Asset Roblox Studio</h1>
-            <p class="lead">Unduh paket Roblox Studio Model V2.0 dan script contoh integrasi DataStore.</p>
+            <h1 class="h1">Download Script &amp; Model Roblox</h1>
+            <p class="lead">Unduh semua asset Roblox resmi untuk integrasi Saweria, SociaBuzz, BagiBagi, dan Live Chat 2-Way.</p>
           </div>
 
-          <div class="grid two" style="margin-bottom: 24px;">
-            <!-- Roblox Model Card -->
-            <div class="card pricing-card featured">
-              <div>
-                <div class="card-head">
-                  <span class="badge badge-gold">Model Roblox (.rbxm)</span>
-                  <span class="badge badge-live">V2.0 Ready</span>
-                </div>
-                <h2 class="h2">Saweria V2.0 by @KIDZY</h2>
-                <p class="small faint" style="margin: 8px 0 20px 0;">
-                  Paket model lengkap siap import ke Roblox Studio. Sudah termasuk Leaderboard 3D UI, Orbit Visual Effects, Sound Alert, dan sinkronisasi DataStore.
-                </p>
+          <div class="grid two" style="margin-bottom: 24px; gap: 20px;">
+            <!-- Live Chat Script Card -->
+            <div class="card" style="border-color: rgba(99, 102, 241, 0.45); background: linear-gradient(160deg, rgba(99, 102, 241, 0.1) 0%, var(--card) 100%);">
+              <div class="card-head">
+                <span class="badge badge-live">💬 Live Chat Bridge 2-Way</span>
+                <span class="badge badge-accent">New Feature</span>
               </div>
-              <a class="btn btn-primary btn-block" href="/api/download/model" download="Saweria_V2_Roblox_Model.rbxm">
+              <h2 class="h2" style="font-size: 19px; margin-bottom: 8px;">Script Live Chat Roblox (.LUA)</h2>
+              <p class="small faint" style="margin-bottom: 20px;">Pasang di ServerScriptService agar chat player in-game otomatis masuk ke Web Admin dan kamu bisa broadcast balik dari Web.</p>
+              <a class="btn btn-primary btn-block" href="/downloads/KidzyLiveChatServer.lua" download>
+                ⬇️ Download KidzyLiveChatServer.lua
+              </a>
+            </div>
+
+            <!-- Full Zip Package -->
+            <div class="card featured">
+              <div class="card-head">
+                <span class="badge badge-gold">⭐ Paket Lengkap</span>
+                <span class="badge badge-live">V3.0 Ready</span>
+              </div>
+              <h2 class="h2" style="font-size: 19px; margin-bottom: 8px;">Saweria Lifetime Package (.ZIP)</h2>
+              <p class="small faint" style="margin-bottom: 20px;">Paket arsip berisi file Model .RBXM, script server, konfigurasi notifikasi alert, orbit camera VFX, dan dokumentasi lengkap.</p>
+              <a class="btn btn-cyan btn-block" href="/admin/download" download>
+                ⬇️ Download Saweria_lifetime.zip
+              </a>
+            </div>
+
+            <!-- Model RBXM -->
+            <div class="card">
+              <div class="card-head">
+                <span class="badge badge-accent">Model Roblox (.rbxm)</span>
+              </div>
+              <h2 class="h2" style="font-size: 19px; margin-bottom: 8px;">Saweria V2.0 Model by KIDZY</h2>
+              <p class="small faint" style="margin-bottom: 20px;">Paket model lengkap siap import ke Roblox Studio. Sudah termasuk Leaderboard 3D UI, Orbit Visual Effects, dan Sound Alert.</p>
+              <a class="btn btn-ghost btn-block" href="/api/download/model" download="Saweria_V2_Roblox_Model.rbxm">
                 ⬇️ Unduh Model (.rbxm)
               </a>
             </div>
 
             <!-- Test Datastore Lua Card -->
-            <div class="card pricing-card">
-              <div>
-                <div class="card-head">
-                  <span class="badge">Script &amp; Example (.lua)</span>
-                </div>
-                <h2 class="h2">Contoh Skrip DataStore</h2>
-                <p class="small faint" style="margin: 8px 0 20px 0;">
-                  Contoh struktur data JSON donatur (Nama, Nominal, Pesan, Timestamp) untuk integrasi kustom script Luau kamu.
-                </p>
+            <div class="card">
+              <div class="card-head">
+                <span class="badge">Script &amp; Example (.lua)</span>
               </div>
-              <a class="btn btn-cyan btn-block" href="/api/download/script" download="TestDatastore.lua">
+              <h2 class="h2" style="font-size: 19px; margin-bottom: 8px;">Contoh Skrip DataStore</h2>
+              <p class="small faint" style="margin-bottom: 20px;">Contoh struktur data JSON donatur (Nama, Nominal, Pesan, Timestamp) untuk integrasi kustom script Luau kamu.</p>
+              <a class="btn btn-ghost btn-block" href="/api/download/script" download="TestDatastore.lua">
                 ⬇️ Unduh Skrip (.lua)
               </a>
             </div>

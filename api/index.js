@@ -492,6 +492,154 @@ app.get(['/api/poll', '/api/poll/:token', '/api/saweria/get-donations', '/api/we
     }
 });
 
+// ============================================
+// LIVE CHAT (WEB ⟷ ROBLOX BRIDGE & SUPPORT)
+// ============================================
+
+// 1. Admin sends message to In-Game Roblox Players
+app.post('/api/chat/send-to-game', requireAdmin, (req, res) => {
+    try {
+        const { text, sender, universeId, targetPlayer, isBroadcast } = req.body;
+        if (!text || !text.trim()) {
+            return res.status(400).json({ success: false, message: 'Isi pesan chat wajib diisi.' });
+        }
+
+        const newMsg = db.addChatMessage({
+            sender: sender || '👑 KIDZY (Owner)',
+            senderType: 'admin',
+            text: sanitizeText(text.trim()),
+            universeId: universeId || 'all',
+            targetPlayer: targetPlayer || 'all',
+            isBroadcast: isBroadcast !== false,
+            details: {
+                adminEmail: req.user?.email || 'admin',
+                adminName: req.user?.name || 'KIDZY Admin'
+            }
+        });
+
+        console.log(`💬 [ADMIN CHAT -> ROBLOX] ${newMsg.sender}: "${newMsg.text}" (Universe: ${newMsg.universeId})`);
+
+        res.json({
+            success: true,
+            message: 'Pesan berhasil dikirim ke antrean in-game Roblox!',
+            chat: newMsg
+        });
+    } catch (err) {
+        console.error('❌ Send to Game Error:', err);
+        res.status(500).json({ success: false, message: 'Gagal mengirim pesan: ' + err.message });
+    }
+});
+
+// 2. Roblox Player sends message to Web Admin
+app.post(['/api/chat/from-game', '/api/chat/game-to-web'], (req, res) => {
+    try {
+        const { playerName, playerId, text, universeId, messageType } = req.body;
+        if (!text || !text.trim()) {
+            return res.status(400).json({ success: false, message: 'Pesan kosong.' });
+        }
+
+        const newMsg = db.addChatMessage({
+            sender: sanitizeText(playerName || 'Roblox Player'),
+            senderType: 'player',
+            text: sanitizeText(text.trim()),
+            universeId: universeId || 'default',
+            targetPlayer: 'admin',
+            isBroadcast: false,
+            details: {
+                playerId: playerId || 0,
+                messageType: messageType || 'chat',
+                avatarUrl: playerId ? `https://www.roblox.com/headshot-thumbnail/image?userId=${playerId}&width=150&height=150&format=png` : ''
+            }
+        });
+
+        console.log(`💬 [ROBLOX -> WEB ADMIN] ${newMsg.sender} (${newMsg.universeId}): "${newMsg.text}"`);
+
+        res.json({
+            success: true,
+            message: 'Pesan player berhasil diterima oleh server web!',
+            chat: newMsg
+        });
+    } catch (err) {
+        console.error('❌ From Game Error:', err);
+        res.status(500).json({ success: false, message: 'Gagal menerima chat player: ' + err.message });
+    }
+});
+
+// 3. Roblox Server Polling (Fetches pending Admin messages to display in-game)
+app.get(['/api/chat/poll-game', '/api/chat/poll-game/:universeId'], (req, res) => {
+    try {
+        const universeId = req.params.universeId || req.query.universeId || 'all';
+        const unpolled = db.getUnpolledGameChat(universeId);
+
+        res.json({
+            success: true,
+            count: unpolled.length,
+            messages: unpolled.map(m => ({
+                id: m.id,
+                sender: m.sender,
+                senderType: m.senderType,
+                text: m.text,
+                universeId: m.universeId,
+                targetPlayer: m.targetPlayer,
+                isBroadcast: m.isBroadcast,
+                timestamp: m.timestamp
+            }))
+        });
+    } catch (err) {
+        console.error('❌ Poll Game Chat Error:', err);
+        res.json({ success: true, count: 0, messages: [] });
+    }
+});
+
+// 4. Get Chat History (Used by Admin Dashboard & Live Support Widget)
+app.get('/api/chat/history', (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 100;
+        const universeId = req.query.universeId || null;
+        const messages = db.getChatHistory(limit, universeId);
+
+        res.json({
+            success: true,
+            count: messages.length,
+            messages: messages
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Gagal memuat riwayat chat: ' + err.message });
+    }
+});
+
+// 5. Website Visitor Support Message
+app.post('/api/chat/web-support', (req, res) => {
+    try {
+        const { name, message, email } = req.body;
+        if (!message || !message.trim()) {
+            return res.status(400).json({ success: false, message: 'Pesan tidak boleh kosong.' });
+        }
+
+        const newMsg = db.addChatMessage({
+            sender: sanitizeText(name || 'Pengunjung Web'),
+            senderType: 'visitor',
+            text: sanitizeText(message.trim()),
+            universeId: 'web_store',
+            targetPlayer: 'admin',
+            details: { email: email || '' }
+        });
+
+        res.json({
+            success: true,
+            message: 'Pesan kamu telah terkirim ke Owner KIDZY Store!',
+            chat: newMsg
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Gagal mengirim pesan support.' });
+    }
+});
+
+// 6. Admin Clear Chat History
+app.delete('/api/chat/history', requireAdmin, (req, res) => {
+    db.clearChatHistory();
+    res.json({ success: true, message: 'Riwayat live chat berhasil dibersihkan.' });
+});
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -829,6 +977,7 @@ app.get('/api/download/script', (req, res) => {
 app.get('/admin', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/index.html')));
 app.get('/admin/send', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/send.html')));
 app.get('/admin/logs', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/logs.html')));
+app.get('/admin/chat', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/chat.html')));
 app.get('/admin/settings', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/settings.html')));
 app.get('/admin/tokens', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/tokens.html')));
 app.get('/admin/services', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/services.html')));

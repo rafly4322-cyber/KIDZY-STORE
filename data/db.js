@@ -127,7 +127,8 @@ function getInitialData() {
             },
             robloxApiKey: process.env.ROBLOX_API_KEY || '',
             universeIds: process.env.UNIVERSE_IDS ? process.env.UNIVERSE_IDS.split(',').map(s => s.trim()) : []
-        }
+        },
+        chatMessages: []
     };
 }
 
@@ -478,6 +479,64 @@ class Database {
         return changed;
     }
 
+    // ============================================
+    // LIVE CHAT (WEB & ROBLOX BRIDGE)
+    // ============================================
+
+    addChatMessage({ sender = 'Anonymous', senderType = 'player', text = '', universeId = 'all', targetPlayer = 'all', isBroadcast = false, details = {} }) {
+        if (!this.data.chatMessages) this.data.chatMessages = [];
+
+        const newMsg = {
+            id: 'chat_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+            sender: String(sender).trim(),
+            senderType: senderType, // 'admin', 'player', 'visitor'
+            text: String(text).trim(),
+            universeId: String(universeId).trim(),
+            targetPlayer: String(targetPlayer).trim(),
+            isBroadcast: Boolean(isBroadcast),
+            timestamp: new Date().toISOString(),
+            polled: false, // true once fetched by Roblox game server
+            details: details || {}
+        };
+
+        this.data.chatMessages.push(newMsg);
+        if (this.data.chatMessages.length > 500) {
+            this.data.chatMessages = this.data.chatMessages.slice(-500);
+        }
+        this.save();
+        return newMsg;
+    }
+
+    getChatHistory(limit = 100, universeId = null) {
+        if (!this.data.chatMessages) this.data.chatMessages = [];
+        let list = this.data.chatMessages;
+        if (universeId && universeId !== 'all') {
+            list = list.filter(m => m.universeId === 'all' || m.universeId === String(universeId).trim());
+        }
+        return list.slice(-limit);
+    }
+
+    getUnpolledGameChat(universeId = 'all') {
+        if (!this.data.chatMessages) this.data.chatMessages = [];
+        const uIdStr = String(universeId).trim();
+        const unpolled = this.data.chatMessages.filter(m => 
+            !m.polled && 
+            m.senderType === 'admin' && 
+            (m.universeId === 'all' || m.universeId === uIdStr)
+        );
+
+        if (unpolled.length > 0) {
+            unpolled.forEach(m => m.polled = true);
+            this.save();
+        }
+        return unpolled;
+    }
+
+    clearChatHistory() {
+        this.data.chatMessages = [];
+        this.save();
+        return true;
+    }
 
     getSettings() {
         return this.data.settings;
