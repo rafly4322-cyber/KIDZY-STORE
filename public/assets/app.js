@@ -277,6 +277,17 @@ const API = {
     }
 };
 
+// Auto close modal on backdrop click
+if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('click', (e) => {
+            if (e.target.classList && e.target.classList.contains('modal-backdrop')) {
+                e.target.classList.remove('is-active');
+            }
+        });
+    });
+}
+
 // Global alias for compatibility & window exports
 const apiFetch = (url, options) => API.request(url, options);
 
@@ -288,4 +299,10 @@ if (typeof window !== 'undefined') {
     window.copyText = copyText;
     window.formatRupiah = formatRupiah;
     window.formatDate = formatDate;
+    window.openOrderModal = openOrderModal;
+    window.closeModal = closeModal;
+    window.toggleFaq = toggleFaq;
+    window.toggleMobileNav = toggleMobileNav;
+    window.toggleTheme = toggleTheme;
+    window.runSimAlert = runSimAlert;
 }
