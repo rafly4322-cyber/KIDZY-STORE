@@ -1,14 +1,18 @@
 <!doctype html>
 <html lang="id">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aktivasi Token Lisensi — KIDZY Store</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
+
 <body>
   <!-- Header -->
   <header class="site-header">
@@ -24,7 +28,7 @@
         <a class="nav-link" href="/p/sociabuzz.html">SociaBuzz</a>
         <a class="nav-link is-active" href="/activation.html">Aktivasi Token</a>
         <span class="nav-sep"></span>
-        <a class="btn btn-sm btn-ghost" href="/login.html">Login Admin</a>
+        <a class="btn btn-sm btn-ghost" href="/login.html">Login</a>
       </nav>
       <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
         ☰
@@ -40,7 +44,8 @@
           <span class="badge badge-live">Live Gateway</span>
         </div>
         <h1 class="h1">Aktivasi Layanan Webhook</h1>
-        <p class="lead">Masukkan kode token lisensi kamu beserta Universe ID game Roblox untuk mengaktifkan webhook donasi realtime secara instan.</p>
+        <p class="lead">Masukkan kode token lisensi kamu beserta Universe ID game Roblox untuk mengaktifkan webhook
+          donasi realtime secara instan.</p>
       </div>
 
       <div class="split">
@@ -51,24 +56,28 @@
           <form id="activate-form" class="stack" onsubmit="handleActivation(event)">
             <div class="field">
               <label for="svc-token">Kode Token Lisensi</label>
-              <input class="input mono" id="svc-token" name="token" required placeholder="Contoh: KIDZY-SAWERIA-LIFETIME-VIP" />
+              <input class="input mono" id="svc-token" name="token" required
+                placeholder="Contoh: KIDZY-SAWERIA-LIFETIME-VIP" />
               <span class="small faint">Token diberikan oleh Admin setelah konfirmasi pembayaran di Discord.</span>
             </div>
 
             <div class="field">
               <label for="svc-universe">Roblox Universe ID Game</label>
-              <input class="input mono" id="svc-universe" name="universe_id" required placeholder="Contoh: 10764300084" />
-              <span class="small faint">Universe ID dapat ditemukan di Creator Dashboard &rarr; Experiences &rarr; Copy Universe ID.</span>
+              <input class="input mono" id="svc-universe" name="universe_id" required
+                placeholder="Contoh: 10764300084" />
+              <span class="small faint">Universe ID dapat ditemukan di Creator Dashboard &rarr; Experiences &rarr; Copy
+                Universe ID.</span>
             </div>
 
             <div class="field">
               <label for="svc-name">Nama Game / Username (Opsional)</label>
-              <input class="input" id="svc-name" name="client_name" placeholder="Contoh: Blox Tycoon / @UsernameDiscord" />
+              <input class="input" id="svc-name" name="client_name"
+                placeholder="Contoh: Blox Tycoon / @UsernameDiscord" />
             </div>
 
             <div style="margin-top: 10px;">
               <button class="btn btn-primary btn-lg btn-block" id="submit-btn" type="submit">
-                ⚡ Aktivasi Layanan Sekarang
+                 Aktivasi Layanan Sekarang
               </button>
             </div>
           </form>
@@ -78,14 +87,17 @@
         <aside class="stack">
           <div class="card soft">
             <h2 class="h2" style="font-size: 18px; margin-bottom: 12px;">Panduan 3 Langkah</h2>
-            <p class="small faint" style="margin-bottom: 20px;">Langkah mudah mengaktifkan gateway donasi Roblox kamu:</p>
-            
+            <p class="small faint" style="margin-bottom: 20px;">Langkah mudah mengaktifkan gateway donasi Roblox kamu:
+            </p>
+
             <div class="stack" style="gap: 18px;">
               <div class="row" style="align-items: flex-start; gap: 14px;">
                 <span class="brand-mark" style="width: 28px; height: 28px; font-size: 12px; flex-shrink: 0;">1</span>
                 <div>
                   <h4 class="h3" style="font-size: 14.5px;">Salin Universe ID</h4>
-                  <p class="small faint">Buka <a href="https://create.roblox.com/dashboard/creations" target="_blank" style="color: #A5B4FC; text-decoration: underline;">Creator Dashboard</a> &rarr; Experiences &rarr; Salin Universe ID game kamu.</p>
+                  <p class="small faint">Buka <a href="https://create.roblox.com/dashboard/creations" target="_blank"
+                      style="color: #A5B4FC; text-decoration: underline;">Creator Dashboard</a> &rarr; Experiences
+                    &rarr; MASUKKAN UNIVERSE ID MAP KAMU.</p>
                 </div>
               </div>
 
@@ -93,7 +105,8 @@
                 <span class="brand-mark" style="width: 28px; height: 28px; font-size: 12px; flex-shrink: 0;">2</span>
                 <div>
                   <h4 class="h3" style="font-size: 14.5px;">Dapatkan Webhook URL</h4>
-                  <p class="small faint">Setelah aktivasi selesai, URL Webhook unik kamu akan langsung terbit di layar ini.</p>
+                  <p class="small faint">Setelah aktivasi selesai, URL Webhook unik kamu akan langsung terbit di layar
+                    ini.</p>
                 </div>
               </div>
 
@@ -101,7 +114,8 @@
                 <span class="brand-mark" style="width: 28px; height: 28px; font-size: 12px; flex-shrink: 0;">3</span>
                 <div>
                   <h4 class="h3" style="font-size: 14.5px;">Hubungkan ke Saweria</h4>
-                  <p class="small faint">Tempel URL Webhook di dashboard Saweria/BagiBagi kamu dan sistem siap menerima donasi!</p>
+                  <p class="small faint">Tempel URL Webhook di dashboard Saweria/BagiBagi kamu dan sistem siap menerima
+                    donasi!</p>
                 </div>
               </div>
             </div>
@@ -109,7 +123,8 @@
 
           <div class="card soft" style="border-color: rgba(99, 102, 241, 0.2);">
             <h3 class="h3" style="font-size: 15px; margin-bottom: 8px;">Belum punya Token Lisensi?</h3>
-            <p class="small faint" style="margin-bottom: 14px;">Beli paket Lifetime seharga Rp 450.000 (Permanen) lewat DM Discord.</p>
+            <p class="small faint" style="margin-bottom: 14px;">Beli paket Lifetime seharga Rp 500.000 (Permanen) lewat
+              DM Discord.</p>
             <a class="btn btn-ghost btn-sm btn-block" href="https://discord.com/users/kidddzyyaj" target="_blank">
               💬 Hubungi Discord: kidddzyyaj
             </a>
@@ -178,7 +193,7 @@
         if (res.success && res.service) {
           const svc = res.service;
           showToast('Layanan berhasil diaktifkan!', 'success');
-          
+
           resultBox.innerHTML = `
             <div class="card" style="border: 1px solid var(--ok); background: linear-gradient(160deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 20, 31, 0.98) 100%); margin-bottom: 24px; padding: 24px;">
               <div class="row between" style="margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
@@ -237,4 +252,5 @@
     }
   </script>
 </body>
+
 </html>
