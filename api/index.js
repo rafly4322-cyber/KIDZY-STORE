@@ -228,6 +228,55 @@ const handleServiceRegistration = (req, res) => {
 app.post('/api/register-service', handleServiceRegistration);
 app.post('/api/services/register', handleServiceRegistration);
 
+// Auto-Discovery Endpoint for Roblox Games based on Universe ID
+app.get('/api/services/by-universe/:universeId', (req, res) => {
+    const uId = String(req.params.universeId).trim();
+    const service = db.getServices().find(s => s.universeId === uId && s.status === 'active');
+    const proto = req.headers['x-forwarded-proto'] || (req.headers.host && req.headers.host.includes('localhost') ? 'http' : 'https');
+    const origin = req.headers.host ? `${proto}://${req.headers.host}` : 'https://kidzy-store.vercel.app';
+
+    if (service) {
+        const slug = service.webhookSlug || service.slug || service.tokenCode;
+        return res.json({
+            success: true,
+            found: true,
+            service: {
+                id: service.id,
+                clientName: service.clientName,
+                platform: service.platform,
+                webhookUrl: `${origin}/api/webhook/${slug}`,
+                pollUrl: `${origin}/api/poll/${slug}`,
+                slug: slug,
+                universeId: service.universeId
+            }
+        });
+    }
+
+    const settings = db.getSettings() || {};
+    if (settings.universeIds && settings.universeIds.includes(uId)) {
+        return res.json({
+            success: true,
+            found: true,
+            service: {
+                id: 'global_' + uId,
+                clientName: 'Global Managed Game',
+                platform: 'saweria',
+                webhookUrl: `${origin}/api/webhook/saweria`,
+                pollUrl: `${origin}/api/poll/saweria`,
+                slug: 'saweria',
+                universeId: uId
+            }
+        });
+    }
+
+    return res.json({
+        success: true,
+        found: false,
+        message: 'Layanan belum terdaftar untuk Universe ID ini. Silakan aktivasi di ' + origin + '/activation.html',
+        fallbackPollUrl: `${origin}/api/poll/VJON7CCA9soIpdNA5jZgtU8SeJNwsmlF`
+    });
+});
+
 // ============================================
 // AUTH ENDPOINTS
 // ============================================
@@ -463,17 +512,18 @@ app.get(['/api/poll', '/api/poll/:token', '/api/saweria/get-donations', '/api/we
         const unpolled = db.getUnpolledDonations(120);
 
         if (unpolled.length === 0) {
-            return res.json({ success: true, count: 0, donations: [] });
+            return res.json({ ok: true, success: true, count: 0, data: [], donations: [] });
         }
 
         // Tandai sebagai sudah di-poll (atomic update)
         const ids = unpolled.map(d => d.id);
         db.markDonationsAsPolled(ids);
 
-        // Format response sesuai yang diharapkan Roblox script
+        // Format response sesuai yang diharapkan Roblox script (dukung format menSecRt0 & KIDZY)
         const formatted = unpolled.map(d => ({
             id: d.id,
             nama: d.nama,
+            donor_name: d.nama,
             donorName: d.nama,
             name: d.nama,
             amount: d.amount,
@@ -482,10 +532,17 @@ app.get(['/api/poll', '/api/poll/:token', '/api/saweria/get-donations', '/api/we
             message: d.message,
             pesan: d.message,
             platform: d.platform,
-            timestamp: d.timestamp
+            timestamp: d.timestamp,
+            created_at: d.timestamp
         }));
 
-        res.json({ success: true, count: formatted.length, donations: formatted });
+        res.json({ 
+            ok: true, 
+            success: true, 
+            count: formatted.length, 
+            data: formatted, 
+            donations: formatted 
+        });
     } catch (err) {
         console.error('❌ Poll Error:', err);
         res.json({ success: true, count: 0, donations: [] });
@@ -977,7 +1034,6 @@ app.get('/api/download/script', (req, res) => {
 app.get('/admin', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/index.html')));
 app.get('/admin/send', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/send.html')));
 app.get('/admin/logs', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/logs.html')));
-app.get('/admin/chat', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/chat.html')));
 app.get('/admin/settings', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/settings.html')));
 app.get('/admin/tokens', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/tokens.html')));
 app.get('/admin/services', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/services.html')));
