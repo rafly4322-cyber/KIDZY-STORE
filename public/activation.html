@@ -70,9 +70,9 @@
             </div>
 
             <div class="field">
-              <label for="svc-name">Nama Game / Username (Opsional)</label>
-              <input class="input" id="svc-name" name="client_name"
-                placeholder="Contoh: Blox Tycoon / @UsernameDiscord" />
+              <label for="svc-api-key">Roblox API Key (Opsional)</label>
+              <input class="input" id="svc-api-key" name="roblox_api_key"
+                placeholder="Masukkan API Key dari create.roblox.com" />
             </div>
 
             <div style="margin-top: 10px;">
@@ -156,7 +156,7 @@
       e.preventDefault();
       const token = document.getElementById('svc-token').value.trim();
       const universeId = document.getElementById('svc-universe').value.trim();
-      const clientName = document.getElementById('svc-name').value.trim();
+      const robloxApiKey = document.getElementById('svc-api-key').value.trim();
       const resultBox = document.getElementById('activation-result');
       const submitBtn = document.getElementById('submit-btn');
 
@@ -174,8 +174,8 @@
         const payload = {
           token: token,
           universeId: universeId,
-          robloxApiKey: 'default-global-key',
-          name: clientName || `Game_${universeId}`
+          robloxApiKey: robloxApiKey || 'default-global-key',
+          name: `Game_${universeId}`
         };
 
         let res;

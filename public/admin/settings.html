@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pengaturan Toko — KIDZY Admin</title>
+  <title>Pengaturan — menSecRt0 Store</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,13 +13,14 @@
   <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="/admin">
-        <span class="brand-mark">KZ</span>
-        <span>KIDZY Admin</span>
+      <a class="brand" href="/">
+        <span class="brand-mark">mS</span>
+        <span>menSecRt0 Store</span>
       </a>
       <nav class="nav">
-        <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko &rarr;</a>
-        <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Keluar</button>
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link is-active" href="/admin">Admin</a>
+        <button class="btn btn-sm btn-ghost" onclick="Auth.logout()">Logout</button>
       </nav>
       <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
         ☰
@@ -31,119 +32,81 @@
     <div class="container">
       <div class="shell">
         <aside class="side">
-          <div class="side-title">Menu Utama</div>
-          <nav class="side-nav">
-            <a class="side-link" href="/admin">📊 Dashboard</a>
-            <a class="side-link" href="/admin/chat.html">💬 Live Chat Roblox</a>
-            <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
-            <a class="side-link" href="/admin/send.html">⚡ Simulator Donasi</a>
-            <a class="side-link" href="/admin/logs.html">📜 Log Donasi</a>
-            <a class="side-link" href="/admin/services.html">🎮 Layanan &amp; Giveaway</a>
-            <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
-            <a class="side-link is-active" href="/admin/settings.html">⚙️ Pengaturan Toko</a>
-            <a class="side-link" href="/admin/downloads.html">⬇️ Download File</a>
+          <div class="side-title" style="margin-bottom: 8px;">Projek aktif</div>
+          <div style="padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; font-weight: 500;">club parkly</div>
+          <a href="/admin/projects" class="small faint" style="display: block; margin-bottom: 24px; text-decoration: underline; color: #A5B4FC;">Kelola projek</a>
+
+          <div class="side-title">Menu</div>
+          <nav class="side-nav stack" style="gap: 4px;">
+            <a class="side-link" href="/admin">Dashboard</a>
+            <a class="side-link" href="/admin/send.html">Kirim Donasi</a>
+            <a class="side-link" href="/admin/logs.html">Log Donasi</a>
+            <a class="side-link is-active" href="/admin/settings.html">Pengaturan</a>
+            <a class="side-link" href="/admin/migrate">Migrasi Projek</a>
+            <a class="side-link" href="/admin/projects">Projek Saya (1)</a>
+            <a class="side-link" href="/register.html">+ Tambah projek</a>
           </nav>
+
+          <p class="small faint" style="margin-top: 24px; color: var(--muted);">Butuh bantuan? Hubungi owner lewat Discord.</p>
         </aside>
 
         <div>
           <div class="page-head">
-            <div class="row" style="margin-bottom: 6px;">
-              <span class="badge badge-accent">Configuration</span>
-            </div>
-            <h1 class="h1">Pengaturan Sistem &amp; Toko</h1>
-            <p class="lead">Kelola data rekening pembayaran, Discord owner, dan keamanan akun administrator.</p>
+            <h1 class="h1">Pengaturan</h1>
+            <p class="muted">Kelola konfigurasi Roblox dan keamanan akun.</p>
           </div>
 
-          <!-- Store & Payment Config -->
-          <div class="card" style="margin-bottom: 24px;">
-            <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">Informasi Rekening &amp; Toko</h2>
+          <form id="roblox-settings-form" class="stack card" onsubmit="handleSaveRobloxSettings(event)" style="margin-bottom: 24px;">
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 4px;">Konfigurasi Roblox</h2>
+            <p class="small faint" style="margin-bottom: 16px;">Perubahan langsung dipakai untuk pengiriman donasi berikutnya.</p>
 
-            <form id="settings-form" class="stack" onsubmit="handleSaveSettings(event)">
-              <div class="grid two">
-                <div class="field">
-                  <label for="set-store-name">Nama Toko</label>
-                  <input class="input" id="set-store-name" required />
-                </div>
-                <div class="field">
-                  <label for="set-discord">Link Undangan / Username Discord</label>
-                  <input class="input mono" id="set-discord" required />
-                </div>
-              </div>
-
-              <div class="grid three">
-                <div class="field">
-                  <label for="set-bank-name">Nama Bank</label>
-                  <input class="input" id="set-bank-name" placeholder="SeaBank (Kode 535)" required />
-                </div>
-                <div class="field">
-                  <label for="set-bank-account">Nomor Rekening</label>
-                  <input class="input mono" id="set-bank-account" placeholder="901506323909" required />
-                </div>
-                <div class="field">
-                  <label for="set-bank-holder">Nama Pemilik Rekening</label>
-                  <input class="input" id="set-bank-holder" placeholder="MUHAMMAD RAFLI FIRDAUS" required />
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="set-price-lifetime">Harga Paket Lifetime (IDR)</label>
-                <input class="input mono" id="set-price-lifetime" type="number" step="1000" />
-              </div>
-
-              <button class="btn btn-primary" type="submit" style="margin-top: 6px;">
-                💾 Simpan Pengaturan Toko
-              </button>
-            </form>
-          </div>
-
-          <!-- Roblox Open Cloud API Key Config -->
-          <div class="card" style="margin-bottom: 24px; border-color: rgba(99, 102, 241, 0.4);">
-            <div class="row between" style="margin-bottom: 12px;">
-              <div>
-                <span class="badge badge-accent">Roblox Open Cloud</span>
-                <h2 class="h2" style="margin-top: 4px;">Kunci API Roblox (Global Fallback)</h2>
-                <p class="small faint">API Key ini otomatis digunakan jika Universe ID tidak memasukkan API Key spesifik.</p>
-              </div>
+            <div class="field">
+              <label for="set-store-name">Nama projek</label>
+              <input class="input" id="set-store-name" required />
+              <span class="small faint">Nama ini hanya untuk memudahkan kamu membedakan projek.</span>
             </div>
 
-            <form id="roblox-settings-form" class="stack" onsubmit="handleSaveRobloxSettings(event)">
-              <div class="field">
-                <label for="set-roblox-apikey">Roblox Open Cloud API Key</label>
-                <input class="input mono" id="set-roblox-apikey" type="password" placeholder="Masukkan API Key dari create.roblox.com..." />
-                <span class="small faint">Buat di Creator Dashboard &rarr; Open Cloud &rarr; Standard DataStores API (Read &amp; Write).</span>
-              </div>
+            <div class="field">
+              <label for="set-universe-ids">Universe ID</label>
+              <input class="input mono" id="set-universe-ids" placeholder="10742273346" />
+            </div>
 
-              <div class="field">
-                <label for="set-universe-ids">Daftar Default Universe IDs (Pisahkan dengan koma)</label>
-                <input class="input mono" id="set-universe-ids" placeholder="10742273346, 118749454354" />
-              </div>
+            <div class="field">
+              <label for="set-roblox-apikey">Roblox API Key</label>
+              <input class="input mono" id="set-roblox-apikey" type="password" placeholder="Masukkan API Key dari create.roblox.com..." />
+              <span class="small faint">Simpan API key ini secara rahasia.</span>
+            </div>
 
-              <button class="btn btn-cyan" type="submit" style="margin-top: 6px;">
-                ☁️ Simpan Kunci API Roblox
-              </button>
-            </form>
-          </div>
+            <!-- Hidden fields to retain previous data -->
+            <input type="hidden" id="set-discord" />
+            <input type="hidden" id="set-bank-name" />
+            <input type="hidden" id="set-bank-account" />
+            <input type="hidden" id="set-bank-holder" />
+            <input type="hidden" id="set-price-lifetime" value="450000" />
 
-          <!-- Change Password -->
-          <div class="card">
-            <h2 class="h2" style="font-size: 18px; margin-bottom: 14px;">Keamanan Akun Admin</h2>
-            <form id="password-form" class="stack" onsubmit="handleChangePassword(event)">
-              <div class="grid two">
-                <div class="field">
-                  <label for="pwd-current">Password Saat Ini</label>
-                  <input class="input" id="pwd-current" type="password" required />
-                </div>
-                <div class="field">
-                  <label for="pwd-new">Password Baru</label>
-                  <input class="input" id="pwd-new" type="password" minlength="6" required />
-                </div>
-              </div>
+            <div style="display: flex; gap: 8px; margin-top: 12px; align-items: center;">
+              <button class="btn btn-primary" type="submit">Simpan perubahan</button>
+              <a class="btn btn-ghost" href="/admin">Kembali</a>
+            </div>
+          </form>
 
-              <button class="btn btn-cyan" type="submit" style="margin-top: 6px;">
-                🔒 Perbarui Password
-              </button>
-            </form>
-          </div>
+          <form id="password-form" class="stack card" onsubmit="handleChangePassword(event)">
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 16px;">Keamanan akun</h2>
+            
+            <div class="field" style="display: none;">
+              <!-- The original script required 'pwd-current', let's mock it or we can prompt for it. -->
+              <input class="input" id="pwd-current" type="password" value="" placeholder="Isi ini jika API butuh" />
+            </div>
+
+            <div class="field">
+              <label for="pwd-new">Password baru</label>
+              <input class="input" id="pwd-new" type="password" minlength="6" required />
+            </div>
+
+            <div style="display: flex; gap: 8px; margin-top: 12px;">
+              <button class="btn btn-primary" type="submit">Simpan perubahan</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -151,7 +114,8 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; 2026 <b>KIDZY Store</b></span>
+      <span>&copy; 2026 menSecRt0 Store</span>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small faint">Support via Discord</a>
     </div>
   </footer>
 
@@ -167,15 +131,11 @@
         const res = await API.get('/api/admin/settings');
         if (res.success && res.settings) {
           const s = res.settings;
-          document.getElementById('set-store-name').value = s.storeName || 'KIDZY Store';
-          document.getElementById('set-discord').value = s.discordUrl || 'kidddzyyaj';
-          document.getElementById('set-bank-name').value = s.bankName || 'SeaBank (Kode 535)';
-          document.getElementById('set-bank-account').value = s.bankAccount || '901506323909';
-          document.getElementById('set-bank-holder').value = s.bankHolder || 'MUHAMMAD RAFLI FIRDAUS';
-
-          if (s.prices && s.prices.saweria) {
-            document.getElementById('set-price-lifetime').value = s.prices.saweria.lifetime || 450000;
-          }
+          document.getElementById('set-store-name').value = s.storeName || 'club parkly';
+          document.getElementById('set-discord').value = s.discordUrl || '';
+          document.getElementById('set-bank-name').value = s.bankName || '';
+          document.getElementById('set-bank-account').value = s.bankAccount || '';
+          document.getElementById('set-bank-holder').value = s.bankHolder || '';
 
           if (s.robloxApiKey) {
             document.getElementById('set-roblox-apikey').value = s.robloxApiKey;
@@ -189,7 +149,7 @@
       }
     }
 
-    async function handleSaveSettings(e) {
+    async function handleSaveRobloxSettings(e) {
       e.preventDefault();
       const storeName = document.getElementById('set-store-name').value.trim();
       const discordUrl = document.getElementById('set-discord').value.trim();
@@ -197,6 +157,10 @@
       const bankAccount = document.getElementById('set-bank-account').value.trim();
       const bankHolder = document.getElementById('set-bank-holder').value.trim();
       const lifetime = parseInt(document.getElementById('set-price-lifetime').value) || 450000;
+
+      const robloxApiKey = document.getElementById('set-roblox-apikey').value.trim();
+      const universeIdsRaw = document.getElementById('set-universe-ids').value.trim();
+      const universeIds = universeIdsRaw ? universeIdsRaw.split(',').map(s => s.trim()).filter(Boolean) : [];
 
       try {
         await API.post('/api/admin/settings', {
@@ -209,26 +173,11 @@
             saweria: { lifetime },
             bagibagi: { lifetime },
             sociabuzz: { lifetime }
-          }
-        });
-        showToast('Pengaturan toko berhasil disimpan!', 'success');
-      } catch (err) {
-        showToast(err.message, 'error');
-      }
-    }
-
-    async function handleSaveRobloxSettings(e) {
-      e.preventDefault();
-      const robloxApiKey = document.getElementById('set-roblox-apikey').value.trim();
-      const universeIdsRaw = document.getElementById('set-universe-ids').value.trim();
-      const universeIds = universeIdsRaw ? universeIdsRaw.split(',').map(s => s.trim()).filter(Boolean) : [];
-
-      try {
-        await API.post('/api/admin/settings', {
+          },
           robloxApiKey,
           universeIds
         });
-        showToast('Kunci API Roblox & Universe IDs berhasil disimpan!', 'success');
+        showToast('Konfigurasi Roblox berhasil disimpan!', 'success');
       } catch (err) {
         showToast(err.message, 'error');
       }
@@ -244,7 +193,15 @@
         showToast('Password berhasil diubah!', 'success');
         document.getElementById('password-form').reset();
       } catch (err) {
-        showToast(err.message, 'error');
+        if (err.message.toLowerCase().includes('current password') || err.message.toLowerCase().includes('saat ini')) {
+           const pwd = prompt("Masukkan password saat ini untuk memverifikasi:");
+           if (pwd) {
+             document.getElementById('pwd-current').value = pwd;
+             handleChangePassword(e);
+           }
+        } else {
+           showToast(err.message, 'error');
+        }
       }
     }
   </script>
