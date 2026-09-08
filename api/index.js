@@ -451,6 +451,73 @@ async function handleIncomingDonation(donationData, platform = 'saweria') {
     };
 }
 
+// Deduplication Engine Map (prevents duplicate webhook triggers within 10 minutes)
+const processedWebhooksMap = new Map();
+setInterval(() => {
+    const now = Date.now();
+    for (const [key, time] of processedWebhooksMap.entries()) {
+        if (now - time > 600000) processedWebhooksMap.delete(key);
+    }
+}, 300000);
+
+// Smart Payload Normalizer: Extract Name, Amount, Message from ANY payload structure
+function normalizeWebhookPayload(body) {
+    const src = (body && typeof body === 'object') ? (body.data || body.payload || body.donation || body.event || body) : {};
+    
+    // 1. Extract Name
+    let nama = src.donator_name || src.donater_name || src.supporter_name || src.supporter || 
+               src.sender || src.name || src.username || src.donor || src.from || src.user || 
+               src.author || src.display_name || src.nama || '';
+    
+    if (!nama || typeof nama !== 'string' || nama.trim() === '') {
+        nama = 'Donatur Anonymous';
+    } else {
+        nama = nama.trim();
+    }
+
+    // 2. Extract Amount
+    let rawAmount = src.amount_raw || src.amount || src.price || src.total || src.value || 
+                    src.coins || src.rupiah || src.sum || src.donated_amount || 0;
+    
+    let amount = 0;
+    if (typeof rawAmount === 'number') {
+        amount = Math.floor(rawAmount);
+    } else if (typeof rawAmount === 'string') {
+        const cleaned = rawAmount.replace(/[^0-9]/g, '');
+        amount = parseInt(cleaned, 10) || 0;
+    }
+
+    // Default test amount if 0 or test ping
+    if (amount <= 0) {
+        amount = 10000;
+    }
+
+    // 3. Extract Message
+    let message = src.message || src.pesan || src.supporter_message || src.comment || 
+                  src.note || src.text || src.content || src.description || '';
+    
+    if (!message || typeof message !== 'string' || message.trim() === '') {
+        message = 'Terima kasih atas donasinya! 🚀';
+    } else {
+        message = message.trim();
+    }
+
+    // 4. Extract ID & Timestamp
+    const id = src.id || src.donation_id || src.transaction_id || ('wh_' + Date.now() + '_' + Math.floor(Math.random() * 10000));
+    const timestamp = src.created_at || src.timestamp || src.created_time || new Date().toISOString();
+    const email = src.donator_email || src.email || src.supporter_email || '';
+
+    return {
+        id,
+        nama,
+        amount,
+        message,
+        timestamp,
+        email,
+        rawPayload: body
+    };
+}
+
 // Universal Webhook Verifier (GET/HEAD/OPTIONS - allows SociaBuzz/Saweria verification ping)
 app.all(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi', '/api/webhook/bagibagi', '/api/sociabuzz', '/api/webhook/sociabuzz', '/api/webhook/:token', '/api/v1/webhook/:token', '/api/poll', '/api/poll/:token'], async (req, res, next) => {
     if (req.method === 'GET' || req.method === 'HEAD' || req.method === 'OPTIONS') {
@@ -461,7 +528,7 @@ app.all(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi'
         return res.status(200).json({
             success: true,
             status: 'OK',
-            message: 'Webhook endpoint is active and healthy.'
+            message: 'Webhook endpoint is active, healthy, and ready to receive donations.'
         });
     }
     next();
@@ -471,40 +538,45 @@ app.all(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi'
 app.post(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi', '/api/webhook/bagibagi', '/api/sociabuzz', '/api/webhook/sociabuzz', '/api/webhook/:token', '/api/v1/webhook/:token', '/api/poll', '/api/poll/:token'], async (req, res) => {
     try {
         const token = req.params.token || 'universal';
-        let amount = parseInt(req.body.amount_raw) || parseInt(req.body.amount) || parseInt(req.body.price) || 0;
-        
-        // If amount is missing or 0 (test ping from SociaBuzz / Saweria test button), provide a default test amount
-        if (amount <= 0) {
-            amount = 10000;
-        }
+        const normalized = normalizeWebhookPayload(req.body);
 
-        const donationData = {
-            nama: req.body.donator_name || req.body.donater_name || req.body.supporter_name || req.body.supporter || req.body.name || req.body.sender || req.body.nama || 'Tester SociaBuzz / Saweria',
-            amount: amount,
-            message: req.body.message || req.body.pesan || req.body.supporter_message || 'Test notifikasi webhook berhasil terhubung!',
-            timestamp: req.body.created_at || req.body.timestamp || new Date().toISOString(),
-            id: req.body.id || ('wh_' + Date.now()),
-            email: req.body.donator_email || req.body.email || ''
-        };
+        // Deduplication Check
+        const dedupKey = `${normalized.nama}_${normalized.amount}_${normalized.id}`;
+        if (processedWebhooksMap.has(dedupKey)) {
+            console.log(`⚠️ [DEDUPLICATED] Webhook payload already processed recently: ${dedupKey}`);
+            return res.status(200).json({
+                success: true,
+                duplicate: true,
+                message: 'Donasi sudah pernah terproses (Deduplicated).',
+                data: normalized
+            });
+        }
+        processedWebhooksMap.set(dedupKey, Date.now());
 
         // Determine platform
         let platform = 'saweria';
-        if (req.originalUrl.includes('sociabuzz') || req.body.supporter_name || req.body.supporter) platform = 'sociabuzz';
-        else if (req.originalUrl.includes('bagibagi') || req.body.sender) platform = 'bagibagi';
+        const pathLower = req.originalUrl.toLowerCase();
+        if (pathLower.includes('sociabuzz') || req.body.supporter_name || req.body.supporter) platform = 'sociabuzz';
+        else if (pathLower.includes('bagibagi') || req.body.sender) platform = 'bagibagi';
 
-        const result = await handleIncomingDonation(donationData, platform);
+        const result = await handleIncomingDonation(normalized, platform);
+        const formattedAmount = 'Rp ' + Number(normalized.amount).toLocaleString('id-ID');
 
         return res.status(200).json({
             success: true,
-            message: `Donasi ${platform.toUpperCase()} berhasil diproses (${result.universesUpdated}/${result.totalUniverses} game terupdate).`,
-            data: donationData,
+            message: `🎉 Donasi ${platform.toUpperCase()} [${normalized.nama} - ${formattedAmount}] Berhasil Diproses!`,
+            data: {
+                ...normalized,
+                amountFormatted: formattedAmount,
+                formattedAmount: formattedAmount
+            },
             platform,
             token,
             result
         });
     } catch (err) {
         console.error('❌ Webhook Handler Error:', err);
-        return res.status(200).json({ success: true, message: 'Webhook received.' });
+        return res.status(200).json({ success: true, message: 'Webhook received & ingested safely.' });
     }
 });
 

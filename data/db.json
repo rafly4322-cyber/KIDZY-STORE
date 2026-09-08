@@ -1320,6 +1320,19 @@
   ],
   "donations": [
     {
+      "id": "wh_1788911003361",
+      "nama": "Sultan_Pesta_Danice",
+      "amount": 50000,
+      "message": "Tes Notifikasi Donasi Langsung Masuk Map!",
+      "platform": "saweria",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-09-08T23:43:23.361Z",
+      "details": {},
+      "polled": false
+    },
+    {
       "id": "test_1788444258093",
       "nama": "TesterKIDZY",
       "amount": 75000,
