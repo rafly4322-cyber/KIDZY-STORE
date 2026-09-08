@@ -7,9 +7,7 @@
   <title>Aktivasi Token Lisensi — KIDZY Store</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 
@@ -23,12 +21,12 @@
       </a>
       <nav class="nav">
         <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/p/saweria.html">Saweria</a>
-        <a class="nav-link" href="/p/bagibagi.html">BagiBagi</a>
-        <a class="nav-link" href="/p/sociabuzz.html">SociaBuzz</a>
+        <a class="nav-link" href="/#platform">Saweria</a>
+        <a class="nav-link" href="/#platform">BagiBagi</a>
+        <a class="nav-link" href="/#platform">SociaBuzz</a>
         <a class="nav-link is-active" href="/activation.html">Aktivasi Token</a>
         <span class="nav-sep"></span>
-        <a class="btn btn-sm btn-ghost" href="/login.html">Login</a>
+        <a class="btn btn-sm btn-ghost" href="/login.html">Login Admin</a>
       </nav>
       <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
         ☰
@@ -41,90 +39,79 @@
       <div class="page-head">
         <div class="row" style="margin-bottom: 8px;">
           <span class="badge badge-accent">Instant Activation</span>
-          <span class="badge badge-live">Live Gateway</span>
+          <span class="badge badge-live">Live Webhook Gateway</span>
         </div>
         <h1 class="h1">Aktivasi Layanan Webhook</h1>
-        <p class="lead">Masukkan kode token lisensi kamu beserta Universe ID game Roblox untuk mengaktifkan webhook
-          donasi realtime secara instan.</p>
+        <p class="lead">Masukkan kode token lisensi kamu beserta Universe ID game Roblox untuk mengaktifkan webhook donasi realtime secara instan.</p>
       </div>
 
       <div class="split">
         <!-- Main Form Card -->
-        <div class="card">
+        <div class="card" style="border-color: rgba(99, 102, 241, 0.35);">
           <div id="activation-result"></div>
 
-          <form id="activate-form" class="stack" onsubmit="handleActivation(event)">
+          <form id="activate-form" class="stack" onsubmit="handleActivation(event)" style="gap: 20px;">
             <div class="field">
-              <label for="svc-token">Kode Token Lisensi</label>
-              <input class="input mono" id="svc-token" name="token" required
-                placeholder="Contoh: KIDZY-SAWERIA-LIFETIME-VIP" />
-              <span class="small faint">Token diberikan oleh Admin setelah konfirmasi pembayaran di Discord.</span>
+              <label for="svc-token" style="font-weight: 600;">Kode Token Lisensi</label>
+              <input class="input mono" id="svc-token" name="token" required placeholder="Contoh: KIDZY-SAWERIA-LIFETIME-VIP" style="font-size: 15px; font-weight: 700; color: #A5B4FC;" />
+              <span class="small faint" style="margin-top: 4px; display: block;">Token diberikan oleh Admin setelah konfirmasi pembayaran di Discord.</span>
             </div>
 
             <div class="field">
-              <label for="svc-universe">Roblox Universe ID Game</label>
-              <input class="input mono" id="svc-universe" name="universe_id" required
-                placeholder="Contoh: 10764300084" />
-              <span class="small faint">Universe ID dapat ditemukan di Creator Dashboard &rarr; Experiences &rarr; Copy
-                Universe ID.</span>
+              <label for="svc-universe" style="font-weight: 600;">Roblox Universe ID Game</label>
+              <input class="input mono" id="svc-universe" name="universe_id" required placeholder="Contoh: 10764300084" style="font-size: 15px; font-weight: 700; color: #67E8F9;" />
+              <span class="small faint" style="margin-top: 4px; display: block;">Ditemukan di Roblox Creator Dashboard &rarr; Experiences &rarr; Copy Universe ID.</span>
             </div>
 
             <div class="field">
-              <label for="svc-api-key">Roblox API Key (Opsional)</label>
-              <input class="input" id="svc-api-key" name="roblox_api_key"
-                placeholder="Masukkan API Key dari create.roblox.com" />
+              <label for="svc-api-key" style="font-weight: 600;">Roblox Open Cloud API Key (Opsional)</label>
+              <input class="input mono" id="svc-api-key" name="roblox_api_key" placeholder="Default global key akan digunakan jika dikosongkan" />
             </div>
 
             <div style="margin-top: 10px;">
               <button class="btn btn-primary btn-lg btn-block" id="submit-btn" type="submit">
-                 Aktivasi Layanan Sekarang
+                ✨ Aktivasi Layanan Sekarang
               </button>
             </div>
           </form>
         </div>
 
         <!-- Sidebar Guide Card -->
-        <aside class="stack">
-          <div class="card soft">
+        <aside class="stack" style="gap: 20px;">
+          <div class="card soft" style="padding: 24px;">
             <h2 class="h2" style="font-size: 18px; margin-bottom: 12px;">Panduan 3 Langkah</h2>
-            <p class="small faint" style="margin-bottom: 20px;">Langkah mudah mengaktifkan gateway donasi Roblox kamu:
-            </p>
+            <p class="small faint" style="margin-bottom: 20px;">Langkah mudah mengaktifkan gateway donasi Roblox kamu:</p>
 
             <div class="stack" style="gap: 18px;">
               <div class="row" style="align-items: flex-start; gap: 14px;">
-                <span class="brand-mark" style="width: 28px; height: 28px; font-size: 12px; flex-shrink: 0;">1</span>
+                <span class="brand-mark" style="width: 32px; height: 32px; font-size: 13px; flex-shrink: 0;">1</span>
                 <div>
                   <h4 class="h3" style="font-size: 14.5px;">Salin Universe ID</h4>
-                  <p class="small faint">Buka <a href="https://create.roblox.com/dashboard/creations" target="_blank"
-                      style="color: #A5B4FC; text-decoration: underline;">Creator Dashboard</a> &rarr; Experiences
-                    &rarr; MASUKKAN UNIVERSE ID MAP KAMU.</p>
+                  <p class="small faint">Buka <a href="https://create.roblox.com/dashboard/creations" target="_blank" style="color: #A5B4FC; text-decoration: underline;">Creator Dashboard</a> &rarr; Experiences &rarr; Salin Universe ID map kamu.</p>
                 </div>
               </div>
 
               <div class="row" style="align-items: flex-start; gap: 14px;">
-                <span class="brand-mark" style="width: 28px; height: 28px; font-size: 12px; flex-shrink: 0;">2</span>
+                <span class="brand-mark" style="width: 32px; height: 32px; font-size: 13px; flex-shrink: 0; background: linear-gradient(135deg, #8B5CF6, #06B6D4);">2</span>
                 <div>
                   <h4 class="h3" style="font-size: 14.5px;">Dapatkan Webhook URL</h4>
-                  <p class="small faint">Setelah aktivasi selesai, URL Webhook unik kamu akan langsung terbit di layar
-                    ini.</p>
+                  <p class="small faint">Setelah aktivasi selesai, URL Webhook unik kamu akan langsung terbit di layar ini.</p>
                 </div>
               </div>
 
               <div class="row" style="align-items: flex-start; gap: 14px;">
-                <span class="brand-mark" style="width: 28px; height: 28px; font-size: 12px; flex-shrink: 0;">3</span>
+                <span class="brand-mark" style="width: 32px; height: 32px; font-size: 13px; flex-shrink: 0; background: linear-gradient(135deg, #06B6D4, #10B981);">3</span>
                 <div>
                   <h4 class="h3" style="font-size: 14.5px;">Hubungkan ke Saweria</h4>
-                  <p class="small faint">Tempel URL Webhook di dashboard Saweria/BagiBagi kamu dan sistem siap menerima
-                    donasi!</p>
+                  <p class="small faint">Tempel URL Webhook di dashboard Saweria/BagiBagi kamu dan sistem siap menerima donasi!</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="card soft" style="border-color: rgba(99, 102, 241, 0.2);">
-            <h3 class="h3" style="font-size: 15px; margin-bottom: 8px;">Belum punya Token Lisensi?</h3>
-            <p class="small faint" style="margin-bottom: 14px;">Beli paket Lifetime seharga Rp 500.000 (Permanen) lewat
-              DM Discord.</p>
+          <div class="card soft" style="border-color: rgba(99, 102, 241, 0.3); padding: 20px;">
+            <h3 class="h3" style="font-size: 15px; margin-bottom: 8px;">Belum Punya Token Lisensi?</h3>
+            <p class="small faint" style="margin-bottom: 14px;">Beli paket Lifetime seharga Rp 500.000 (Permanen) lewat DM Discord.</p>
             <a class="btn btn-ghost btn-sm btn-block" href="https://discord.com/users/kidddzyyaj" target="_blank">
               💬 Hubungi Discord: kidddzyyaj
             </a>
@@ -135,10 +122,14 @@
   </main>
 
   <!-- Footer -->
-  <footer class="site-footer">
+  <footer class="site-footer" style="margin-top: 80px; border-top: 1px solid var(--border); padding: 32px 0;">
     <div class="container footer-inner">
-      <span>&copy; 2026 <b>KIDZY Store</b> &middot; Sistem Gateway Roblox</span>
-      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small faint">Support via Discord</a>
+      <div class="row" style="gap: 12px;">
+        <span class="brand-mark" style="width: 28px; height: 28px; font-size: 12px;">KZ</span>
+        <span style="font-size: 14px; font-weight: 600;">&copy; 2026 KIDZY Store</span>
+        <span class="faint">&bull; Sistem Gateway Roblox</span>
+      </div>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small faint nav-link">Support via Discord</a>
     </div>
   </footer>
 
@@ -151,6 +142,13 @@
         document.getElementById('svc-token').value = tokenFromUrl.trim();
       }
     });
+
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text);
+      const originalText = btn.textContent;
+      btn.textContent = '✓ Tersalin!';
+      setTimeout(() => { btn.textContent = originalText; }, 2000);
+    }
 
     async function handleActivation(e) {
       e.preventDefault();
@@ -207,7 +205,7 @@
               
               <!-- 1. UNTUK SAWERIA / BAGIBAGI / SOCIABUZZ -->
               <div class="card soft" style="margin-bottom: 16px; border-color: rgba(99, 102, 241, 0.4);">
-                <div class="row between" style="margin-bottom: 6px;">
+                <div class="row between" style="margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
                   <b style="color: #A5B4FC; font-size: 15px;">1️⃣ Link Webhook (Tempel di Web Saweria / BagiBagi / SociaBuzz)</b>
                   <button class="btn btn-sm btn-cyan" onclick="copyText('${svc.webhookUrl}', this)">📋 Salin Webhook URL</button>
                 </div>
@@ -217,7 +215,7 @@
 
               <!-- 2. UNTUK ROBLOX STUDIO -->
               <div class="card soft" style="margin-bottom: 16px; border-color: rgba(16, 185, 129, 0.4);">
-                <div class="row between" style="margin-bottom: 6px;">
+                <div class="row between" style="margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
                   <b style="color: #34D399; font-size: 15px;">2️⃣ Link Polling (Tempel di Script Roblox Studio)</b>
                   <button class="btn btn-sm btn-cyan" onclick="copyText('${svc.pollUrl}', this)">📋 Salin Polling URL</button>
                 </div>
@@ -241,13 +239,13 @@
           showToast(res.message || 'Gagal mengaktifkan token', 'error');
           resultBox.innerHTML = `<div class="alert alert-error">${res.message || 'Token tidak valid atau sudah pernah digunakan.'}</div>`;
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Aktivasi Layanan Sekarang';
+          submitBtn.textContent = '✨ Aktivasi Layanan Sekarang';
         }
       } catch (err) {
         showToast(err.message, 'error');
         resultBox.innerHTML = `<div class="alert alert-error">Terjadi kesalahan: ${err.message}</div>`;
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Aktivasi Layanan Sekarang';
+        submitBtn.textContent = '✨ Aktivasi Layanan Sekarang';
       }
     }
   </script>

@@ -3,162 +3,336 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>KIDZY Store</title>
+  <title>KIDZY Store — Webhook Donasi Roblox Instant & Auto Datastore</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
-  <style>
-    body { background-color: #1c1c1c; color: #ffffff; font-family: 'Inter', sans-serif; }
-    
-    /* Header Overrides */
-    .site-header { border-bottom: 1px solid #2e2e2e; background-color: #1c1c1c; }
-    .brand-mark { background: #fff; color: #000; border-radius: 4px; padding: 4px 6px; font-weight: 700; font-size: 14px; margin-right: 8px; }
-    .brand span { color: #fff; font-weight: 500; font-size: 15px; }
-    .nav-link { color: #ccc; font-size: 14px; }
-    .nav-link:hover, .nav-link.is-active { color: #fff; }
-    .btn-ghost-header { background: transparent; border: 1px solid #333; color: #fff; font-size: 13px; padding: 6px 12px; border-radius: 6px; cursor: pointer; text-decoration: none; }
-    .btn-ghost-header:hover { background: #333; }
-
-    /* Hero Section */
-    .hero-split {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 40px;
-      margin-top: 80px;
-      margin-bottom: 80px;
-      align-items: center;
-    }
-    
-    .hero-subtitle { font-size: 11px; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
-    .hero-title { font-size: 48px; font-weight: 700; line-height: 1.15; margin-bottom: 20px; color: #fff; }
-    .hero-desc { font-size: 15px; color: #999; line-height: 1.6; margin-bottom: 40px; max-width: 480px; }
-    
-    .hero-btns { display: flex; gap: 16px; }
-    .btn-white { background: #fff; color: #000; font-weight: 600; border-radius: 6px; padding: 12px 24px; text-decoration: none; display: inline-block; font-size: 14px; transition: 0.2s; border: none; cursor: pointer; }
-    .btn-white:hover { background: #e0e0e0; }
-    .btn-outline { border: 1px solid #333; background: transparent; color: #fff; font-weight: 500; border-radius: 6px; padding: 12px 24px; text-decoration: none; display: inline-block; font-size: 14px; transition: 0.2s; }
-    .btn-outline:hover { background: #2a2a2a; border-color: #444; }
-
-    /* Card: Cara Kerjanya */
-    .how-it-works-card { background: #1f1f1f; border: 1px solid #2e2e2e; border-radius: 12px; padding: 32px; }
-    .how-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #fff; }
-    .how-desc { font-size: 13px; color: #888; margin-bottom: 24px; }
-    .how-sep { height: 1px; background: #2e2e2e; margin-bottom: 24px; }
-    
-    .how-step { display: flex; gap: 16px; margin-bottom: 24px; }
-    .how-step:last-child { margin-bottom: 0; }
-    .how-num { width: 20px; height: 20px; background: #333; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; margin-top: 2px; }
-    .how-text h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #ddd; }
-    .how-text p { font-size: 13px; color: #888; line-height: 1.5; }
-
-    /* Platform Section */
-    .platform-section { margin-bottom: 100px; }
-    .platform-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; color: #fff; }
-    .platform-desc { font-size: 13px; color: #777; margin-bottom: 24px; }
-    
-    .platform-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .platform-card { background: #1a1a1a; border: 1px solid #2e2e2e; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; }
-    .platform-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #fff; }
-    .platform-card p { font-size: 13px; color: #888; margin-bottom: 32px; flex-grow: 1; }
-    .platform-card .btn-white { text-align: center; width: 100%; padding: 10px; font-size: 13px; }
-
-    @media (max-width: 768px) {
-      .hero-split { grid-template-columns: 1fr; gap: 32px; margin-top: 40px; }
-      .platform-grid { grid-template-columns: 1fr; }
-    }
-  </style>
 </head>
 <body>
   <!-- Header -->
   <header class="site-header">
-    <div class="container header-inner" style="height: 70px;">
-      <a class="brand" href="/" style="text-decoration: none;">
+    <div class="container header-inner">
+      <a class="brand" href="/">
         <span class="brand-mark">KZ</span>
         <span>KIDZY Store</span>
       </a>
 
-      <nav class="nav" style="display: flex; gap: 24px; align-items: center;">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/admin">Admin</a>
-        <a class="btn-ghost-header" href="#" onclick="Auth.logout()">Logout</a>
+      <nav class="nav">
+        <a class="nav-link is-active" href="/">Home</a>
+        <a class="nav-link" href="#features">Fitur</a>
+        <a class="nav-link" href="#platform">Paket Platform</a>
+        <a class="nav-link" href="/activation.html">Aktivasi Token</a>
+        <span class="nav-sep"></span>
+        <a class="btn btn-sm btn-ghost" href="/login.html">Login Admin</a>
       </nav>
+      
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
+        ☰
+      </button>
     </div>
   </header>
 
   <main>
-    <div class="container">
+    <div class="container page">
       
       <!-- Hero Section -->
-      <section class="hero-split">
-        <div class="hero-content">
-          <div class="hero-subtitle">DONATION WEBHOOK UNTUK ROBLOX</div>
-          <h1 class="hero-title">Hubungkan donasi<br>ke game kamu.</h1>
-          <p class="hero-desc">
-            Pilih platform donasi, ambil paket yang sesuai, lalu aktifkan webhook dengan token dari owner. Setup selesai dalam beberapa menit.
+      <section class="split" style="align-items: center; min-height: calc(100vh - 160px); padding: 40px 0 60px 0;">
+        <div class="stack" style="gap: 24px;">
+          <div class="row" style="gap: 10px; flex-wrap: wrap;">
+            <span class="badge badge-live">Live Gateway Active</span>
+            <span class="badge badge-cyan">Roblox Open Cloud V2</span>
+            <span class="badge badge-gold">Lifetime License</span>
+          </div>
+
+          <h1 class="h1" style="line-height: 1.12;">
+            Integrasi Donasi <br />
+            <span class="gradient-text">Realtime ke Game Roblox</span>
+          </h1>
+
+          <p class="lead" style="max-width: 540px;">
+            Hubungkan Saweria, BagiBagi, dan SociaBuzz langsung ke dalam game Roblox kamu. Notifikasi instan, auto DataStore sync, dan setup instan tanpa ribet.
           </p>
-          <div class="hero-btns">
-            <a href="#platform" class="btn-white">Lihat paket</a>
-            <a href="/activation.html" class="btn-outline">Sudah punya token</a>
+
+          <div class="row" style="gap: 16px; margin-top: 8px;">
+            <a href="#platform" class="btn btn-primary btn-lg">
+              🚀 Lihat Paket Platform
+            </a>
+            <a href="/activation.html" class="btn btn-ghost btn-lg">
+              🔑 Sudah Punya Token?
+            </a>
+          </div>
+
+          <div class="row" style="gap: 24px; margin-top: 16px; padding-top: 20px; border-top: 1px solid var(--border-subtle);">
+            <div>
+              <div style="font-size: 18px; font-weight: 800; color: var(--ink);">⚡ &lt; 100ms</div>
+              <div style="font-size: 12.5px; color: var(--muted);">Latency Sync</div>
+            </div>
+            <div style="width: 1px; height: 30px; background: var(--border-subtle);"></div>
+            <div>
+              <div style="font-size: 18px; font-weight: 800; color: var(--ink);">🛡️ 99.9%</div>
+              <div style="font-size: 12.5px; color: var(--muted);">Uptime Guarantee</div>
+            </div>
+            <div style="width: 1px; height: 30px; background: var(--border-subtle);"></div>
+            <div>
+              <div style="font-size: 18px; font-weight: 800; color: var(--ink);">🎮 3 Platform</div>
+              <div style="font-size: 12.5px; color: var(--muted);">Saweria &bull; BagiBagi &bull; SociaBuzz</div>
+            </div>
           </div>
         </div>
 
-        <div class="how-it-works-card">
-          <h2 class="how-title">Cara kerjanya</h2>
-          <p class="how-desc">Tiga langkah sampai donasi tampil di dalam game.</p>
-          <div class="how-sep"></div>
-
-          <div class="how-step">
-            <div class="how-num">1</div>
-            <div class="how-text">
-              <h4>Pilih paket</h4>
-              <p>Tentukan 30 hari atau lifetime sesuai kebutuhan.</p>
+        <!-- Interactive Live Preview Mockup -->
+        <div class="hero-mockup-wrap">
+          <div class="hero-mockup-card">
+            <div class="mockup-header">
+              <div class="mockup-dots">
+                <span class="mockup-dot red"></span>
+                <span class="mockup-dot yellow"></span>
+                <span class="mockup-dot green"></span>
+              </div>
+              <div style="font-size: 12px; font-family: var(--mono); color: var(--muted);">Roblox Game Experience #10764</div>
+              <span class="badge badge-live">Live Webhook</span>
             </div>
-          </div>
 
-          <div class="how-step">
-            <div class="how-num">2</div>
-            <div class="how-text">
-              <h4>Bayar &amp; kirim bukti</h4>
-              <p>QRIS atau transfer bank, lalu kirim lewat Discord.</p>
+            <!-- Simulated Roblox Alert Box -->
+            <div class="roblox-alert-box" style="margin-bottom: 16px;">
+              <div class="roblox-alert-top">
+                <div class="roblox-alert-icon">🎁</div>
+                <div class="roblox-alert-info">
+                  <h4>Sultan_Gamer123</h4>
+                  <p>Mendonasikan Rp 100.000 via Saweria</p>
+                </div>
+              </div>
+              <div class="roblox-alert-msg">
+                "Semangat terus dev game nya! Ditunggu update map barunya 🔥"
+              </div>
             </div>
-          </div>
 
-          <div class="how-step">
-            <div class="how-num">3</div>
-            <div class="how-text">
-              <h4>Aktifkan token</h4>
-              <p>Masukkan token, Universe ID, dan Roblox API Key.</p>
+            <!-- Secondary Alert Preview -->
+            <div class="roblox-alert-box" style="border-color: #06B6D4; background: linear-gradient(135deg, rgba(8, 47, 73, 0.85), rgba(15, 23, 42, 0.95)); animation-delay: 2s;">
+              <div class="roblox-alert-top">
+                <div class="roblox-alert-icon" style="background: linear-gradient(135deg, #06B6D4, #0891B2);">💎</div>
+                <div class="roblox-alert-info">
+                  <h4>RobloxVIP_Pro</h4>
+                  <p style="color: #67E8F9;">Mendonasikan Rp 250.000 via BagiBagi</p>
+                </div>
+              </div>
+              <div class="roblox-alert-msg" style="border-left-color: #06B6D4;">
+                "Bonus VIP Member & Global Announcement Active!"
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Platform Section -->
-      <section class="platform-section" id="platform">
-        <h2 class="platform-title">Pilih platform</h2>
-        <p class="platform-desc">Tiga platform didukung, dengan paket dan harga yang sama.</p>
+      <!-- Trust Bar -->
+      <section class="stat-bar">
+        <div class="stat-item">
+          <div class="stat-num">500+</div>
+          <div class="stat-lbl">Game Roblox Terhubung</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-lbl">Otomatisasi Sync</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">24/7</div>
+          <div class="stat-lbl">Gateway Server Support</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">Rp 50M+</div>
+          <div class="stat-lbl">Total Donasi Terproses</div>
+        </div>
+      </section>
 
-        <div class="platform-grid">
-          <!-- BagiBagi -->
-          <div class="platform-card">
-            <h3>BagiBagi</h3>
-            <p>Order subscription untuk platform BagiBagi.</p>
-            <button class="btn-white" onclick="openOrderModal('BagiBagi', 'Rp 500.000')">Lihat paket</button>
+      <!-- Feature Grid Section -->
+      <section id="features" style="padding: 60px 0;">
+        <div style="text-align: center; margin-bottom: 48px;">
+          <span class="badge badge-accent" style="margin-bottom: 12px;">Keunggulan KIDZY Store</span>
+          <h2 class="h1">Kenapa Memilih System Webhook Kami?</h2>
+          <p class="lead" style="max-width: 600px; margin: 12px auto 0 auto;">
+            Dibuat khusus untuk pengembang game Roblox Indonesia yang ingin monetisasi game dengan aman, cepat, dan profesional.
+          </p>
+        </div>
+
+        <div class="grid three">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">⚡</div>
+            <h3 class="h3">Instant Notification</h3>
+            <p class="small faint">Donasi dari pemain akan tampil di layar server Roblox dalam hitungan detik tanpa jeda delay.</p>
           </div>
 
-          <!-- Saweria -->
-          <div class="platform-card">
-            <h3>Saweria</h3>
-            <p>Order subscription untuk platform Saweria.</p>
-            <button class="btn-white" onclick="openOrderModal('Saweria', 'Rp 500.000')">Lihat paket</button>
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">☁️</div>
+            <h3 class="h3">Roblox DataStore Sync</h3>
+            <p class="small faint">Otomatis menyimpan koin, gem, atau item reward donasi ke DataStore resmi Roblox lewat Open Cloud API.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">🛡️</div>
+            <h3 class="h3">Keamanan Terjamin</h3>
+            <p class="small faint">Dilengkapi proteksi enkripsi token unik, DDoS shield, dan audit logging riwayat donasi.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">🌐</div>
+            <h3 class="h3">Multi Platform Support</h3>
+            <p class="small faint">Dukungan penuh untuk Saweria, BagiBagi, dan SociaBuzz dalam 1 sistem manajemen token yang praktis.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">♾️</div>
+            <h3 class="h3">Akses Lifetime Permanen</h3>
+            <p class="small faint">Cukup sekali bayar, token lisensi kamu aktif selamanya tanpa biaya langganan bulanan tersembunyi.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">💬</div>
+            <h3 class="h3">Support Discord 24/7</h3>
+            <p class="small faint">Tim developer siap membantu proses pemasangan script ke Roblox Studio hingga lancar.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Platform Section -->
+      <section id="platform" style="padding: 60px 0;">
+        <div style="text-align: center; margin-bottom: 48px;">
+          <span class="badge badge-cyan" style="margin-bottom: 12px;">Pilihan Platform</span>
+          <h2 class="h1">Pilih Platform Donasi Kamu</h2>
+          <p class="lead" style="max-width: 600px; margin: 12px auto 0 auto;">
+            Semua paket sudah termasuk lisensi Lifetime seumur hidup dan script integrasi Roblox Studio.
+          </p>
+        </div>
+
+        <div class="grid three">
+          <!-- BagiBagi -->
+          <div class="platform-card-v2">
+            <span class="badge badge-cyan platform-badge-ribbon">Recommended</span>
+            <h3 class="h3">BagiBagi Platform</h3>
+            <p class="small faint" style="margin-top: 4px;">Integrasi khusus platform BagiBagi ke game Roblox.</p>
+
+            <div class="price-tag">Rp 500.000</div>
+            <div class="price-period">Akses Lifetime &bull; Sekali Bayar</div>
+
+            <ul class="platform-feat-list">
+              <li class="platform-feat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Instant Webhook Sync (&lt;100ms)</span>
+              </li>
+              <li class="platform-feat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Auto DataStore Reward Player</span>
+              </li>
+              <li class="platform-feat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Script Roblox Studio Ready-to-Use</span>
+              </li>
+              <li class="platform-feat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Support 1 Universe ID Game</span>
+              </li>
+            </ul>
+
+            <button class="btn btn-cyan btn-block" onclick="openOrderModal('BagiBagi', 'Rp 500.000')">
+              🛒 Order BagiBagi License
+            </button>
+          </div>
+
+          <!-- Saweria (Popular) -->
+          <div class="platform-card-v2 popular">
+            <span class="badge badge-gold platform-badge-ribbon">🔥 Best Seller</span>
+            <h3 class="h3">Saweria Platform</h3>
+            <p class="small faint" style="margin-top: 4px;">Integrasi resmi Saweria Webhook ke game Roblox.</p>
+
+            <div class="price-tag">Rp 500.000</div>
+            <div class="price-period">Akses Lifetime &bull; Sekali Bayar</div>
+
+            <ul class="platform-feat-list">
+              <li class="platform-feat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Instant Webhook Sync (&lt;100ms)</span>
+              </li>
+              <li class="platform-feat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Auto DataStore Reward Player</span>
+              </li>
+              <li class="platform-feat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Script Roblox Studio Ready-to-Use</span>
+              </li>
+              <li class="platform-feat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Support Saweria Overlay &amp; Audio</span>
+              </li>
+            </ul>
+
+            <button class="btn btn-primary btn-block" onclick="openOrderModal('Saweria', 'Rp 500.000')">
+              ✨ Order Saweria License
+            </button>
           </div>
 
           <!-- SociaBuzz -->
-          <div class="platform-card">
-            <h3>SociaBuzz</h3>
-            <p>Order subscription untuk platform SociaBuzz.</p>
-            <button class="btn-white" onclick="openOrderModal('SociaBuzz', 'Rp 500.000')">Lihat paket</button>
+          <div class="platform-card-v2">
+            <span class="badge badge-accent platform-badge-ribbon">Fast Setup</span>
+            <h3 class="h3">SociaBuzz Platform</h3>
+            <p class="small faint" style="margin-top: 4px;">Integrasi platform SociaBuzz ke game Roblox.</p>
+
+            <div class="price-tag">Rp 500.000</div>
+            <div class="price-period">Akses Lifetime &bull; Sekali Bayar</div>
+
+            <ul class="platform-feat-list">
+              <li class="platform-feat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Instant Webhook Sync (&lt;100ms)</span>
+              </li>
+              <li class="platform-feat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Auto DataStore Reward Player</span>
+              </li>
+              <li class="platform-feat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Script Roblox Studio Ready-to-Use</span>
+              </li>
+              <li class="platform-feat-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Support 1 Universe ID Game</span>
+              </li>
+            </ul>
+
+            <button class="btn btn-ghost btn-block" onclick="openOrderModal('SociaBuzz', 'Rp 500.000')">
+              ⚡ Order SociaBuzz License
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- How It Works Section -->
+      <section style="padding: 60px 0;">
+        <div class="card" style="padding: 40px;">
+          <div style="text-align: center; margin-bottom: 36px;">
+            <span class="badge badge-live">Setup Mudah</span>
+            <h2 class="h1" style="margin-top: 8px;">Cara Kerjanya Dalam 3 Langkah</h2>
+            <p class="lead">Hanya butuh 5 menit untuk membuat sistem donasi aktif di game kamu.</p>
+          </div>
+
+          <div class="grid three">
+            <div class="stack" style="gap: 12px; align-items: flex-start;">
+              <div class="brand-mark" style="width: 44px; height: 44px; font-size: 18px;">1</div>
+              <h3 class="h3">1. Order Paket Platform</h3>
+              <p class="small faint">Pilih platform (Saweria, BagiBagi, atau SociaBuzz) dan lakukan pembayaran ke rekening resmi SeaBank.</p>
+            </div>
+
+            <div class="stack" style="gap: 12px; align-items: flex-start;">
+              <div class="brand-mark" style="width: 44px; height: 44px; font-size: 18px; background: linear-gradient(135deg, #8B5CF6, #06B6D4);">2</div>
+              <h3 class="h3">2. Klaim &amp; Aktivasi Token</h3>
+              <p class="small faint">Kirim bukti transfer ke Discord Owner untuk menerima Token Lisensi, lalu aktivasi dengan Universe ID Roblox kamu.</p>
+            </div>
+
+            <div class="stack" style="gap: 12px; align-items: flex-start;">
+              <div class="brand-mark" style="width: 44px; height: 44px; font-size: 18px; background: linear-gradient(135deg, #06B6D4, #10B981);">3</div>
+              <h3 class="h3">3. Pasang Script &amp; Live</h3>
+              <p class="small faint">Salin Webhook URL ke dashboard Saweria kamu &amp; pasang script di Roblox Studio. Donasi langsung aktif!</p>
+            </div>
           </div>
         </div>
       </section>
@@ -166,50 +340,61 @@
     </div>
   </main>
 
-  <!-- Payment / Order Modal (Kept for functionality) -->
-  <div class="modal-backdrop" id="order-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 100;">
-    <div class="modal" style="background: #1f1f1f; border: 1px solid #333; border-radius: 12px; padding: 24px; max-width: 400px; width: 100%; position: relative;">
-      <button class="modal-close" onclick="closeModal('order-modal')" style="position: absolute; top: 12px; right: 12px; background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">&times;</button>
+  <!-- Modern Payment / Order Modal -->
+  <div class="modal-backdrop" id="order-modal" style="display: none; position: fixed; inset: 0; background: rgba(3, 5, 10, 0.85); backdrop-filter: blur(16px); align-items: center; justify-content: center; z-index: 999; padding: 20px;">
+    <div class="card" style="max-width: 460px; width: 100%; position: relative; border-color: rgba(99, 102, 241, 0.4); box-shadow: var(--shadow-lg);">
+      <button onclick="closeModal('order-modal')" style="position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;">✕</button>
 
-      <div style="text-align: center; margin-bottom: 20px;">
-        <h2 class="h2" id="modal-platform-name" style="font-size: 20px; color: #fff;">Saweria</h2>
-        <div style="font-size: 24px; font-weight: 700; color: #fff; margin-top: 4px;" id="modal-price-display">Rp 500.000</div>
-        <p style="font-size: 13px; color: #888; margin-top: 8px;">Lifetime Access</p>
+      <div style="text-align: center; margin-bottom: 24px;">
+        <span class="badge badge-accent" id="modal-platform-badge">Lifetime License</span>
+        <h2 class="h2" id="modal-platform-name" style="font-size: 24px; margin-top: 8px;">Saweria</h2>
+        <div style="font-size: 32px; font-weight: 800; color: #FFFFFF; font-family: var(--font-heading); margin-top: 4px;" id="modal-price-display">Rp 500.000</div>
+        <p class="small faint" style="margin-top: 4px;">Sekali bayar &bull; Akses seumur hidup</p>
       </div>
 
       <div class="stack" style="gap: 16px;">
         <div class="field">
-          <label style="font-size: 13px; color: #aaa;">Transfer Pembayaran Resmi (SeaBank):</label>
-          <div style="display: flex; gap: 8px; margin-top: 4px;">
-            <input class="input mono" readonly value="901506323909" style="flex-grow: 1; background: #111; border: 1px solid #333; color: #fff; padding: 8px; border-radius: 6px;" />
-            <button class="btn-white" style="padding: 8px 12px;" onclick="copyText('901506323909', this)">Salin</button>
+          <label style="font-size: 13px; color: var(--text-secondary); font-weight: 600;">Transfer Pembayaran Resmi (SeaBank):</label>
+          <div class="row" style="gap: 8px; margin-top: 6px;">
+            <input class="input mono" readonly value="901506323909" style="flex: 1; background: rgba(0,0,0,0.5); font-weight: 700; color: #A5B4FC;" />
+            <button class="btn btn-sm btn-cyan" onclick="copyText('901506323909', this)">📋 Salin Rekening</button>
           </div>
-          <span style="font-size: 12px; color: #666; display: block; margin-top: 4px;">Bank: <b>SeaBank (Kode 535)</b> &middot; a/n <b>MUHAMMAD RAFLI FIRDAUS</b></span>
+          <span class="small faint" style="margin-top: 6px; display: block;">Bank: <b>SeaBank (Kode 535)</b> &bull; a/n <b>MUHAMMAD RAFLI FIRDAUS</b></span>
         </div>
 
         <div class="field">
-          <label style="font-size: 13px; color: #aaa;">Konfirmasi Bukti Transfer via Discord:</label>
-          <div style="display: flex; gap: 8px; margin-top: 4px;">
-            <input class="input mono" readonly value="kidddzyyaj" style="flex-grow: 1; background: #111; border: 1px solid #333; color: #fff; padding: 8px; border-radius: 6px;" />
-            <button class="btn-outline" style="padding: 8px 12px;" onclick="copyText('kidddzyyaj', this)">Salin User</button>
+          <label style="font-size: 13px; color: var(--text-secondary); font-weight: 600;">Konfirmasi Bukti Transfer via Discord:</label>
+          <div class="row" style="gap: 8px; margin-top: 6px;">
+            <input class="input mono" readonly value="kidddzyyaj" style="flex: 1; background: rgba(0,0,0,0.5); font-weight: 700; color: #67E8F9;" />
+            <button class="btn btn-sm btn-ghost" onclick="copyText('kidddzyyaj', this)">📋 Salin Discord ID</button>
           </div>
-          <span style="font-size: 12px; color: #666; display: block; margin-top: 4px;">Kirim screenshot bukti transfer ke username Discord di atas untuk klaim Token.</span>
+          <span class="small faint" style="margin-top: 6px; display: block;">Kirim screenshot bukti transfer ke Discord owner untuk klaim Kode Token Lisensi kamu.</span>
         </div>
 
-        <div style="margin-top: 8px;">
-          <a class="btn-white" style="display: block; text-align: center; width: 100%; box-sizing: border-box;" href="https://discord.com/users/kidddzyyaj" target="_blank">
-            Buka Chat Discord Owner
+        <div style="margin-top: 12px;" class="stack">
+          <a class="btn btn-primary btn-block" href="https://discord.com/users/kidddzyyaj" target="_blank">
+            💬 Buka Chat Discord Owner (kidddzyyaj)
+          </a>
+          <a class="btn btn-ghost btn-sm btn-block" href="/activation.html">
+            🔗 Sudah Punya Token? Masuk ke Aktivasi
           </a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Site Footer (Minimal) -->
-  <footer class="site-footer" style="background: #1a1a1a; border-top: 1px solid #2e2e2e; padding: 24px 0;">
-    <div class="container footer-inner" style="display: flex; justify-content: space-between; align-items: center;">
-      <span style="font-size: 13px; color: #666;">&copy; 2026 KIDZY Store</span>
-      <a href="https://discord.gg/tqnreKW6D8" target="_blank" style="font-size: 13px; color: #666; text-decoration: none;">Support via Discord</a>
+  <!-- Footer -->
+  <footer class="site-footer" style="margin-top: 80px; border-top: 1px solid var(--border); padding: 32px 0;">
+    <div class="container footer-inner">
+      <div class="row" style="gap: 12px;">
+        <span class="brand-mark" style="width: 28px; height: 28px; font-size: 12px;">KZ</span>
+        <span style="font-size: 14px; font-weight: 600;">&copy; 2026 KIDZY Store</span>
+        <span class="faint">&bull; Platform Webhook &amp; Gateway Roblox</span>
+      </div>
+      <div class="row" style="gap: 16px;">
+        <a href="https://discord.com/users/kidddzyyaj" target="_blank" class="small faint nav-link">Discord Support</a>
+        <a href="/login.html" class="small faint nav-link">Admin Dashboard</a>
+      </div>
     </div>
   </footer>
 
@@ -218,6 +403,7 @@
     function openOrderModal(platformName, price) {
       document.getElementById('modal-platform-name').textContent = platformName;
       document.getElementById('modal-price-display').textContent = price;
+      document.getElementById('modal-platform-badge').textContent = platformName + ' Lifetime Access';
       document.getElementById('order-modal').style.display = 'flex';
     }
 
@@ -228,7 +414,7 @@
     function copyText(text, btn) {
       navigator.clipboard.writeText(text);
       const originalText = btn.textContent;
-      btn.textContent = 'Tersalin!';
+      btn.textContent = '✓ Tersalin!';
       setTimeout(() => { btn.textContent = originalText; }, 2000);
     }
   </script>

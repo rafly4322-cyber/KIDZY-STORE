@@ -18,7 +18,6 @@
       </a>
       <nav class="nav">
         <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/p/saweria.html">Saweria</a>
         <a class="nav-link" href="/activation.html">Aktivasi Token</a>
         <a class="nav-link" href="/login.html">Login</a>
         <span class="nav-sep"></span>
@@ -33,32 +32,33 @@
   <main>
     <div class="container page">
       <div class="page-head">
+        <span class="badge badge-cyan" style="margin-bottom: 8px;">Pendaftaran Gratis</span>
         <h1 class="h1">Buat Akun Baru</h1>
         <p class="lead">Daftar untuk mengelola layanan donasi dan memantau status webhook game kamu.</p>
       </div>
 
       <div class="split">
-        <div class="card">
+        <div class="card" style="border-color: rgba(6, 182, 212, 0.35);">
           <div id="register-alert"></div>
 
-          <form id="register-form" class="stack" onsubmit="handleRegister(event)">
+          <form id="register-form" class="stack" onsubmit="handleRegister(event)" style="gap: 20px;">
             <div class="field">
-              <label for="reg-name">Nama Lengkap / Username</label>
+              <label for="reg-name" style="font-weight: 600;">Nama Lengkap / Username</label>
               <input class="input" id="reg-name" name="name" required placeholder="Contoh: Muhammad Rafly" />
             </div>
 
             <div class="field">
-              <label for="reg-email">Alamat Email</label>
+              <label for="reg-email" style="font-weight: 600;">Alamat Email</label>
               <input class="input" id="reg-email" name="email" type="email" required placeholder="contoh@gmail.com" />
             </div>
 
             <div class="field">
-              <label for="reg-password">Password</label>
+              <label for="reg-password" style="font-weight: 600;">Password</label>
               <input class="input" id="reg-password" name="password" type="password" required placeholder="Minimal 6 karakter" minlength="6" />
             </div>
 
             <div style="margin-top: 12px;">
-              <button class="btn btn-primary btn-lg btn-block" id="register-btn" type="submit">
+              <button class="btn btn-cyan btn-lg btn-block" id="register-btn" type="submit">
                 ✨ Buat Akun Sekarang
               </button>
             </div>
@@ -70,21 +70,18 @@
         </div>
 
         <aside class="stack">
-          <div class="card soft">
+          <div class="card soft" style="padding: 24px;">
             <h2 class="h2" style="font-size: 18px; margin-bottom: 12px;">Keuntungan Member</h2>
             <p class="small faint" style="margin-bottom: 16px;">Akun kamu dapat digunakan untuk:</p>
-            <ul class="feature-list">
-              <li class="feature-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Menyimpan Universe ID dan Layanan Aktif
+            <ul class="stack" style="gap: 12px; list-style: none;">
+              <li style="display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--text-secondary);">
+                <span style="color: #10B981;">✓</span> <span>Menyimpan Universe ID dan Layanan Aktif</span>
               </li>
-              <li class="feature-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Mengakses Webhook URL &amp; Polling Endpoint
+              <li style="display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--text-secondary);">
+                <span style="color: #10B981;">✓</span> <span>Mengakses Webhook URL &amp; Polling Endpoint</span>
               </li>
-              <li class="feature-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Download Script Roblox Update Terbaru
+              <li style="display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--text-secondary);">
+                <span style="color: #10B981;">✓</span> <span>Download Script Roblox Update Terbaru</span>
               </li>
             </ul>
           </div>
@@ -93,10 +90,10 @@
     </div>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" style="margin-top: 80px; border-top: 1px solid var(--border); padding: 32px 0;">
     <div class="container footer-inner">
       <span>&copy; 2026 <b>KIDZY Store</b></span>
-      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small faint">Support via Discord</a>
+      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small faint nav-link">Support via Discord</a>
     </div>
   </footer>
 
