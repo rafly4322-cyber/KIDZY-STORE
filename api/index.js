@@ -452,8 +452,12 @@ async function handleIncomingDonation(donationData, platform = 'saweria') {
 }
 
 // Universal Webhook Verifier (GET/HEAD/OPTIONS - allows SociaBuzz/Saweria verification ping)
-app.all(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi', '/api/webhook/bagibagi', '/api/sociabuzz', '/api/webhook/sociabuzz', '/api/webhook/:token', '/api/v1/webhook/:token'], async (req, res, next) => {
+app.all(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi', '/api/webhook/bagibagi', '/api/sociabuzz', '/api/webhook/sociabuzz', '/api/webhook/:token', '/api/v1/webhook/:token', '/api/poll', '/api/poll/:token'], async (req, res, next) => {
     if (req.method === 'GET' || req.method === 'HEAD' || req.method === 'OPTIONS') {
+        // If GET request is sent to /api/poll, pass to the GET polling handler below!
+        if (req.path.startsWith('/api/poll') || req.path.includes('/get-donations')) {
+            return next();
+        }
         return res.status(200).json({
             success: true,
             status: 'OK',
@@ -463,8 +467,8 @@ app.all(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi'
     next();
 });
 
-// Universal Webhook Processor
-app.post(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi', '/api/webhook/bagibagi', '/api/sociabuzz', '/api/webhook/sociabuzz', '/api/webhook/:token', '/api/v1/webhook/:token'], async (req, res) => {
+// Universal Webhook Processor (POST)
+app.post(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi', '/api/webhook/bagibagi', '/api/sociabuzz', '/api/webhook/sociabuzz', '/api/webhook/:token', '/api/v1/webhook/:token', '/api/poll', '/api/poll/:token'], async (req, res) => {
     try {
         const token = req.params.token || 'universal';
         let amount = parseInt(req.body.amount_raw) || parseInt(req.body.amount) || parseInt(req.body.price) || 0;
