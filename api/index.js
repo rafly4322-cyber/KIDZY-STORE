@@ -519,9 +519,9 @@ function normalizeWebhookPayload(body) {
 }
 
 // Universal Webhook Verifier (GET/HEAD/OPTIONS - allows SociaBuzz/Saweria verification ping)
-app.all(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi', '/api/webhook/bagibagi', '/api/sociabuzz', '/api/webhook/sociabuzz', '/api/webhook/:token', '/api/v1/webhook/:token', '/api/poll', '/api/poll/:token'], async (req, res, next) => {
+app.all(['/api/saweria*', '/api/webhook*', '/api/bagibagi*', '/api/sociabuzz*', '/api/poll*', '/webhook*'], async (req, res, next) => {
     if (req.method === 'GET' || req.method === 'HEAD' || req.method === 'OPTIONS') {
-        // If GET request is sent to /api/poll, pass to the GET polling handler below!
+        // If GET request is sent to polling endpoint, pass to the GET polling handler below!
         if (req.path.startsWith('/api/poll') || req.path.includes('/get-donations')) {
             return next();
         }
@@ -534,8 +534,8 @@ app.all(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi'
     next();
 });
 
-// Universal Webhook Processor (POST)
-app.post(['/api/saweria', '/api/webhook/saweria', '/api/webhook', '/api/bagibagi', '/api/webhook/bagibagi', '/api/sociabuzz', '/api/webhook/sociabuzz', '/api/webhook/:token', '/api/v1/webhook/:token', '/api/poll', '/api/poll/:token'], async (req, res) => {
+// Universal Webhook Processor (POST - Accepts ANY Webhook variation)
+app.post(['/api/saweria*', '/api/webhook*', '/api/bagibagi*', '/api/sociabuzz*', '/api/poll*', '/webhook*'], async (req, res) => {
     try {
         const token = req.params.token || 'universal';
         const normalized = normalizeWebhookPayload(req.body);
