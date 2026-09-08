@@ -55,14 +55,6 @@
       "createdAt": "2026-08-29T00:31:11.135Z",
       "expiresAt": "2026-09-05T00:31:11.135Z"
     },
-    "dd1bce91ec528ad31418f223d251f25a7bf76486bdeb6ece75eb07040071e095": {
-      "userId": "usr_admin_1",
-      "email": "rafly4322@gmail.com",
-      "role": "admin",
-      "name": "Muhammad Rafly (Admin)",
-      "createdAt": "2026-08-29T05:48:27.769Z",
-      "expiresAt": "2026-09-05T05:48:27.769Z"
-    },
     "cb7ab99e86a4b512e145572c53ca9c5cb7bab8e64a3555d96f4f06e59aef7311": {
       "userId": "usr_admin_1",
       "email": "rafly4322@gmail.com",
@@ -824,6 +816,23 @@
   ],
   "services": [
     {
+      "id": "svc_pesta_danice_10765268597",
+      "tokenCode": "KIDZY-SAWERIA-LIFETIME-VIP",
+      "slug": "VJON7CCA9soIpdNA5jZgtU8SeJNwsmlF",
+      "webhookSlug": "VJON7CCA9soIpdNA5jZgtU8SeJNwsmlF",
+      "platform": "saweria",
+      "plan": "lifetime",
+      "universeId": "10765268597",
+      "robloxApiKey": "default-global-key",
+      "clientName": "Pesta Danice (10765268597)",
+      "status": "active",
+      "activatedAt": "2026-09-09T07:58:00.000Z",
+      "expiresAt": null,
+      "lastDonationAt": null,
+      "totalDonationsAmount": 0,
+      "donationCount": 0
+    },
+    {
       "id": "svc_1788194158669_83",
       "tokenCode": "KZ-GW-444441",
       "slug": "bvyHNtGaHua6xw0d6Wg6s4jYLcu9i6oi",
@@ -1319,6 +1328,19 @@
     }
   ],
   "donations": [
+    {
+      "id": "wh_1788911819428_9022",
+      "nama": "Sultan_Danice_Test",
+      "amount": 250000,
+      "message": "Tes Webhook Subpath Saweria Berhasil!",
+      "platform": "saweria",
+      "universeId": "default",
+      "email": "",
+      "status": "success",
+      "timestamp": "2026-09-08T23:56:59.429Z",
+      "details": {},
+      "polled": false
+    },
     {
       "id": "wh_1788911262082_107",
       "nama": "Uji_Coba_Saweria_Live",
