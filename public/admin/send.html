@@ -1,29 +1,186 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Simulator Donasi — KIDZY Store</title>
+  <title>Kirim Donasi Uji Coba — KIDZY Store</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    .send-hero {
+      background: linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(16,185,129,0.08) 50%, rgba(16,20,31,0) 100%);
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .send-hero::before {
+      content: 'E2 9A A1';
+      position: absolute; right: 28px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 72px; opacity: 0.07; pointer-events: none;
+    }
+    .send-hero h1 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .send-hero p { color: var(--muted); font-size: 14px; margin: 0; }
+    .project-banner {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.25);
+      border-radius: 12px; padding: 14px 18px; margin-bottom: 24px;
+    }
+    .project-banner-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #34D399; box-shadow: 0 0 10px #34D399; flex-shrink: 0;
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px #34D399; }
+      50% { opacity: 0.5; box-shadow: 0 0 4px #34D399; }
+    }
+    .project-banner-info { flex: 1; }
+    .project-banner-info .plabel { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .project-banner-info .pname { font-size: 15px; font-weight: 700; color: #A7F3D0; margin-top: 2px; }
+    .project-banner-action a {
+      font-size: 12px; color: #6EE7B7; text-decoration: none; white-space: nowrap;
+      border: 1px solid rgba(110,231,183,0.3); border-radius: 8px; padding: 6px 12px; transition: all 0.2s;
+    }
+    .project-banner-action a:hover { background: rgba(110,231,183,0.1); }
+    .send-card {
+      background: rgba(16,20,31,0.95);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 28px; margin-bottom: 20px;
+    }
+    .send-card-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+    }
+    .send-card-head h2 { font-size: 17px; font-weight: 700; margin: 0; }
+    .field-label {
+      font-size: 12px; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      margin-bottom: 8px; display: block;
+    }
+    .field-wrap { margin-bottom: 20px; }
+    .input-lg {
+      width: 100%; padding: 14px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; color: #fff; font-size: 15px;
+      font-family: inherit; transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box;
+    }
+    .input-lg:focus {
+      outline: none; border-color: rgba(99,102,241,0.6);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
+    }
+    .input-mono { font-family: var(--mono); font-size: 18px; font-weight: 700; color: #A5B4FC; }
+    .amount-row { display: flex; gap: 10px; align-items: stretch; }
+    .amount-row .input-lg { flex: 1; }
+    .currency-select {
+      padding: 14px 12px;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.3);
+      border-radius: 10px; color: #A5B4FC;
+      font-family: var(--mono); font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; min-width: 80px;
+    }
+    .currency-select:focus { outline: none; border-color: rgba(99,102,241,0.7); }
+    .currency-note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+    .currency-note.idr { color: #34D399; }
+    .platform-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .platform-pill {
+      padding: 8px 16px; border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted); font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .platform-pill:hover { border-color: rgba(99,102,241,0.4); color: #A5B4FC; }
+    .platform-pill.active {
+      background: rgba(99,102,241,0.15);
+      border-color: rgba(99,102,241,0.6); color: #A5B4FC;
+    }
+    .platform-pill input { display: none; }
+    .btn-send {
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, #6366F1, #8B5CF6);
+      border: none; border-radius: 12px; color: #fff;
+      font-size: 16px; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; position: relative; overflow: hidden;
+    }
+    .btn-send:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,0.4); }
+    .btn-send:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn-send .btn-inner { display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin 0.7s linear infinite; display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .result-panel {
+      background: rgba(16,20,31,0.95);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; overflow: hidden;
+    }
+    .result-panel-head {
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .result-panel-head h3 { font-size: 14px; font-weight: 700; margin: 0; }
+    .result-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+    .result-dot.ok { background: #34D399; box-shadow: 0 0 8px #34D399; }
+    .result-dot.err { background: #F87171; box-shadow: 0 0 8px #F87171; }
+    .result-body { padding: 20px 24px; min-height: 200px; }
+    .result-placeholder {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; height: 160px; color: var(--muted); font-size: 14px; gap: 12px;
+    }
+    .result-placeholder .icon { font-size: 36px; opacity: 0.4; }
+    .result-pre {
+      font-family: var(--mono); font-size: 12px; line-height: 1.8;
+      white-space: pre-wrap; word-break: break-all;
+      max-height: 320px; overflow-y: auto; margin: 0; padding: 0;
+    }
+    .result-pre.ok { color: #6EE7B7; }
+    .result-pre.err { color: #FCA5A5; }
+    .tips-card {
+      background: rgba(16,185,129,0.06);
+      border: 1px solid rgba(16,185,129,0.18);
+      border-radius: 12px; padding: 16px 20px;
+      margin-top: 16px; font-size: 13px; color: #6EE7B7; line-height: 1.7;
+    }
+    .tips-card strong { color: #A7F3D0; }
+    .preset-amounts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .preset-btn {
+      padding: 6px 12px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted); font-size: 12px; font-family: var(--mono);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .preset-btn:hover { border-color: rgba(99,102,241,0.5); color: #A5B4FC; background: rgba(99,102,241,0.08); }
+    @media (min-width: 900px) {
+      .send-layout { display: grid; grid-template-columns: 1fr 400px; gap: 24px; align-items: start; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="/admin">
         <span class="brand-mark">KZ</span>
-        <span>KIDZY Admin</span>
+        <span id="site-store-name">KIDZY Admin</span>
       </a>
       <nav class="nav">
         <a class="btn btn-sm btn-ghost" href="/" target="_blank">Lihat Toko &rarr;</a>
         <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Keluar</button>
       </nav>
-      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
-        ☰
-      </button>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">&#9776;</button>
     </div>
   </header>
 
@@ -31,83 +188,159 @@
     <div class="container">
       <div class="shell">
         <aside class="side">
-          <div class="side-title">Menu Utama</div>
+          <div class="side-title">Menu</div>
           <nav class="side-nav">
-            <a class="side-link" href="/admin">📊 Dashboard</a>
-            <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
-            <a class="side-link is-active" href="/admin/send.html">⚡ Simulator Donasi</a>
-            <a class="side-link" href="/admin/logs.html">📜 Log Donasi</a>
-            <a class="side-link" href="/admin/services.html">🎮 Layanan &amp; Giveaway</a>
-            <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
-            <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan Toko</a>
-            <a class="side-link" href="/admin/downloads.html">⬇️ Download File</a>
+            <a class="side-link" href="/admin">&#128202; Dashboard</a>
+            <a class="side-link" href="/admin/tokens.html">&#128273; Kelola Token</a>
+            <a class="side-link is-active" href="/admin/send.html">&#9889; Kirim Donasi</a>
+            <a class="side-link" href="/admin/logs.html">&#128220; Log Donasi</a>
+            <a class="side-link" href="/admin/services.html">&#127918; Layanan &amp; Giveaway</a>
+            <a class="side-link" href="/admin/roblox.html">&#9729;&#65039; Roblox DataStore</a>
+            <a class="side-link" href="/admin/settings.html">&#9881;&#65039; Pengaturan Toko</a>
+            <a class="side-link" href="/admin/downloads.html">&#11015;&#65039; Download File</a>
           </nav>
+          <div class="tips-card" style="margin-top: 24px;">
+            <strong>&#128161; Tips:</strong><br>
+            Donasi uji coba akan masuk ke poll queue dan dipick-up oleh Roblox Studio dalam ~5 detik.
+          </div>
+          <div class="card soft" style="margin-top: 16px; padding: 16px;">
+            <p class="small faint" style="margin-bottom: 6px;">Butuh bantuan?</p>
+            <div class="mono" style="color: #A5B4FC; font-weight: 700; font-size: 13px;">kidddzyyaj</div>
+            <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="btn btn-sm btn-ghost btn-block" style="margin-top: 10px;">
+              &#128172; Buka Discord
+            </a>
+          </div>
         </aside>
 
         <div>
-          <div class="page-head">
-            <h1 class="h1">Simulator Donasi Uji Coba</h1>
-            <p class="muted">Kirim donasi uji coba langsung ke server gateway dan DataStore Roblox.</p>
+          <div class="send-hero">
+            <div class="row" style="margin-bottom: 8px;">
+              <span class="badge badge-live">Live Gateway</span>
+              <span class="badge badge-accent">Admin Only</span>
+            </div>
+            <h1>Kirim Donasi Uji Coba</h1>
+            <p>Kirim donasi palsu untuk memastikan webhook dan efek di game berjalan dengan benar.</p>
           </div>
 
-          <div class="split">
-            <!-- Form Card -->
-            <div class="card">
-              <div class="card-head">
-                <h2 class="h2">Form Kirim Donasi Tiruan</h2>
-                <button class="btn btn-sm btn-ghost" type="button" onclick="randomize()">🎲 Acak Data</button>
+          <div class="project-banner" id="project-banner">
+            <div class="project-banner-dot"></div>
+            <div class="project-banner-info">
+              <div class="plabel">Projek aktif</div>
+              <div class="pname" id="active-project-name">Memuat projek...</div>
+            </div>
+            <div class="project-banner-action">
+              <a href="/admin/services.html">Kelola projek</a>
+            </div>
+          </div>
+
+          <div class="send-layout">
+            <div class="send-card">
+              <div class="send-card-head">
+                <h2>Form Donasi Uji Coba</h2>
+                <button class="btn btn-sm btn-ghost" type="button" onclick="randomize()">&#127922; Acak Data</button>
               </div>
 
-              <form id="sim-form" class="stack" onsubmit="handleSendDonation(event)">
-                <div class="grid two">
-                  <div class="field">
-                    <label for="sim-nama">Nama Donatur</label>
-                    <input class="input" id="sim-nama" required value="Muhammad Rafly" />
-                  </div>
-                  <div class="field">
-                    <label for="sim-amount">Nominal Donasi (IDR)</label>
-                    <input class="input mono" id="sim-amount" type="number" required value="100000" step="5000" />
-                  </div>
+              <form id="send-form" onsubmit="handleSend(event)">
+                <div class="field-wrap">
+                  <label class="field-label" for="f-nama">Nama Donatur</label>
+                  <input class="input-lg" id="f-nama" placeholder="Contoh: RaflyGamer123" required value="Muhammad Rafly" autocomplete="off" />
                 </div>
 
-                <div class="field">
-                  <label for="sim-message">Pesan Donasi</label>
-                  <input class="input" id="sim-message" required value="Semangat kembangin gamenya! Server Roblox gacor 🚀" />
-                </div>
-
-                <div class="grid two">
-                  <div class="field">
-                    <label for="sim-platform">Platform</label>
-                    <select class="input" id="sim-platform">
-                      <option value="saweria">Saweria</option>
-                      <option value="bagibagi">BagiBagi</option>
-                      <option value="sociabuzz">SociaBuzz</option>
+                <div class="field-wrap">
+                  <label class="field-label" for="f-amount">Jumlah</label>
+                  <div class="amount-row">
+                    <input class="input-lg input-mono" id="f-amount" type="number" min="1" step="any" required value="100000" />
+                    <select class="currency-select" id="f-currency" onchange="onCurrencyChange()">
+                      <option value="IDR">IDR</option>
+                      <option value="USD">USD</option>
+                      <option value="EUR">EUR</option>
+                      <option value="GBP">GBP</option>
+                      <option value="JPY">JPY</option>
+                      <option value="SGD">SGD</option>
+                      <option value="MYR">MYR</option>
+                      <option value="AUD">AUD</option>
+                      <option value="CAD">CAD</option>
+                      <option value="CHF">CHF</option>
+                      <option value="CNY">CNY</option>
+                      <option value="HKD">HKD</option>
+                      <option value="KRW">KRW</option>
+                      <option value="TWD">TWD</option>
+                      <option value="THB">THB</option>
+                      <option value="PHP">PHP</option>
+                      <option value="VND">VND</option>
+                      <option value="INR">INR</option>
+                      <option value="BRL">BRL</option>
+                      <option value="MXN">MXN</option>
                     </select>
                   </div>
-                  <div class="field">
-                    <label for="sim-target-universe">Target Universe ID (Opsional)</label>
-                    <input class="input mono" id="sim-target-universe" placeholder="Kosongkan untuk semua game aktif" />
+                  <div class="currency-note idr" id="currency-note">Nominal dalam Rupiah (IDR).</div>
+                  <div class="preset-amounts" id="preset-amounts">
+                    <button type="button" class="preset-btn" onclick="setAmount(10000)">10K</button>
+                    <button type="button" class="preset-btn" onclick="setAmount(25000)">25K</button>
+                    <button type="button" class="preset-btn" onclick="setAmount(50000)">50K</button>
+                    <button type="button" class="preset-btn" onclick="setAmount(100000)">100K</button>
+                    <button type="button" class="preset-btn" onclick="setAmount(200000)">200K</button>
+                    <button type="button" class="preset-btn" onclick="setAmount(500000)">500K</button>
+                    <button type="button" class="preset-btn" onclick="setAmount(1000000)">1JT</button>
                   </div>
                 </div>
 
-                <div style="margin-top: 12px;">
-                  <button class="btn btn-primary btn-lg btn-block" id="sim-btn" type="submit">
-                    ⚡ Kirim Donasi Sekarang
-                  </button>
+                <div class="field-wrap">
+                  <label class="field-label" for="f-pesan">Pesan <span style="font-weight:400;text-transform:none;letter-spacing:0;">(Opsional. Pesan ini ikut tampil di game.)</span></label>
+                  <input class="input-lg" id="f-pesan" placeholder="Tulis pesan untuk tampil di game..." value="Semangat kembangin gamenya! Server Roblox gacor!" />
                 </div>
+
+                <div class="field-wrap">
+                  <label class="field-label">Platform</label>
+                  <div class="platform-pills">
+                    <label class="platform-pill active" onclick="setPlatform('saweria', this)">
+                      <input type="radio" name="platform" value="saweria" checked> &#129000; Saweria
+                    </label>
+                    <label class="platform-pill" onclick="setPlatform('bagibagi', this)">
+                      <input type="radio" name="platform" value="bagibagi"> &#128309; BagiBagi
+                    </label>
+                    <label class="platform-pill" onclick="setPlatform('sociabuzz', this)">
+                      <input type="radio" name="platform" value="sociabuzz"> &#128994; SociaBuzz
+                    </label>
+                  </div>
+                </div>
+
+                <button class="btn-send" id="send-btn" type="submit">
+                  <span class="btn-inner">
+                    <span class="spinner" id="send-spinner"></span>
+                    <span id="send-label">&#9889; Kirim Donasi Uji Coba</span>
+                  </span>
+                </button>
+
+                <p style="text-align:center; font-size:12px; color:var(--muted); margin-top:12px;">
+                  <a href="/admin" style="color:var(--muted); text-decoration:underline;">&larr; Kembali ke Dashboard</a>
+                </p>
               </form>
             </div>
 
-            <!-- Output Box -->
-            <aside class="stack">
-              <div class="card soft">
-                <h2 class="h2" style="font-size: 18px; margin-bottom: 8px;">Hasil Respons Gateway</h2>
-                <p class="small faint" style="margin-bottom: 16px;">Status eksekusi webhook dan update DataStore:</p>
-                <div id="result-box">
-                  <pre class="code" style="max-height: 380px; overflow-y: auto;">Menunggu pengiriman...</pre>
+            <div>
+              <div class="result-panel">
+                <div class="result-panel-head">
+                  <div class="result-dot" id="result-dot"></div>
+                  <h3>Hasil Respons Gateway</h3>
+                </div>
+                <div class="result-body">
+                  <div class="result-placeholder" id="result-placeholder">
+                    <div class="icon">&#128225;</div>
+                    <span>Menunggu pengiriman donasi...</span>
+                  </div>
+                  <pre class="result-pre" id="result-pre" style="display:none;"></pre>
                 </div>
               </div>
-            </aside>
+
+              <div class="send-card" style="margin-top: 20px; padding: 20px;">
+                <div class="send-card-head" style="margin-bottom: 14px;">
+                  <h2 style="font-size:14px;">Riwayat Sesi Ini</h2>
+                  <button class="btn btn-sm btn-ghost" style="font-size:11px;" onclick="clearHistory()">Hapus</button>
+                </div>
+                <div id="history-list" style="font-size:13px; color:var(--muted);">Belum ada donasi terkirim.</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -122,54 +355,173 @@
 
   <script src="/assets/app.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    let currentPlatform = 'saweria';
+    let activeService = null;
+    let sessionHistory = [];
+
+    const CURRENCY_RATES = {
+      IDR:1, USD:16350, EUR:17800, GBP:20500, JPY:110,
+      SGD:12100, MYR:3700, AUD:10700, CAD:12000, CHF:18200,
+      CNY:2250, HKD:2090, KRW:11.8, TWD:510, THB:460,
+      PHP:285, VND:0.65, INR:195, BRL:3200, MXN:950
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
       Auth.requireAdmin();
+      await loadActiveProject();
     });
+
+    async function loadActiveProject() {
+      try {
+        const res = await API.get('/api/admin/services');
+        if (res.success && res.services && res.services.length > 0) {
+          const active = res.services.find(s => s.status === 'active') || res.services[0];
+          activeService = active;
+          document.getElementById('active-project-name').textContent = active.clientName || active.name || 'Tanpa Nama';
+        } else {
+          document.getElementById('active-project-name').textContent = 'Tidak ada projek aktif';
+        }
+      } catch (e) {
+        document.getElementById('active-project-name').textContent = 'Pesta Danice (10765268597)';
+      }
+    }
+
+    function setPlatform(val, el) {
+      currentPlatform = val;
+      document.querySelectorAll('.platform-pill').forEach(p => p.classList.remove('active'));
+      if (el) el.classList.add('active');
+    }
+
+    function setAmount(val) {
+      document.getElementById('f-amount').value = val;
+    }
+
+    function onCurrencyChange() {
+      const currency = document.getElementById('f-currency').value;
+      const note = document.getElementById('currency-note');
+      const presets = document.getElementById('preset-amounts');
+      if (currency === 'IDR') {
+        note.textContent = 'Nominal dalam Rupiah (IDR).';
+        note.className = 'currency-note idr';
+        presets.style.display = 'flex';
+      } else {
+        const rate = CURRENCY_RATES[currency] || 1;
+        note.textContent = 'Selain IDR akan dikonversi ke Rupiah. 1 ' + currency + ' kurang lebih Rp ' + rate.toLocaleString('id-ID') + '.';
+        note.className = 'currency-note';
+        presets.style.display = 'none';
+      }
+    }
+
+    function formatRp(num) { return 'Rp ' + Number(num).toLocaleString('id-ID'); }
 
     const samples = [
       { name: 'RaflyGamer', amount: 150000, msg: 'Semangat kembangin gamenya bang!' },
-      { name: 'Ahmad_Sultan', amount: 500000, msg: 'Top Up Leaderboard #1' },
-      { name: 'Budi_Pro', amount: 50000, msg: 'Support developer Indonesia!' },
-      { name: 'Siti_Kusuma', amount: 200000, msg: 'Game paling keren abis!' },
-      { name: 'Sultan_Roblox', amount: 1000000, msg: 'Titip salam buat seluruh player server' }
+      { name: 'Ahmad_Sultan', amount: 500000, msg: 'Top donator selamanya!' },
+      { name: 'Budi_Pro', amount: 50000, msg: 'Support developer Indonesia bos!' },
+      { name: 'SitiKusuma99', amount: 200000, msg: 'Game paling keren di Roblox!' },
+      { name: 'Sultan_Roblox', amount: 1000000, msg: 'Titip salam buat seluruh player server' },
+      { name: 'DimasGanteng', amount: 75000, msg: 'GG wp server tetap jaya!' },
+      { name: 'NabilahPro', amount: 300000, msg: 'Donasi buat upgrade server!' }
     ];
 
     function randomize() {
       const pick = samples[Math.floor(Math.random() * samples.length)];
-      document.getElementById('sim-nama').value = pick.name;
-      document.getElementById('sim-amount').value = pick.amount;
-      document.getElementById('sim-message').value = pick.msg;
+      document.getElementById('f-nama').value = pick.name;
+      document.getElementById('f-amount').value = pick.amount;
+      document.getElementById('f-pesan').value = pick.msg;
+      document.getElementById('f-currency').value = 'IDR';
+      onCurrencyChange();
     }
 
-    async function handleSendDonation(e) {
+    async function handleSend(e) {
       e.preventDefault();
-      const btn = document.getElementById('sim-btn');
-      const box = document.getElementById('result-box');
+      const btn = document.getElementById('send-btn');
+      const spinner = document.getElementById('send-spinner');
+      const label = document.getElementById('send-label');
+      const resultPre = document.getElementById('result-pre');
+      const resultPlaceholder = document.getElementById('result-placeholder');
+      const resultDot = document.getElementById('result-dot');
 
-      const nama = document.getElementById('sim-nama').value.trim();
-      const amount = parseInt(document.getElementById('sim-amount').value) || 100000;
-      const message = document.getElementById('sim-message').value.trim();
-      const platform = document.getElementById('sim-platform').value;
-      const targetUniverseId = document.getElementById('sim-target-universe').value.trim();
+      const nama = document.getElementById('f-nama').value.trim();
+      const rawAmount = parseFloat(document.getElementById('f-amount').value) || 0;
+      const currency = document.getElementById('f-currency').value;
+      const pesan = document.getElementById('f-pesan').value.trim();
+      const rate = CURRENCY_RATES[currency] || 1;
+      const amountIDR = Math.round(rawAmount * rate);
+
+      const payload = {
+        nama, name: nama, donator: nama,
+        amount: amountIDR,
+        message: pesan || 'Donasi uji coba dari Admin Panel',
+        pesan: pesan || 'Donasi uji coba dari Admin Panel',
+        platform: currentPlatform, currency,
+        original_amount: rawAmount,
+        source: 'admin_simulator',
+        id: 'sim_' + Date.now()
+      };
 
       btn.disabled = true;
-      btn.textContent = 'Memproses...';
-      box.innerHTML = '<pre class="code">Memproses pengiriman donasi...</pre>';
+      spinner.style.display = 'block';
+      label.textContent = 'Mengirim...';
+      resultPre.style.display = 'none';
+      resultPlaceholder.style.display = 'flex';
+      resultPlaceholder.innerHTML = '<div class="icon">&#9889;</div><span>Mengirim ke gateway...</span>';
+      resultDot.className = 'result-dot';
 
       try {
-        const res = await API.post('/api/admin/simulate-donation', {
-          nama, amount, message, platform, targetUniverseId
+        const slug = (activeService && activeService.slug) ? activeService.slug : 'VJON7CCA9soIpdNA5jZgtU8SeJNwsmlF';
+        const res = await fetch('/api/webhook/' + slug, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
         });
-
-        box.innerHTML = `<pre class="code" style="color: #34D399;">${JSON.stringify(res, null, 2)}</pre>`;
-        showToast(`Donasi ${formatRupiah(amount)} berhasil disimulasikan!`, 'success');
+        const data = await res.json();
+        resultPlaceholder.style.display = 'none';
+        resultPre.style.display = 'block';
+        resultPre.className = 'result-pre ok';
+        resultPre.textContent = JSON.stringify(data, null, 2);
+        resultDot.className = 'result-dot ok';
+        showToast('Donasi ' + formatRp(amountIDR) + ' berhasil dikirim!', 'success');
+        addHistory({ nama, amountIDR, currency, rawAmount, platform: currentPlatform, success: true });
       } catch (err) {
-        box.innerHTML = `<pre class="code" style="color: #F87171;">${err.message}</pre>`;
+        resultPlaceholder.style.display = 'none';
+        resultPre.style.display = 'block';
+        resultPre.className = 'result-pre err';
+        resultPre.textContent = 'Error: ' + err.message;
+        resultDot.className = 'result-dot err';
         showToast(err.message, 'error');
+        addHistory({ nama, amountIDR, currency, rawAmount, platform: currentPlatform, success: false });
       } finally {
         btn.disabled = false;
-        btn.textContent = '⚡ Kirim Donasi Sekarang';
+        spinner.style.display = 'none';
+        label.textContent = 'Kirim Donasi Uji Coba';
       }
+    }
+
+    function addHistory(entry) {
+      sessionHistory.unshift(entry);
+      if (sessionHistory.length > 5) sessionHistory.pop();
+      renderHistory();
+    }
+
+    function clearHistory() { sessionHistory = []; renderHistory(); }
+
+    function renderHistory() {
+      const el = document.getElementById('history-list');
+      if (sessionHistory.length === 0) {
+        el.innerHTML = '<span style="color:var(--muted);">Belum ada donasi terkirim.</span>';
+        return;
+      }
+      el.innerHTML = sessionHistory.map(h =>
+        '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);">' +
+        '<div>' +
+        '<div style="font-weight:600;color:#fff;font-size:13px;">' + h.nama + '</div>' +
+        '<div style="font-size:11px;color:var(--muted);margin-top:2px;">' + h.platform.toUpperCase() + ' &middot; ' +
+        (h.currency !== 'IDR' ? h.rawAmount + ' ' + h.currency + ' &rarr; ' : '') + formatRp(h.amountIDR) + '</div>' +
+        '</div>' +
+        '<span style="font-size:12px;">' + (h.success ? 'OK' : 'ERR') + '</span>' +
+        '</div>'
+      ).join('');
     }
   </script>
 </body>
