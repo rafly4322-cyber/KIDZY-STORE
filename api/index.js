@@ -398,6 +398,9 @@ async function handleIncomingDonation(donationData, platform = 'saweria') {
         status: 'success'
     });
 
+    // ⚡ Also push to in-process queue (same-instance Vercel poll fix)
+    pushToLiveQueue({ ...savedDonation, platform });
+
     console.log(`\n⚡ [${platform.toUpperCase()}] Instant Donation Ingested: ${donationData.nama} - Rp ${Number(donationData.amount).toLocaleString('id-ID')}`);
 
     const settings = db.getSettings() || {};
@@ -466,6 +469,26 @@ setInterval(() => {
         if (now - time > 600000) processedWebhooksMap.delete(key);
     }
 }, 300000);
+
+// ⚡ VERCEL SERVERLESS FIX: In-process donation queue
+// Vercel /tmp is NOT shared across instances — this queue handles same-instance polls.
+// Cross-instance polls are handled by the extended 300s DB window.
+const LIVE_DONATION_QUEUE = [];
+const LIVE_QUEUE_MAX_AGE_MS = 300000; // 5 minutes
+function pushToLiveQueue(donation) {
+    LIVE_DONATION_QUEUE.unshift({ ...donation, _queuedAt: Date.now() });
+    // Keep queue trim (max 50 entries)
+    while (LIVE_DONATION_QUEUE.length > 50) LIVE_DONATION_QUEUE.pop();
+}
+function flushLiveQueue() {
+    const now = Date.now();
+    // Remove stale + already polled
+    const fresh = LIVE_DONATION_QUEUE.filter(d => !d.polled && (now - d._queuedAt) < LIVE_QUEUE_MAX_AGE_MS);
+    // Replace in-place
+    LIVE_DONATION_QUEUE.length = 0;
+    fresh.forEach(d => LIVE_DONATION_QUEUE.push(d));
+    return fresh;
+}
 
 // Smart Payload Normalizer: Extract Name, Amount, Message from ANY payload structure
 function normalizeWebhookPayload(body) {
@@ -591,19 +614,33 @@ app.post(['/api/saweria*', '/api/webhook*', '/api/bagibagi*', '/api/sociabuzz*',
 // ⚡ DB-based polling — reliable across Vercel serverless instances
 app.get(['/api/poll', '/api/poll/:token', '/api/saweria/get-donations', '/api/webhook/get-donations'], (req, res) => {
     try {
-        // Ambil semua donasi yang belum di-poll dalam 120 detik terakhir dari DB
-        const unpolled = db.getUnpolledDonations(120);
+        // ⚡ VERCEL FIX: Merge in-process queue (same-instance) + DB donations (cross-instance, 300s window)
+        const dbUnpolled = db.getUnpolledDonations(300);
+        const liveQueue = flushLiveQueue();
 
-        if (unpolled.length === 0) {
+        // Merge: live queue takes priority, avoid duplicates by ID
+        const seenIds = new Set();
+        const merged = [];
+        for (const d of [...liveQueue, ...dbUnpolled]) {
+            if (!seenIds.has(d.id)) {
+                seenIds.add(d.id);
+                merged.push(d);
+            }
+        }
+
+        if (merged.length === 0) {
             return res.json({ ok: true, success: true, count: 0, data: [], donations: [] });
         }
 
-        // Tandai sebagai sudah di-poll (atomic update)
-        const ids = unpolled.map(d => d.id);
-        db.markDonationsAsPolled(ids);
+        // Mark live queue items as polled
+        liveQueue.forEach(d => { d.polled = true; });
 
-        // Format response sesuai yang diharapkan Roblox script (dukung format menSecRt0 & KIDZY)
-        const formatted = unpolled.map(d => ({
+        // Tandai sebagai sudah di-poll di DB (atomic update)
+        const ids = merged.map(d => d.id).filter(Boolean);
+        if (ids.length > 0) db.markDonationsAsPolled(ids);
+
+        // Format response sesuai yang diharapkan Roblox script
+        const formatted = merged.map(d => ({
             id: d.id,
             nama: d.nama,
             donor_name: d.nama,
