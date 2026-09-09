@@ -98,10 +98,17 @@ if (fs.existsSync(PUBLIC_DIR)) {
     }));
 }
 
-// Normalize URL on Vercel so both /api/xxx and /xxx match Express routes
+// Normalize webhook & polling routes so both /api/xxx and /xxx match Express routes seamlessly
 app.use((req, res, next) => {
-    if (!req.url.startsWith('/api') && !req.url.startsWith('/assets') && !req.url.startsWith('/downloads')) {
-        req.url = '/api' + (req.url.startsWith('/') ? req.url : '/' + req.url);
+    const rawUrl = req.url.split('?')[0];
+    if (
+        rawUrl.startsWith('/saweria') ||
+        rawUrl.startsWith('/webhook') ||
+        rawUrl.startsWith('/poll') ||
+        rawUrl.startsWith('/bagibagi') ||
+        rawUrl.startsWith('/sociabuzz')
+    ) {
+        req.url = '/api' + req.url;
     }
     next();
 });
@@ -1074,7 +1081,7 @@ app.post('/api/admin/settings', requireAdmin, (req, res) => {
 // ASSET DOWNLOADS & ADMIN CLEAN ROUTES
 // ============================================
 
-app.get(['/admin/download', '/api/download/zip'], (req, res) => {
+app.get(['/admin/download', '/api/admin/download', '/api/download/zip'], (req, res) => {
     const zipPath = path.join(PUBLIC_DIR, 'downloads/Saweria_lifetime.zip');
     if (fs.existsSync(zipPath)) {
         res.download(zipPath, 'Saweria_lifetime.zip');

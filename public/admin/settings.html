@@ -32,19 +32,16 @@
     <div class="container">
       <div class="shell">
         <aside class="side">
-          <div class="side-title" style="margin-bottom: 8px;">Projek aktif</div>
-          <div style="padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; font-weight: 500;">club parkly</div>
-          <a href="/admin/projects" class="small faint" style="display: block; margin-bottom: 24px; text-decoration: underline; color: #A5B4FC;">Kelola projek</a>
-
-          <div class="side-title">Menu</div>
-          <nav class="side-nav stack" style="gap: 4px;">
-            <a class="side-link" href="/admin">Dashboard</a>
-            <a class="side-link" href="/admin/send.html">Kirim Donasi</a>
-            <a class="side-link" href="/admin/logs.html">Log Donasi</a>
-            <a class="side-link is-active" href="/admin/settings.html">Pengaturan</a>
-            <a class="side-link" href="/admin/migrate">Migrasi Projek</a>
-            <a class="side-link" href="/admin/projects">Projek Saya (1)</a>
-            <a class="side-link" href="/register.html">+ Tambah projek</a>
+          <div class="side-title">Menu Utama</div>
+          <nav class="side-nav">
+            <a class="side-link" href="/admin">📊 Dashboard</a>
+            <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
+            <a class="side-link" href="/admin/send.html">⚡ Simulator Donasi</a>
+            <a class="side-link" href="/admin/logs.html">📜 Log Donasi</a>
+            <a class="side-link" href="/admin/services.html">🎮 Layanan Game</a>
+            <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
+            <a class="side-link is-active" href="/admin/settings.html">⚙️ Pengaturan Toko</a>
+            <a class="side-link" href="/admin/downloads.html">⬇️ Download File</a>
           </nav>
 
           <p class="small faint" style="margin-top: 24px; color: var(--muted);">Butuh bantuan? Hubungi owner lewat Discord.</p>
@@ -52,29 +49,28 @@
 
         <div>
           <div class="page-head">
-            <h1 class="h1">Pengaturan</h1>
-            <p class="muted">Kelola konfigurasi Roblox dan keamanan akun.</p>
+            <h1 class="h1">Pengaturan Toko &amp; Akun</h1>
+            <p class="lead">Kelola konfigurasi Roblox, informasi rekening toko, dan keamanan akun.</p>
           </div>
 
           <form id="roblox-settings-form" class="stack card" onsubmit="handleSaveRobloxSettings(event)" style="margin-bottom: 24px;">
-            <h2 class="h2" style="font-size: 18px; margin-bottom: 4px;">Konfigurasi Roblox</h2>
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 4px;">Konfigurasi Roblox &amp; Toko</h2>
             <p class="small faint" style="margin-bottom: 16px;">Perubahan langsung dipakai untuk pengiriman donasi berikutnya.</p>
 
             <div class="field">
-              <label for="set-store-name">Nama projek</label>
+              <label for="set-store-name">Nama Toko / Projek</label>
               <input class="input" id="set-store-name" required />
-              <span class="small faint">Nama ini hanya untuk memudahkan kamu membedakan projek.</span>
             </div>
 
             <div class="field">
-              <label for="set-universe-ids">Universe ID</label>
-              <input class="input mono" id="set-universe-ids" placeholder="10742273346" />
+              <label for="set-universe-ids">Universe ID Game Roblox (pisahkan dengan koma jika lebih dari satu)</label>
+              <input class="input mono" id="set-universe-ids" placeholder="Contoh: 10765268597, 10742273346" />
             </div>
 
             <div class="field">
-              <label for="set-roblox-apikey">Roblox API Key</label>
+              <label for="set-roblox-apikey">Roblox Open Cloud API Key</label>
               <input class="input mono" id="set-roblox-apikey" type="password" placeholder="Masukkan API Key dari create.roblox.com..." />
-              <span class="small faint">Simpan API key ini secara rahasia.</span>
+              <span class="small faint">API Key aman tersimpan dan dienkripsi di server.</span>
             </div>
 
             <!-- Hidden fields to retain previous data -->
@@ -85,26 +81,26 @@
             <input type="hidden" id="set-price-lifetime" value="450000" />
 
             <div style="display: flex; gap: 8px; margin-top: 12px; align-items: center;">
-              <button class="btn btn-primary" type="submit">Simpan perubahan</button>
+              <button class="btn btn-primary" type="submit">💾 Simpan Perubahan</button>
               <a class="btn btn-ghost" href="/admin">Kembali</a>
             </div>
           </form>
 
           <form id="password-form" class="stack card" onsubmit="handleChangePassword(event)">
-            <h2 class="h2" style="font-size: 18px; margin-bottom: 16px;">Keamanan akun</h2>
+            <h2 class="h2" style="font-size: 18px; margin-bottom: 16px;">Ganti Password Akun</h2>
             
-            <div class="field" style="display: none;">
-              <!-- The original script required 'pwd-current', let's mock it or we can prompt for it. -->
-              <input class="input" id="pwd-current" type="password" value="" placeholder="Isi ini jika API butuh" />
+            <div class="field">
+              <label for="pwd-current">Password Saat Ini</label>
+              <input class="input" id="pwd-current" type="password" required placeholder="Masukkan password lama" />
             </div>
 
             <div class="field">
-              <label for="pwd-new">Password baru</label>
-              <input class="input" id="pwd-new" type="password" minlength="6" required />
+              <label for="pwd-new">Password Baru</label>
+              <input class="input" id="pwd-new" type="password" minlength="6" required placeholder="Minimal 6 karakter" />
             </div>
 
             <div style="display: flex; gap: 8px; margin-top: 12px;">
-              <button class="btn btn-primary" type="submit">Simpan perubahan</button>
+              <button class="btn btn-primary" type="submit">🔒 Perbarui Password</button>
             </div>
           </form>
         </div>
@@ -193,15 +189,7 @@
         showToast('Password berhasil diubah!', 'success');
         document.getElementById('password-form').reset();
       } catch (err) {
-        if (err.message.toLowerCase().includes('current password') || err.message.toLowerCase().includes('saat ini')) {
-           const pwd = prompt("Masukkan password saat ini untuk memverifikasi:");
-           if (pwd) {
-             document.getElementById('pwd-current').value = pwd;
-             handleChangePassword(e);
-           }
-        } else {
-           showToast(err.message, 'error');
-        }
+        showToast(err.message, 'error');
       }
     }
   </script>

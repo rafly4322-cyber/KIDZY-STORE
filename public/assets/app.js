@@ -129,22 +129,26 @@ function formatDate(isoStr) {
 }
 
 // Modal Management
-function openOrderModal(platform = 'Saweria', price = 'Rp 450.000') {
+function openOrderModal(platform = 'Saweria', price = 'Rp 500.000') {
     const modal = document.getElementById('order-modal');
     if (!modal) return;
     
     const platformEl = document.getElementById('modal-platform-name');
     const priceEl = document.getElementById('modal-price-display');
+    const badgeEl = document.getElementById('modal-platform-badge');
     if (platformEl) platformEl.textContent = platform;
     if (priceEl) priceEl.textContent = price;
+    if (badgeEl) badgeEl.textContent = platform + ' Lifetime Access';
 
     modal.classList.add('is-active');
+    modal.style.display = 'flex';
 }
 
 function closeModal(modalId = 'order-modal') {
     const modal = document.getElementById(modalId);
     if (modal) {
         modal.classList.remove('is-active');
+        modal.style.display = 'none';
     }
 }
 

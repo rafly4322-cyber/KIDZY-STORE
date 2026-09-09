@@ -54,7 +54,10 @@
 
             <div class="field">
               <label for="reg-password" style="font-weight: 600;">Password</label>
-              <input class="input" id="reg-password" name="password" type="password" required placeholder="Minimal 6 karakter" minlength="6" />
+              <div style="position: relative;">
+                <input class="input" id="reg-password" name="password" type="password" required placeholder="Minimal 6 karakter" minlength="6" autocomplete="new-password" />
+                <button type="button" onclick="togglePasswordVisibility('reg-password', this)" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 16px;">👁️</button>
+              </div>
             </div>
 
             <div style="margin-top: 12px;">
@@ -93,12 +96,35 @@
   <footer class="site-footer" style="margin-top: 80px; border-top: 1px solid var(--border); padding: 32px 0;">
     <div class="container footer-inner">
       <span>&copy; 2026 <b>KIDZY Store</b></span>
-      <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="small faint nav-link">Support via Discord</a>
+      <a href="https://discord.com/users/kidddzyyaj" target="_blank" class="small faint nav-link">Support via Discord</a>
     </div>
   </footer>
 
   <script src="/assets/app.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (Auth.isLoggedIn()) {
+        if (Auth.isAdmin()) {
+          window.location.href = '/admin/index.html';
+        } else {
+          window.location.href = '/activation.html';
+        }
+      }
+    });
+
+    function togglePasswordVisibility(id, btn) {
+      const input = document.getElementById(id);
+      if (input) {
+        if (input.type === 'password') {
+          input.type = 'text';
+          btn.textContent = '🔒';
+        } else {
+          input.type = 'password';
+          btn.textContent = '👁️';
+        }
+      }
+    }
+
     async function handleRegister(e) {
       e.preventDefault();
       const name = document.getElementById('reg-name').value.trim();
@@ -106,6 +132,12 @@
       const password = document.getElementById('reg-password').value;
       const btn = document.getElementById('register-btn');
       const alertBox = document.getElementById('register-alert');
+
+      if (password.length < 6) {
+        alertBox.innerHTML = '<div class="alert alert-error">Password minimal 6 karakter.</div>';
+        showToast('Password minimal 6 karakter.', 'warn');
+        return;
+      }
 
       btn.disabled = true;
       btn.textContent = 'Mendaftarkan...';
