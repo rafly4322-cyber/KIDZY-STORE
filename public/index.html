@@ -4,10 +4,254 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>KIDZY Store — Webhook Donasi Roblox Instant & Auto Datastore</title>
+  <meta name="description" content="Hubungkan Saweria, BagiBagi, dan SociaBuzz ke game Roblox kamu. Notifikasi instan <100ms, auto DataStore sync, dan setup 5 menit." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    /* Landing page specific enhancements */
+    .hero-section {
+      position: relative;
+      min-height: calc(100vh - 72px);
+      display: flex;
+      align-items: center;
+      padding: 60px 0;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(99, 102, 241, 0.15) 0%, transparent 65%);
+      pointer-events: none;
+      animation: heroPulse 6s ease-in-out infinite;
+    }
+
+    @keyframes heroPulse {
+      0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+    }
+
+    .hero-badge-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      animation: slideInUp 0.6s ease both;
+    }
+
+    .hero-title {
+      animation: slideInUp 0.7s ease 0.1s both;
+    }
+
+    .hero-lead {
+      animation: slideInUp 0.7s ease 0.2s both;
+    }
+
+    .hero-actions {
+      animation: slideInUp 0.7s ease 0.3s both;
+    }
+
+    .hero-trust {
+      animation: slideInUp 0.7s ease 0.4s both;
+    }
+
+    .hero-mockup {
+      animation: slideInRight 0.8s ease 0.2s both;
+    }
+
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(32px) scale(0.96); }
+      to { opacity: 1; transform: translateX(0) scale(1); }
+    }
+
+    /* Floating particles */
+    .particles {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.6);
+      animation: particleFloat linear infinite;
+    }
+
+    @keyframes particleFloat {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-20px) translateX(40px); opacity: 0; }
+    }
+
+    /* Section headers */
+    .section-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .section-eyebrow-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent-gradient);
+    }
+
+    /* Glow CTA button */
+    .btn-glow-primary {
+      background: var(--accent-gradient);
+      color: #FFFFFF;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: var(--r);
+      border: none;
+      box-shadow: 0 6px 30px rgba(99, 102, 241, 0.5), 0 0 0 1px rgba(255,255,255,0.1) inset;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-glow-primary::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -75%;
+      width: 50%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+    }
+
+    .btn-glow-primary:hover {
+      box-shadow: 0 10px 40px rgba(99, 102, 241, 0.7), 0 0 0 1px rgba(255,255,255,0.15) inset;
+      transform: translateY(-3px);
+    }
+
+    .btn-glow-primary:hover::before { left: 125%; }
+
+    /* Platform section gradient divider */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(99,102,241,0.5), rgba(6,182,212,0.4), transparent);
+      margin: 0;
+    }
+
+    /* Testimonial style stats bar upgrade */
+    .trust-stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+    }
+
+    .trust-stat-icon {
+      font-size: 18px;
+      filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.5));
+    }
+
+    .trust-stat-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .trust-stat-label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Steps upgrade */
+    .step-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .step-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent-gradient);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+
+    .step-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(99, 102, 241, 0.4);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 25px rgba(99,102,241,0.15);
+    }
+
+    .step-card:hover::before { transform: scaleX(1); }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      font-family: var(--font-heading);
+      color: #FFFFFF;
+      letter-spacing: -0.05em;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .step-number.s1 { background: linear-gradient(135deg, #6366F1, #8B5CF6); box-shadow: 0 6px 20px rgba(99,102,241,0.4); }
+    .step-number.s2 { background: linear-gradient(135deg, #8B5CF6, #06B6D4); box-shadow: 0 6px 20px rgba(139,92,246,0.4); }
+    .step-number.s3 { background: linear-gradient(135deg, #06B6D4, #10B981); box-shadow: 0 6px 20px rgba(6,182,212,0.4); }
+
+    /* Highlight text */
+    .highlight-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.25);
+      border-radius: var(--r-full);
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #C4B5FD;
+      margin-bottom: 16px;
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -18,71 +262,83 @@
         <span>KIDZY Store</span>
       </a>
 
-      <nav class="nav">
+      <nav class="nav" id="main-nav">
         <a class="nav-link is-active" href="/">Home</a>
         <a class="nav-link" href="#features">Fitur</a>
-        <a class="nav-link" href="#platform">Paket Platform</a>
-        <a class="nav-link" href="/activation.html">Aktivasi Token</a>
+        <a class="nav-link" href="#platform">Paket</a>
+        <a class="nav-link" href="/activation.html">Aktivasi</a>
         <span class="nav-sep"></span>
         <a class="btn btn-sm btn-ghost" href="/login.html">Login Admin</a>
       </nav>
       
-      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
-        ☰
-      </button>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">☰</button>
     </div>
   </header>
 
   <main>
-    <div class="container page">
-      
-      <!-- Hero Section -->
-      <section class="split" style="align-items: center; min-height: calc(100vh - 160px); padding: 40px 0 60px 0;">
-        <div class="stack" style="gap: 24px;">
-          <div class="row" style="gap: 10px; flex-wrap: wrap;">
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container page" style="position: relative; z-index: 1;">
+
+      <!-- ===== HERO ===== -->
+      <section style="min-height: calc(100vh - 160px); display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: center; padding: 60px 0 80px 0;" id="hero-section">
+        <!-- Left -->
+        <div class="stack hero-badge-row" style="gap: 28px;">
+          <div class="hero-badge-row" style="gap: 10px; flex-wrap: wrap; display: flex;">
             <span class="badge badge-live">Live Gateway Active</span>
             <span class="badge badge-cyan">Roblox Open Cloud V2</span>
             <span class="badge badge-gold">Lifetime License</span>
           </div>
 
-          <h1 class="h1" style="line-height: 1.12;">
-            Integrasi Donasi <br />
-            <span class="gradient-text">Realtime ke Game Roblox</span>
-          </h1>
+          <div class="hero-title">
+            <h1 class="h1" style="line-height: 1.07; letter-spacing: -0.05em;">
+              Integrasi Donasi<br/>
+              <span class="gradient-text">Realtime ke Game</span><br/>
+              <span style="color: var(--ink);">Roblox</span>
+            </h1>
+          </div>
 
-          <p class="lead" style="max-width: 540px;">
-            Hubungkan Saweria, BagiBagi, dan SociaBuzz langsung ke dalam game Roblox kamu. Notifikasi instan, auto DataStore sync, dan setup instan tanpa ribet.
+          <p class="lead hero-lead" style="max-width: 500px; font-size: 17px;">
+            Hubungkan <strong style="color: #C4B5FD;">Saweria</strong>, <strong style="color: #67E8F9;">BagiBagi</strong>, dan <strong style="color: #4ADE80;">SociaBuzz</strong> langsung ke game Roblox kamu. Notifikasi instan, auto DataStore sync, setup 5 menit tanpa ribet.
           </p>
 
-          <div class="row" style="gap: 16px; margin-top: 8px;">
-            <a href="#platform" class="btn btn-primary btn-lg">
+          <div class="hero-actions" style="display: flex; gap: 14px; flex-wrap: wrap;">
+            <a href="#platform" class="btn-glow-primary">
               🚀 Lihat Paket Platform
             </a>
-            <a href="/activation.html" class="btn btn-ghost btn-lg">
+            <a href="/activation.html" class="btn btn-ghost btn-lg" style="padding: 16px 28px; font-size: 16px;">
               🔑 Sudah Punya Token?
             </a>
           </div>
 
-          <div class="row" style="gap: 24px; margin-top: 16px; padding-top: 20px; border-top: 1px solid var(--border-subtle);">
-            <div>
-              <div style="font-size: 18px; font-weight: 800; color: var(--ink);">⚡ &lt; 100ms</div>
-              <div style="font-size: 12.5px; color: var(--muted);">Latency Sync</div>
+          <div class="hero-trust" style="display: flex; gap: 32px; padding-top: 24px; border-top: 1px solid var(--border-subtle); flex-wrap: wrap;">
+            <div class="trust-stat">
+              <span class="trust-stat-icon">⚡</span>
+              <div>
+                <div class="trust-stat-text">&lt; 100ms</div>
+                <div class="trust-stat-label">Latency Sync</div>
+              </div>
             </div>
-            <div style="width: 1px; height: 30px; background: var(--border-subtle);"></div>
-            <div>
-              <div style="font-size: 18px; font-weight: 800; color: var(--ink);">🛡️ 99.9%</div>
-              <div style="font-size: 12.5px; color: var(--muted);">Uptime Guarantee</div>
+            <div class="trust-stat">
+              <span class="trust-stat-icon">🛡️</span>
+              <div>
+                <div class="trust-stat-text">99.9%</div>
+                <div class="trust-stat-label">Uptime Guarantee</div>
+              </div>
             </div>
-            <div style="width: 1px; height: 30px; background: var(--border-subtle);"></div>
-            <div>
-              <div style="font-size: 18px; font-weight: 800; color: var(--ink);">🎮 3 Platform</div>
-              <div style="font-size: 12.5px; color: var(--muted);">Saweria &bull; BagiBagi &bull; SociaBuzz</div>
+            <div class="trust-stat">
+              <span class="trust-stat-icon">🎮</span>
+              <div>
+                <div class="trust-stat-text">3 Platform</div>
+                <div class="trust-stat-label">Saweria • BagiBagi • SociaBuzz</div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Interactive Live Preview Mockup -->
-        <div class="hero-mockup-wrap">
+        <!-- Right: Mockup -->
+        <div class="hero-mockup">
           <div class="hero-mockup-card">
             <div class="mockup-header">
               <div class="mockup-dots">
@@ -90,11 +346,12 @@
                 <span class="mockup-dot yellow"></span>
                 <span class="mockup-dot green"></span>
               </div>
-              <div style="font-size: 13px; font-weight: 600; color: #FFFFFF;">Preview Notifikasi In-Game</div>
+              <div style="font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); letter-spacing: 0.02em;">⚡ Live In-Game Preview</div>
+              <span class="badge badge-live" style="font-size: 10px;">LIVE</span>
             </div>
 
-            <!-- Simulated Roblox Alert Box -->
-            <div class="roblox-alert-box" style="margin-bottom: 16px;">
+            <!-- Alert 1 -->
+            <div class="roblox-alert-box" style="margin-bottom: 14px;">
               <div class="roblox-alert-top">
                 <div class="roblox-alert-icon">🎁</div>
                 <div class="roblox-alert-info">
@@ -107,24 +364,30 @@
               </div>
             </div>
 
-            <!-- Secondary Alert Preview -->
-            <div class="roblox-alert-box" style="border-color: #06B6D4; background: linear-gradient(135deg, rgba(8, 47, 73, 0.85), rgba(15, 23, 42, 0.95)); animation-delay: 2s;">
+            <!-- Alert 2 -->
+            <div class="roblox-alert-box" style="border-color: #06B6D4; background: linear-gradient(135deg, rgba(8, 47, 73, 0.9), rgba(10, 18, 38, 0.97)); box-shadow: 0 12px 32px rgba(6, 182, 212, 0.3);">
               <div class="roblox-alert-top">
-                <div class="roblox-alert-icon" style="background: linear-gradient(135deg, #06B6D4, #0891B2);">💎</div>
+                <div class="roblox-alert-icon" style="background: linear-gradient(135deg, #06B6D4, #0891B2); box-shadow: 0 0 20px rgba(6,182,212,0.6);">💎</div>
                 <div class="roblox-alert-info">
                   <h4>RobloxVIP_Pro</h4>
                   <p style="color: #67E8F9;">Mendonasikan Rp 250.000 via BagiBagi</p>
                 </div>
               </div>
               <div class="roblox-alert-msg" style="border-left-color: #06B6D4;">
-                "Bonus VIP Member & Global Announcement Active!"
+                "Bonus VIP Member & Global Announcement Active! 💎"
               </div>
+            </div>
+
+            <!-- Live indicator -->
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06);">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #10B981; box-shadow: 0 0 10px #10B981; animation: livePulse 1.5s ease-in-out infinite; display: block;"></span>
+              <span style="font-size: 12px; color: #34D399; font-weight: 600;">Gateway aktif · sync realtime</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Trust Bar -->
+      <!-- ===== STATS BAR ===== -->
       <section class="stat-bar">
         <div class="stat-item">
           <div class="stat-num">500+</div>
@@ -144,12 +407,18 @@
         </div>
       </section>
 
-      <!-- Feature Grid Section -->
-      <section id="features" style="padding: 60px 0;">
-        <div style="text-align: center; margin-bottom: 48px;">
-          <span class="badge badge-accent" style="margin-bottom: 12px;">Keunggulan KIDZY Store</span>
-          <h2 class="h1">Kenapa Memilih System Webhook Kami?</h2>
-          <p class="lead" style="max-width: 600px; margin: 12px auto 0 auto;">
+      <!-- ===== FEATURES ===== -->
+      <section id="features" style="padding: 80px 0;">
+        <div style="text-align: center; margin-bottom: 56px;">
+          <div class="section-eyebrow">
+            <div class="section-eyebrow-inner">
+              <div class="section-line"></div>
+              <span class="badge badge-accent">Keunggulan KIDZY Store</span>
+              <div class="section-line"></div>
+            </div>
+          </div>
+          <h2 class="h1" style="margin-top: 8px;">Kenapa Memilih<br/><span class="gradient-text">System Webhook Kami?</span></h2>
+          <p class="lead" style="max-width: 560px; margin: 16px auto 0 auto;">
             Dibuat khusus untuk pengembang game Roblox Indonesia yang ingin monetisasi game dengan aman, cepat, dan profesional.
           </p>
         </div>
@@ -158,48 +427,56 @@
           <div class="feature-card">
             <div class="feature-icon-wrapper">⚡</div>
             <h3 class="h3">Instant Notification</h3>
-            <p class="small faint">Donasi dari pemain akan tampil di layar server Roblox dalam hitungan detik tanpa jeda delay.</p>
+            <p class="small faint">Donasi dari pemain tampil di layar server Roblox dalam hitungan detik tanpa delay. Latency &lt;100ms dijamin.</p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon-wrapper">☁️</div>
+            <div class="feature-icon-wrapper" style="background: linear-gradient(135deg, rgba(6,182,212,0.18), rgba(6,182,212,0.08)); border-color: rgba(6,182,212,0.25); color: #67E8F9;">☁️</div>
             <h3 class="h3">Roblox DataStore Sync</h3>
-            <p class="small faint">Otomatis menyimpan koin, gem, atau item reward donasi ke DataStore resmi Roblox lewat Open Cloud API.</p>
+            <p class="small faint">Otomatis simpan koin, gem, atau item reward donasi ke DataStore Roblox lewat Open Cloud API resmi.</p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon-wrapper">🛡️</div>
+            <div class="feature-icon-wrapper" style="background: linear-gradient(135deg, rgba(16,185,129,0.18), rgba(16,185,129,0.08)); border-color: rgba(16,185,129,0.25); color: #4ADE80;">🛡️</div>
             <h3 class="h3">Keamanan Terjamin</h3>
-            <p class="small faint">Dilengkapi proteksi enkripsi token unik, DDoS shield, dan audit logging riwayat donasi.</p>
+            <p class="small faint">Enkripsi token unik, DDoS shield berlapis, dan audit logging lengkap untuk setiap riwayat donasi.</p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon-wrapper">🌐</div>
+            <div class="feature-icon-wrapper" style="background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(245,158,11,0.07)); border-color: rgba(245,158,11,0.25); color: #FBBF24;">🌐</div>
             <h3 class="h3">Multi Platform Support</h3>
-            <p class="small faint">Dukungan penuh untuk Saweria, BagiBagi, dan SociaBuzz dalam 1 sistem manajemen token yang praktis.</p>
+            <p class="small faint">Dukungan penuh Saweria, BagiBagi, dan SociaBuzz dalam satu sistem token yang praktis dan powerful.</p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon-wrapper">♾️</div>
+            <div class="feature-icon-wrapper" style="background: linear-gradient(135deg, rgba(139,92,246,0.18), rgba(139,92,246,0.08)); border-color: rgba(139,92,246,0.25); color: #C4B5FD;">♾️</div>
             <h3 class="h3">Akses Lifetime Permanen</h3>
-            <p class="small faint">Cukup sekali bayar, token lisensi kamu aktif selamanya tanpa biaya langganan bulanan tersembunyi.</p>
+            <p class="small faint">Cukup sekali bayar, token lisensi aktif selamanya. Tanpa biaya langganan bulanan tersembunyi.</p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon-wrapper">💬</div>
+            <div class="feature-icon-wrapper" style="background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(59,130,246,0.08)); border-color: rgba(59,130,246,0.25); color: #93C5FD;">💬</div>
             <h3 class="h3">Support Discord 24/7</h3>
-            <p class="small faint">Tim developer siap membantu proses pemasangan script ke Roblox Studio hingga lancar.</p>
+            <p class="small faint">Tim developer siap bantu pemasangan script ke Roblox Studio hingga sistem donasi kamu aktif & jalan.</p>
           </div>
         </div>
       </section>
 
-      <!-- Platform Section -->
-      <section id="platform" style="padding: 60px 0;">
-        <div style="text-align: center; margin-bottom: 48px;">
-          <span class="badge badge-cyan" style="margin-bottom: 12px;">Pilihan Platform</span>
-          <h2 class="h1">Pilih Platform Donasi Kamu</h2>
-          <p class="lead" style="max-width: 600px; margin: 12px auto 0 auto;">
-            Semua paket sudah termasuk lisensi Lifetime seumur hidup dan script integrasi Roblox Studio.
+      <div class="section-divider"></div>
+
+      <!-- ===== PLATFORM PRICING ===== -->
+      <section id="platform" style="padding: 80px 0;">
+        <div style="text-align: center; margin-bottom: 56px;">
+          <div class="section-eyebrow">
+            <div class="section-eyebrow-inner">
+              <div class="section-line" style="background: linear-gradient(90deg, #06B6D4, #3B82F6);"></div>
+              <span class="badge badge-cyan">Pilihan Platform</span>
+              <div class="section-line" style="background: linear-gradient(90deg, #3B82F6, #06B6D4);"></div>
+            </div>
+          </div>
+          <h2 class="h1" style="margin-top: 8px;">Pilih Platform <span class="gradient-text">Donasi Kamu</span></h2>
+          <p class="lead" style="max-width: 560px; margin: 16px auto 0 auto;">
+            Semua paket sudah termasuk lisensi Lifetime seumur hidup dan script integrasi Roblox Studio siap pakai.
           </p>
         </div>
 
@@ -207,8 +484,8 @@
           <!-- BagiBagi -->
           <div class="platform-card-v2">
             <span class="badge badge-cyan platform-badge-ribbon">Recommended</span>
-            <h3 class="h3">BagiBagi Platform</h3>
-            <p class="small faint" style="margin-top: 4px;">Integrasi khusus platform BagiBagi ke game Roblox.</p>
+            <h3 class="h3" style="color: #FFFFFF;">BagiBagi Platform</h3>
+            <p class="small faint" style="margin-top: 6px;">Integrasi khusus platform BagiBagi ke game Roblox kamu.</p>
 
             <div class="price-tag">Rp 500.000</div>
             <div class="price-period">Akses Lifetime &bull; Sekali Bayar</div>
@@ -232,16 +509,16 @@
               </li>
             </ul>
 
-            <button class="btn btn-cyan btn-block" onclick="openOrderModal('BagiBagi', 'Rp 500.000')">
+            <button class="btn btn-cyan btn-block" onclick="openOrderModal('BagiBagi', 'Rp 500.000')" style="font-size: 15px; padding: 14px;">
               🛒 Order BagiBagi License
             </button>
           </div>
 
-          <!-- Saweria (Popular) -->
+          <!-- Saweria (POPULAR) -->
           <div class="platform-card-v2 popular">
             <span class="badge badge-gold platform-badge-ribbon">🔥 Best Seller</span>
-            <h3 class="h3">Saweria Platform</h3>
-            <p class="small faint" style="margin-top: 4px;">Integrasi resmi Saweria Webhook ke game Roblox.</p>
+            <h3 class="h3" style="color: #FFFFFF;">Saweria Platform</h3>
+            <p class="small faint" style="margin-top: 6px;">Integrasi resmi Saweria Webhook ke game Roblox kamu.</p>
 
             <div class="price-tag">Rp 500.000</div>
             <div class="price-period">Akses Lifetime &bull; Sekali Bayar</div>
@@ -265,7 +542,7 @@
               </li>
             </ul>
 
-            <button class="btn btn-primary btn-block" onclick="openOrderModal('Saweria', 'Rp 500.000')">
+            <button class="btn btn-primary btn-block" onclick="openOrderModal('Saweria', 'Rp 500.000')" style="font-size: 15px; padding: 14px;">
               ✨ Order Saweria License
             </button>
           </div>
@@ -273,8 +550,8 @@
           <!-- SociaBuzz -->
           <div class="platform-card-v2">
             <span class="badge badge-accent platform-badge-ribbon">Fast Setup</span>
-            <h3 class="h3">SociaBuzz Platform</h3>
-            <p class="small faint" style="margin-top: 4px;">Integrasi platform SociaBuzz ke game Roblox.</p>
+            <h3 class="h3" style="color: #FFFFFF;">SociaBuzz Platform</h3>
+            <p class="small faint" style="margin-top: 6px;">Integrasi platform SociaBuzz ke game Roblox kamu.</p>
 
             <div class="price-tag">Rp 500.000</div>
             <div class="price-period">Akses Lifetime &bull; Sekali Bayar</div>
@@ -298,84 +575,106 @@
               </li>
             </ul>
 
-            <button class="btn btn-ghost btn-block" onclick="openOrderModal('SociaBuzz', 'Rp 500.000')">
+            <button class="btn btn-ghost btn-block" onclick="openOrderModal('SociaBuzz', 'Rp 500.000')" style="font-size: 15px; padding: 14px;">
               ⚡ Order SociaBuzz License
             </button>
           </div>
         </div>
       </section>
 
-      <!-- How It Works Section -->
-      <section style="padding: 60px 0;">
-        <div class="card" style="padding: 40px;">
-          <div style="text-align: center; margin-bottom: 36px;">
-            <span class="badge badge-live">Setup Mudah</span>
-            <h2 class="h1" style="margin-top: 8px;">Cara Kerjanya Dalam 3 Langkah</h2>
-            <p class="lead">Hanya butuh 5 menit untuk membuat sistem donasi aktif di game kamu.</p>
-          </div>
+      <div class="section-divider"></div>
 
-          <div class="grid three">
-            <div class="stack" style="gap: 12px; align-items: flex-start;">
-              <div class="brand-mark" style="width: 44px; height: 44px; font-size: 18px;">1</div>
-              <h3 class="h3">1. Order Paket Platform</h3>
-              <p class="small faint">Pilih platform (Saweria, BagiBagi, atau SociaBuzz) dan lakukan pembayaran ke rekening resmi SeaBank.</p>
-            </div>
-
-            <div class="stack" style="gap: 12px; align-items: flex-start;">
-              <div class="brand-mark" style="width: 44px; height: 44px; font-size: 18px; background: linear-gradient(135deg, #8B5CF6, #06B6D4);">2</div>
-              <h3 class="h3">2. Klaim &amp; Aktivasi Token</h3>
-              <p class="small faint">Kirim bukti transfer ke Discord Owner untuk menerima Token Lisensi, lalu aktivasi dengan Universe ID Roblox kamu.</p>
-            </div>
-
-            <div class="stack" style="gap: 12px; align-items: flex-start;">
-              <div class="brand-mark" style="width: 44px; height: 44px; font-size: 18px; background: linear-gradient(135deg, #06B6D4, #10B981);">3</div>
-              <h3 class="h3">3. Pasang Script &amp; Live</h3>
-              <p class="small faint">Salin Webhook URL ke dashboard Saweria kamu &amp; pasang script di Roblox Studio. Donasi langsung aktif!</p>
+      <!-- ===== HOW IT WORKS ===== -->
+      <section style="padding: 80px 0;">
+        <div style="text-align: center; margin-bottom: 56px;">
+          <div class="section-eyebrow">
+            <div class="section-eyebrow-inner">
+              <div class="section-line" style="background: linear-gradient(90deg, #10B981, #06B6D4);"></div>
+              <span class="badge badge-live">Setup Mudah</span>
+              <div class="section-line" style="background: linear-gradient(90deg, #06B6D4, #10B981);"></div>
             </div>
           </div>
+          <h2 class="h1" style="margin-top: 8px;">Cara Kerja Dalam <span class="gradient-text">3 Langkah</span></h2>
+          <p class="lead" style="max-width: 500px; margin: 16px auto 0 auto;">
+            Hanya butuh 5 menit untuk membuat sistem donasi aktif di game kamu.
+          </p>
+        </div>
+
+        <div class="grid three">
+          <div class="step-card">
+            <div class="step-number s1">1</div>
+            <div>
+              <h3 class="h3">Order Paket Platform</h3>
+              <p class="small faint" style="margin-top: 8px;">Pilih platform (Saweria, BagiBagi, atau SociaBuzz) dan lakukan pembayaran ke rekening resmi SeaBank.</p>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number s2">2</div>
+            <div>
+              <h3 class="h3">Klaim &amp; Aktivasi Token</h3>
+              <p class="small faint" style="margin-top: 8px;">Kirim bukti transfer ke Discord Owner untuk menerima Token Lisensi, lalu aktivasi dengan Universe ID Roblox kamu.</p>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number s3">3</div>
+            <div>
+              <h3 class="h3">Pasang Script &amp; Live!</h3>
+              <p class="small faint" style="margin-top: 8px;">Salin Webhook URL ke dashboard platform donasi &amp; pasang script di Roblox Studio. Donasi langsung aktif!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Bottom -->
+        <div style="text-align: center; margin-top: 56px;">
+          <a href="#platform" class="btn-glow-primary" style="display: inline-flex; align-items: center; gap: 10px; text-decoration: none;">
+            🎮 Mulai Sekarang — Pilih Platform
+          </a>
+          <p class="small faint" style="margin-top: 16px;">Butuh bantuan? <a href="https://discord.com/users/kidddzyyaj" target="_blank" style="color: #C4B5FD; font-weight: 600;">Chat Discord Owner</a></p>
         </div>
       </section>
 
     </div>
   </main>
 
-  <!-- Modern Payment / Order Modal -->
-  <div class="modal-backdrop" id="order-modal" style="display: none; position: fixed; inset: 0; background: rgba(3, 5, 10, 0.85); backdrop-filter: blur(16px); align-items: center; justify-content: center; z-index: 999; padding: 20px;">
-    <div class="card" style="max-width: 460px; width: 100%; position: relative; border-color: rgba(99, 102, 241, 0.4); box-shadow: var(--shadow-lg);">
-      <button onclick="closeModal('order-modal')" style="position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;">✕</button>
+  <!-- Order Modal -->
+  <div class="modal-backdrop" id="order-modal" style="display: none;">
+    <div class="modal">
+      <button onclick="closeModal('order-modal')" class="modal-close">✕</button>
 
-      <div style="text-align: center; margin-bottom: 24px;">
+      <div style="text-align: center; margin-bottom: 28px;">
         <span class="badge badge-accent" id="modal-platform-badge">Lifetime License</span>
-        <h2 class="h2" id="modal-platform-name" style="font-size: 24px; margin-top: 8px;">Saweria</h2>
-        <div style="font-size: 32px; font-weight: 800; color: #FFFFFF; font-family: var(--font-heading); margin-top: 4px;" id="modal-price-display">Rp 500.000</div>
+        <h2 class="h2" id="modal-platform-name" style="font-size: 26px; margin-top: 12px; color: #FFFFFF;"></h2>
+        <div style="font-size: 36px; font-weight: 800; color: #FFFFFF; font-family: var(--font-heading); margin-top: 6px; letter-spacing: -0.04em;" id="modal-price-display"></div>
         <p class="small faint" style="margin-top: 4px;">Sekali bayar &bull; Akses seumur hidup</p>
       </div>
 
-      <div class="stack" style="gap: 16px;">
+      <div class="stack" style="gap: 18px;">
         <div class="field">
-          <label style="font-size: 13px; color: var(--text-secondary); font-weight: 600;">Transfer Pembayaran Resmi (SeaBank):</label>
-          <div class="row" style="gap: 8px; margin-top: 6px;">
-            <input class="input mono" readonly value="901506323909" style="flex: 1; background: rgba(0,0,0,0.5); font-weight: 700; color: #A5B4FC;" />
-            <button class="btn btn-sm btn-cyan" onclick="copyText('901506323909', this)">📋 Salin Rekening</button>
+          <label>Transfer Pembayaran Resmi (SeaBank):</label>
+          <div class="row" style="gap: 8px; margin-top: 4px;">
+            <input class="input mono" readonly value="901506323909" style="flex: 1; font-weight: 700; color: #C4B5FD !important; letter-spacing: 0.05em;" />
+            <button class="btn btn-sm btn-cyan" onclick="copyText('901506323909', this)">📋 Salin</button>
           </div>
-          <span class="small faint" style="margin-top: 6px; display: block;">Bank: <b>SeaBank (Kode 535)</b> &bull; a/n <b>MUHAMMAD RAFLI FIRDAUS</b></span>
+          <span class="small faint">Bank: <b style="color: var(--text-secondary);">SeaBank (Kode 535)</b> &bull; a/n <b style="color: var(--text-secondary);">MUHAMMAD RAFLI FIRDAUS</b></span>
         </div>
 
         <div class="field">
-          <label style="font-size: 13px; color: var(--text-secondary); font-weight: 600;">Konfirmasi Bukti Transfer via Discord:</label>
-          <div class="row" style="gap: 8px; margin-top: 6px;">
-            <input class="input mono" readonly value="kidddzyyaj" style="flex: 1; background: rgba(0,0,0,0.5); font-weight: 700; color: #67E8F9;" />
-            <button class="btn btn-sm btn-ghost" onclick="copyText('kidddzyyaj', this)">📋 Salin Discord ID</button>
+          <label>Konfirmasi Bukti Transfer via Discord:</label>
+          <div class="row" style="gap: 8px; margin-top: 4px;">
+            <input class="input mono" readonly value="kidddzyyaj" style="flex: 1; font-weight: 700; color: #67E8F9 !important;" />
+            <button class="btn btn-sm btn-ghost" onclick="copyText('kidddzyyaj', this)">📋 Salin</button>
           </div>
-          <span class="small faint" style="margin-top: 6px; display: block;">Kirim screenshot bukti transfer ke Discord owner untuk klaim Kode Token Lisensi kamu.</span>
+          <span class="small faint">Kirim screenshot bukti transfer ke Discord owner untuk klaim Token Lisensi kamu.</span>
         </div>
 
-        <div style="margin-top: 12px;" class="stack">
-          <a class="btn btn-primary btn-block" href="https://discord.com/users/kidddzyyaj" target="_blank">
-            💬 Buka Chat Discord Owner (kidddzyyaj)
+        <div class="stack" style="gap: 10px; margin-top: 4px;">
+          <a class="btn btn-primary btn-block" href="https://discord.com/users/kidddzyyaj" target="_blank" style="padding: 15px;">
+            💬 Buka Chat Discord Owner
           </a>
           <a class="btn btn-ghost btn-sm btn-block" href="/activation.html">
-            🔗 Sudah Punya Token? Masuk ke Aktivasi
+            🔗 Sudah Punya Token? Aktivasi Sekarang
           </a>
         </div>
       </div>
@@ -383,27 +682,55 @@
   </div>
 
   <!-- Footer -->
-  <footer class="site-footer" style="margin-top: 80px; border-top: 1px solid var(--border); padding: 32px 0;">
+  <footer class="site-footer" style="margin-top: 0;">
     <div class="container footer-inner">
       <div class="row" style="gap: 12px;">
-        <span class="brand-mark" style="width: 28px; height: 28px; font-size: 12px;">KZ</span>
-        <span style="font-size: 14px; font-weight: 600;">&copy; 2026 KIDZY Store</span>
+        <span class="brand-mark" style="width: 30px; height: 30px; font-size: 12px;">KZ</span>
+        <span style="font-size: 14px; font-weight: 600; color: var(--text);">&copy; 2026 KIDZY Store</span>
         <span class="faint">&bull; Platform Webhook &amp; Gateway Roblox</span>
       </div>
-      <div class="row" style="gap: 16px;">
+      <div class="row" style="gap: 20px;">
         <a href="https://discord.com/users/kidddzyyaj" target="_blank" class="small faint nav-link">Discord Support</a>
-        <a href="/login.html" class="small faint nav-link">Admin Dashboard</a>
+        <a href="/activation.html" class="small faint nav-link">Aktivasi Token</a>
+        <a href="/login.html" class="small faint nav-link">Admin</a>
       </div>
     </div>
   </footer>
 
+  <!-- Floating Discord Button -->
+  <button class="live-chat-bubble-btn" onclick="window.open('https://discord.com/users/kidddzyyaj','_blank')" title="Chat Discord Owner">
+    💬
+    <span class="live-chat-ping"></span>
+  </button>
+
   <script src="/assets/app.js"></script>
   <script>
+    // Generate floating particles
+    function generateParticles() {
+      const container = document.getElementById('particles');
+      const colors = ['rgba(99,102,241,0.7)', 'rgba(139,92,246,0.6)', 'rgba(6,182,212,0.6)', 'rgba(16,185,129,0.5)'];
+      for (let i = 0; i < 20; i++) {
+        const p = document.createElement('span');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.width = (Math.random() * 3 + 1) + 'px';
+        p.style.height = p.style.width;
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+        p.style.animationDelay = (Math.random() * 10) + 's';
+        p.style.borderRadius = '50%';
+        container.appendChild(p);
+      }
+    }
+    generateParticles();
+
     function openOrderModal(platformName, price) {
       document.getElementById('modal-platform-name').textContent = platformName;
       document.getElementById('modal-price-display').textContent = price;
       document.getElementById('modal-platform-badge').textContent = platformName + ' Lifetime Access';
-      document.getElementById('order-modal').style.display = 'flex';
+      const modal = document.getElementById('order-modal');
+      modal.style.display = 'flex';
+      setTimeout(() => { modal.style.opacity = '1'; modal.style.visibility = 'visible'; }, 10);
     }
 
     function closeModal(id) {
@@ -412,10 +739,28 @@
 
     function copyText(text, btn) {
       navigator.clipboard.writeText(text);
-      const originalText = btn.textContent;
+      const orig = btn.textContent;
       btn.textContent = '✓ Tersalin!';
-      setTimeout(() => { btn.textContent = originalText; }, 2000);
+      btn.style.background = 'rgba(16,185,129,0.3)';
+      setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 2000);
     }
+
+    // Smooth scroll + header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.site-header');
+      if (window.scrollY > 20) {
+        header.style.background = 'rgba(5,7,15,0.92)';
+        header.style.boxShadow = '0 4px 24px rgba(0,0,0,0.5)';
+      } else {
+        header.style.background = '';
+        header.style.boxShadow = '';
+      }
+    });
+
+    // Close modal on backdrop click
+    document.getElementById('order-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal('order-modal');
+    });
   </script>
 </body>
 </html>

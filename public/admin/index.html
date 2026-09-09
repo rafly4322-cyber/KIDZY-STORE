@@ -8,6 +8,165 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    /* Dashboard-specific premium styles */
+    .admin-stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .admin-stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+
+    .admin-stat-card.cyan::before { background: linear-gradient(90deg, #06B6D4, #3B82F6); }
+    .admin-stat-card.green::before { background: linear-gradient(90deg, #10B981, #34D399); }
+    .admin-stat-card.purple::before { background: linear-gradient(90deg, #8B5CF6, #6366F1); }
+
+    .admin-stat-card::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      right: -20px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      opacity: 0.06;
+      transition: all 0.4s ease;
+    }
+
+    .admin-stat-card.cyan::after { background: #06B6D4; }
+    .admin-stat-card.green::after { background: #10B981; }
+    .admin-stat-card.purple::after { background: #8B5CF6; }
+
+    .admin-stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+    }
+
+    .admin-stat-card:hover::after { opacity: 0.12; transform: scale(1.5); }
+
+    .stat-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 14px;
+    }
+
+    .stat-icon.cyan { background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.25); }
+    .stat-icon.green { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.25); }
+    .stat-icon.purple { background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.25); }
+
+    /* Generator card gradient */
+    .gen-card-free {
+      border: 1px solid rgba(16, 185, 129, 0.35) !important;
+      background: linear-gradient(160deg, rgba(16, 185, 129, 0.07) 0%, rgba(8, 11, 22, 0.95) 100%) !important;
+    }
+
+    .gen-card-paid {
+      border: 1px solid rgba(99, 102, 241, 0.35) !important;
+      background: linear-gradient(160deg, rgba(99, 102, 241, 0.08) 0%, rgba(8, 11, 22, 0.95) 100%) !important;
+    }
+
+    /* Endpoint cards */
+    .endpoint-card {
+      background: rgba(8, 11, 22, 0.8);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--r);
+      padding: 18px 20px;
+      transition: all 0.25s ease;
+    }
+
+    .endpoint-card:hover {
+      border-color: rgba(99,102,241,0.3);
+      background: rgba(10, 14, 28, 0.9);
+    }
+
+    /* Sidebar profile card */
+    .sidebar-profile {
+      background: linear-gradient(160deg, rgba(99,102,241,0.08), rgba(8,11,22,0.9));
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: var(--r);
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    /* Quick action cards */
+    .quick-action-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 22px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quick-action-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    }
+
+    .quick-action-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(99,102,241,0.35);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+    }
+
+    /* Status badges row */
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    /* Page title area */
+    .dash-title-area {
+      margin-bottom: 28px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    /* Animated number counting */
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stat-animate {
+      animation: countUp 0.5s ease both;
+    }
+
+    /* Table row highlight */
+    .table-code-cell {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: #FFFFFF;
+      background: rgba(255,255,255,0.04);
+      padding: 5px 10px;
+      border-radius: 6px;
+      display: inline-block;
+      letter-spacing: 0.02em;
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -22,16 +181,14 @@
         <a class="nav-link is-active" href="/admin">Dashboard Admin</a>
         <button class="btn btn-sm btn-danger" onclick="Auth.logout()">Logout</button>
       </nav>
-      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
-        ☰
-      </button>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">☰</button>
     </div>
   </header>
 
   <main class="page">
     <div class="container">
       <div class="shell">
-        <!-- Sidebar Menu -->
+        <!-- ===== SIDEBAR ===== -->
         <aside class="side">
           <div class="side-title">Menu Utama</div>
           <nav class="side-nav">
@@ -45,64 +202,100 @@
             <a class="side-link" href="/admin/downloads.html">⬇️ Download File</a>
           </nav>
 
-          <div class="card soft" style="margin-top: 24px; padding: 16px;">
-            <p class="small faint" style="margin-bottom: 6px;">Discord Owner:</p>
-            <div class="mono" style="color: #A5B4FC; font-weight: 700; font-size: 13px;">kidddzyyaj</div>
-            <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="btn btn-sm btn-ghost btn-block" style="margin-top: 10px;">
-              💬 Buka Discord
+          <div class="sidebar-profile">
+            <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;">Discord Owner</p>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <div style="width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #F59E0B, #D97706); display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 0 12px rgba(245,158,11,0.4);">👑</div>
+              <div>
+                <div style="font-family: var(--mono); color: #C4B5FD; font-weight: 700; font-size: 13px;">kidddzyyaj</div>
+                <div style="font-size: 11px; color: var(--muted);">Admin KIDZY Store</div>
+              </div>
+            </div>
+            <a href="https://discord.gg/tqnreKW6D8" target="_blank" class="btn btn-sm btn-ghost btn-block" style="font-size: 13px;">
+              💬 Buka Discord Server
             </a>
           </div>
         </aside>
 
-        <!-- Main Content -->
+        <!-- ===== MAIN CONTENT ===== -->
         <div>
-          <div class="page-head" style="margin-bottom: 24px;">
-            <div class="row" style="margin-bottom: 6px;">
+          <!-- Page Title -->
+          <div class="dash-title-area">
+            <div class="status-row">
               <span class="badge badge-live">Server Online</span>
               <span class="badge badge-accent">Admin Mode</span>
+              <span class="badge" style="background: rgba(245,158,11,0.1); color: #FBBF24; border-color: rgba(245,158,11,0.3);">👑 KIDZY Admin</span>
             </div>
-            <h1 class="h1">Dashboard Overview</h1>
-            <p class="lead">Buat tiket gratis/berbayar untuk orang lain, pantau statistik donasi, dan kontrol gateway Roblox.</p>
+            <h1 class="h1" style="font-size: clamp(28px, 4vw, 42px);">Dashboard Overview</h1>
+            <p class="lead" style="margin-top: 8px;">Buat tiket gratis/berbayar, pantau statistik donasi, dan kontrol gateway Roblox kamu.</p>
           </div>
 
-          <!-- 1. FREE TICKET & GIVEAWAY GENERATOR (PROMINENT) -->
-          <div class="card" style="margin-bottom: 24px; border: 1px solid rgba(16, 185, 129, 0.45); background: linear-gradient(160deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 20, 31, 0.95) 100%);">
+          <!-- ===== STATS GRID ===== -->
+          <div class="grid three" style="margin-bottom: 28px;">
+            <div class="admin-stat-card cyan">
+              <div class="stat-icon cyan">📊</div>
+              <div class="stat-label" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;">Total Transaksi Masuk</div>
+              <div class="stat-value cyan-text stat-animate" id="stat-count" style="font-size: 34px; margin: 8px 0 4px;">0</div>
+              <div class="small faint">Donasi webhook terproses</div>
+            </div>
+
+            <div class="admin-stat-card green">
+              <div class="stat-icon green">💰</div>
+              <div class="stat-label" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;">Total Nilai Donasi</div>
+              <div class="stat-value stat-animate" style="color: #34D399; font-size: 34px; margin: 8px 0 4px;" id="stat-amount">Rp 0</div>
+              <div class="small faint">Rupiah tersimpan di DataStore</div>
+            </div>
+
+            <div class="admin-stat-card purple">
+              <div class="stat-icon purple">🔑</div>
+              <div class="stat-label" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;">Total Token Aktif</div>
+              <div class="stat-value accent-text stat-animate" id="stat-tokens" style="font-size: 34px; margin: 8px 0 4px;">0</div>
+              <div class="small faint">Lisensi lifetime terdaftar</div>
+            </div>
+          </div>
+
+          <!-- ===== FREE TICKET GENERATOR ===== -->
+          <div class="card gen-card-free" style="margin-bottom: 22px;">
             <div class="card-head">
               <div>
-                <span class="badge badge-live" style="margin-bottom: 6px;">🎁 Generator Tiket Free / Hadiah</span>
-                <h2 class="h2">Buat Tiket / Token Gratis untuk Orang Lain (Lifetime)</h2>
-                <p class="small faint">Buat tiket akses gratis seumur hidup dalam 1-klik untuk teman, pemenang giveaway, atau member Discord.</p>
+                <span class="badge badge-live" style="margin-bottom: 10px;">🎁 Generator Tiket Free / Hadiah</span>
+                <h2 class="h2" style="font-size: 20px;">Buat Tiket Gratis untuk Orang Lain</h2>
+                <p class="small faint" style="margin-top: 4px;">Buat tiket akses gratis seumur hidup dalam 1-klik untuk teman, pemenang giveaway, atau member Discord.</p>
               </div>
             </div>
 
-            <div class="row" style="gap: 12px; margin-top: 8px; flex-wrap: wrap;">
-              <input class="input" id="dash-free-recipient" placeholder="Nama orang / username Discord (Contoh: @SultanRoblox / Teman Baik)" style="flex: 1; min-width: 260px;" />
-              <button class="btn btn-primary" onclick="createFreeTicketDashboard()" style="height: 48px;">
+            <div class="row" style="gap: 12px; flex-wrap: wrap;">
+              <input class="input" id="dash-free-recipient" placeholder="Nama orang / username Discord (Contoh: @SultanRoblox / Teman Baik)" style="flex: 1; min-width: 240px;" />
+              <button class="btn btn-primary" onclick="createFreeTicketDashboard()" style="height: 50px; white-space: nowrap; padding: 0 24px;">
                 🎁 Buat Tiket Gratis Sekarang
               </button>
             </div>
 
-            <div id="dash-free-result" style="display: none; margin-top: 18px; padding: 18px; background: #07090E; border-radius: var(--r); border: 1px solid var(--ok);">
-              <h3 class="h3" style="color: #A7F3D0; font-size: 15px; margin-bottom: 8px;">✅ Tiket Free Berhasil Dibuat!</h3>
-              <textarea class="input mono" id="dash-free-text" rows="5" readonly style="resize: none; font-size: 13px; margin-bottom: 12px; background: #030407;"></textarea>
-              <div class="row" style="gap: 8px;">
-                <button class="btn btn-sm btn-cyan" onclick="copyText(document.getElementById('dash-free-text').value, this)">📋 Salin Format Pesan Discord</button>
-                <a class="btn btn-sm btn-ghost" href="/activation.html" target="_blank">🔗 Buka Halaman Aktivasi</a>
+            <div id="dash-free-result" style="display: none; margin-top: 18px;">
+              <div style="padding: 18px; background: rgba(16,185,129,0.06); border-radius: var(--r); border: 1px solid rgba(16,185,129,0.25);">
+                <h3 class="h3" style="color: #4ADE80; font-size: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                  <span>✅</span> Tiket Free Berhasil Dibuat!
+                </h3>
+                <textarea class="input mono" id="dash-free-text" rows="5" readonly style="resize: none; font-size: 13px; margin-bottom: 12px; background: rgba(4,6,14,0.9) !important; border-color: rgba(255,255,255,0.08) !important;"></textarea>
+                <div class="row" style="gap: 8px; flex-wrap: wrap;">
+                  <button class="btn btn-sm btn-cyan" onclick="copyText(document.getElementById('dash-free-text').value, this)">📋 Salin Format Discord</button>
+                  <a class="btn btn-sm btn-ghost" href="/activation.html" target="_blank">🔗 Buka Halaman Aktivasi</a>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- 2. CUSTOM TOKEN GENERATOR (FOR BUYERS) -->
-          <div class="card" style="margin-bottom: 24px; border: 1px solid rgba(99, 102, 241, 0.4); background: linear-gradient(160deg, rgba(99, 102, 241, 0.08) 0%, rgba(16, 20, 31, 0.9) 100%);">
+          <!-- ===== CUSTOM TOKEN GENERATOR ===== -->
+          <div class="card gen-card-paid" style="margin-bottom: 22px;">
             <div class="card-head">
               <div>
-                <span class="badge badge-accent" style="margin-bottom: 6px;">⚡ Token Generator Pembeli</span>
-                <h2 class="h2">Buat Token Lisensi Kustom</h2>
-                <p class="small faint">Generate token kustom untuk pembeli yang telah transfer pembayaran.</p>
+                <span class="badge badge-accent" style="margin-bottom: 10px;">⚡ Token Generator Pembeli</span>
+                <h2 class="h2" style="font-size: 20px;">Buat Token Lisensi Kustom</h2>
+                <p class="small faint" style="margin-top: 4px;">Generate token kustom untuk pembeli yang telah transfer pembayaran.</p>
               </div>
             </div>
 
-            <form id="quick-token-form" onsubmit="handleQuickCreateToken(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto; gap: 12px; align-items: end;">
+            <form id="quick-token-form" onsubmit="handleQuickCreateToken(event)" style="display: grid; grid-template-columns: 1fr 1fr 1.5fr auto; gap: 12px; align-items: end;">
               <div class="field">
                 <label for="qtok-platform">Platform</label>
                 <select class="input" id="qtok-platform">
@@ -115,7 +308,7 @@
               <div class="field">
                 <label for="qtok-plan">Paket Layanan</label>
                 <select class="input" id="qtok-plan">
-                  <option value="lifetime">Lifetime (Rp 450.000)</option>
+                  <option value="lifetime">Lifetime (Rp 500.000)</option>
                 </select>
               </div>
 
@@ -125,53 +318,34 @@
               </div>
 
               <div>
-                <button class="btn btn-cyan" type="submit" style="height: 48px; white-space: nowrap;">
-                  ✨ Buat Token Pembeli
+                <button class="btn btn-cyan" type="submit" style="height: 50px; white-space: nowrap; padding: 0 22px;">
+                  ✨ Buat Token
                 </button>
               </div>
             </form>
 
-            <div id="quick-token-result" style="display: none; margin-top: 18px; padding: 16px; background: #07090E; border-radius: var(--r); border: 1px solid var(--accent);">
-              <div class="row between" style="flex-wrap: wrap; gap: 12px;">
-                <div>
-                  <span class="badge badge-accent">✓ Token Pembeli Dibuat!</span>
-                  <div style="margin-top: 6px; font-family: var(--mono); font-size: 16px; font-weight: 700; color: #A5B4FC;" id="qtok-code-display"></div>
-                </div>
-                <div class="row" style="gap: 8px;">
-                  <button class="btn btn-sm btn-cyan" id="qtok-copy-btn">📋 Salin Kode</button>
-                  <button class="btn btn-sm btn-primary" id="qtok-copy-link">🔗 Salin Format Discord</button>
+            <div id="quick-token-result" style="display: none; margin-top: 18px;">
+              <div style="padding: 16px; background: rgba(99,102,241,0.06); border-radius: var(--r); border: 1px solid rgba(99,102,241,0.25);">
+                <div class="row between" style="flex-wrap: wrap; gap: 12px;">
+                  <div>
+                    <span class="badge badge-accent">✓ Token Pembeli Dibuat!</span>
+                    <div style="margin-top: 8px; font-family: var(--mono); font-size: 18px; font-weight: 700; color: #C4B5FD; letter-spacing: 0.06em;" id="qtok-code-display"></div>
+                  </div>
+                  <div class="row" style="gap: 8px; flex-wrap: wrap;">
+                    <button class="btn btn-sm btn-cyan" id="qtok-copy-btn">📋 Salin Kode</button>
+                    <button class="btn btn-sm btn-primary" id="qtok-copy-link">🔗 Salin Format Discord</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Statistik Grid -->
-          <div class="stats" style="margin-bottom: 24px;">
-            <div class="stat-card">
-              <div class="stat-label">Total Transaksi Masuk</div>
-              <div class="stat-value cyan-text" id="stat-count">0</div>
-              <div class="small faint">Donasi webhook terproses</div>
-            </div>
-
-            <div class="stat-card">
-              <div class="stat-label">Total Nilai Donasi</div>
-              <div class="stat-value" style="color: #34D399;" id="stat-amount">Rp 0</div>
-              <div class="small faint">Rupiah tersimpan di DataStore</div>
-            </div>
-
-            <div class="stat-card">
-              <div class="stat-label">Total Token Aktif</div>
-              <div class="stat-value accent-text" id="stat-tokens">0</div>
-              <div class="small faint">Lisensi lifetime terdaftar</div>
-            </div>
-          </div>
-
-          <!-- Recent Tokens Table directly on Dashboard -->
-          <div class="card" style="margin-bottom: 24px;">
+          <!-- ===== RECENT TOKENS ===== -->
+          <div class="card" style="margin-bottom: 22px;">
             <div class="card-head">
               <div>
-                <h2 class="h2">Daftar Token Terbaru</h2>
-                <p class="small faint">Token yang siap digunakan atau dibagikan ke orang lain.</p>
+                <h2 class="h2" style="font-size: 18px;">Daftar Token Terbaru</h2>
+                <p class="small faint" style="margin-top: 4px;">Token yang siap digunakan atau dibagikan ke orang lain.</p>
               </div>
               <a class="btn btn-sm btn-ghost" href="/admin/tokens.html">Kelola Semua Token &rarr;</a>
             </div>
@@ -188,51 +362,70 @@
                   </tr>
                 </thead>
                 <tbody id="dash-tokens-tbody">
-                  <tr><td colspan="5" style="text-align: center; padding: 24px; color: var(--muted);">Memuat token...</td></tr>
+                  <tr>
+                    <td colspan="5" style="text-align: center; padding: 32px; color: var(--muted);">
+                      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                        <span style="font-size: 24px; opacity: 0.4;">🔑</span>
+                        <span>Memuat token...</span>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          <!-- Endpoints Card -->
-          <div class="card" style="margin-bottom: 24px;">
+          <!-- ===== ENDPOINTS ===== -->
+          <div class="card" style="margin-bottom: 22px;">
             <div class="card-head">
               <div>
-                <h2 class="h2">Universal Endpoints</h2>
-                <p class="small faint">Gunakan URL berikut pada webhook platform donasi dan game Roblox kamu.</p>
+                <h2 class="h2" style="font-size: 18px;">Universal Endpoints</h2>
+                <p class="small faint" style="margin-top: 4px;">Gunakan URL berikut pada webhook platform donasi dan game Roblox kamu.</p>
               </div>
             </div>
             
-            <div class="stack" style="gap: 16px;">
-              <div class="card soft">
-                <div class="row between" style="margin-bottom: 8px;">
-                  <b style="color: #A5B4FC;">⚡ Webhook Masuk (Saweria / BagiBagi / SociaBuzz)</b>
+            <div class="stack" style="gap: 14px;">
+              <div class="endpoint-card">
+                <div class="row between" style="margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 16px;">⚡</span>
+                    <b style="color: #C4B5FD; font-size: 13px;">Webhook Masuk (Saweria / BagiBagi / SociaBuzz)</b>
+                  </div>
                   <button class="btn btn-sm btn-cyan" onclick="copyText(document.getElementById('ep-webhook').innerText, this)">📋 Salin URL</button>
                 </div>
-                <pre class="code" id="ep-webhook">Loading webhook URL...</pre>
+                <pre class="code" id="ep-webhook" style="font-size: 12.5px;">Loading webhook URL...</pre>
               </div>
 
-              <div class="card soft">
-                <div class="row between" style="margin-bottom: 8px;">
-                  <b style="color: #34D399;">📡 Polling URL (Roblox Studio HttpService Gateway)</b>
+              <div class="endpoint-card">
+                <div class="row between" style="margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 16px;">📡</span>
+                    <b style="color: #34D399; font-size: 13px;">Polling URL (Roblox Studio HttpService Gateway)</b>
+                  </div>
                   <button class="btn btn-sm btn-cyan" onclick="copyText(document.getElementById('ep-poll').innerText, this)">📋 Salin URL</button>
                 </div>
-                <pre class="code" id="ep-poll">Loading polling URL...</pre>
+                <pre class="code" id="ep-poll" style="font-size: 12.5px; color: #4ADE80;">Loading polling URL...</pre>
               </div>
             </div>
           </div>
 
-          <!-- Quick Actions -->
+          <!-- ===== QUICK ACTIONS ===== -->
           <div class="grid two">
-            <div class="card soft">
-              <h3 class="h3" style="margin-bottom: 8px;">🧪 Simulator Donasi</h3>
-              <p class="small faint" style="margin-bottom: 14px;">Kirim donasi uji coba langsung ke server dan game Roblox kamu.</p>
+            <div class="quick-action-card">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                <div style="width: 40px; height: 40px; border-radius: 12px; background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.25); display: flex; align-items: center; justify-content: center; font-size: 18px;">🧪</div>
+                <h3 class="h3" style="font-size: 16px;">Simulator Donasi</h3>
+              </div>
+              <p class="small faint" style="margin-bottom: 16px;">Kirim donasi uji coba langsung ke server dan game Roblox kamu untuk testing.</p>
               <a class="btn btn-primary btn-sm" href="/admin/send.html">Buka Simulator Donasi &rarr;</a>
             </div>
 
-            <div class="card soft">
-              <h3 class="h3" style="margin-bottom: 8px;">☁️ Roblox DataStore Inspector</h3>
-              <p class="small faint" style="margin-bottom: 14px;">Cek data donatur yang tersimpan di DataStore game kamu.</p>
+            <div class="quick-action-card">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                <div style="width: 40px; height: 40px; border-radius: 12px; background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.25); display: flex; align-items: center; justify-content: center; font-size: 18px;">☁️</div>
+                <h3 class="h3" style="font-size: 16px;">Roblox DataStore Inspector</h3>
+              </div>
+              <p class="small faint" style="margin-bottom: 16px;">Cek data donatur yang tersimpan di DataStore game Roblox kamu secara langsung.</p>
               <a class="btn btn-cyan btn-sm" href="/admin/roblox.html">Cek DataStore &rarr;</a>
             </div>
           </div>
@@ -243,7 +436,10 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>&copy; 2026 <b>KIDZY Store</b> &middot; Admin Panel</span>
+      <div class="row" style="gap: 10px;">
+        <span class="brand-mark" style="width: 28px; height: 28px; font-size: 11px;">KZ</span>
+        <span style="font-size: 13px;">&copy; 2026 <b>KIDZY Store</b> &middot; Admin Panel</span>
+      </div>
       <span class="small faint">Admin: Muhammad Rafly</span>
     </div>
   </footer>
@@ -282,26 +478,41 @@
           const whUrl = `${origin}/api/webhook/${slug}`;
           const pollUrl = `${origin}/api/poll/${slug}`;
 
+          const platformColors = {
+            saweria: '#C4B5FD',
+            bagibagi: '#67E8F9',
+            sociabuzz: '#4ADE80'
+          };
+          const pColor = platformColors[tok.platform?.toLowerCase()] || '#C4B5FD';
+
           return `
             <tr>
               <td>
-                <span class="code" style="font-size: 13px; font-weight: 700; color: #FFFFFF;">${tok.code}</span>
+                <span class="table-code-cell">${tok.code}</span>
               </td>
-              <td><span class="badge badge-accent">${tok.platform.toUpperCase()}</span></td>
-              <td><span class="${badgeClass}">${badgeText}</span></td>
-              <td style="color: var(--text-secondary); max-width: 160px;">${tok.note || '-'}</td>
+              <td>
+                <span class="badge badge-accent" style="color: ${pColor}; font-size: 10px;">${(tok.platform||'').toUpperCase()}</span>
+              </td>
+              <td><span class="${badgeClass}" style="font-size: 10px;">${badgeText}</span></td>
+              <td style="color: var(--text-secondary); max-width: 160px; font-size: 13px;">${tok.note || '-'}</td>
               <td>
                 <div class="row" style="gap: 6px; flex-wrap: wrap;">
-                  <button class="btn btn-sm btn-cyan" onclick="copyText('${tok.code}', this)" title="Salin Kode Token">🔑 Token</button>
-                  <button class="btn btn-sm btn-ghost" onclick="copyText('${whUrl}', this)" title="Salin Webhook URL">🌐 Webhook</button>
-                  <button class="btn btn-sm btn-ghost" onclick="copyText('${pollUrl}', this)" title="Salin Polling URL">📡 Polling</button>
+                  <button class="btn btn-sm btn-cyan" onclick="copyText('${tok.code}', this)" title="Salin Kode Token" style="font-size: 11px;">🔑 Token</button>
+                  <button class="btn btn-sm btn-ghost" onclick="copyText('${whUrl}', this)" title="Salin Webhook URL" style="font-size: 11px;">🌐 Webhook</button>
+                  <button class="btn btn-sm btn-ghost" onclick="copyText('${pollUrl}', this)" title="Salin Polling URL" style="font-size: 11px;">📡 Poll</button>
                 </div>
               </td>
             </tr>
           `;
         }).join('');
       } else {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 24px; color: var(--muted);">Belum ada token.</td></tr>';
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 32px; color: var(--muted);">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <span style="font-size: 28px; opacity: 0.35;">🔑</span>
+            <span>Belum ada token.</span>
+            <a href="/admin/tokens.html" class="btn btn-sm btn-ghost" style="margin-top: 4px;">+ Buat Token Pertama</a>
+          </div>
+        </td></tr>`;
       }
     }
 
@@ -312,7 +523,6 @@
           const s = statsRes.stats;
           const count = s.totalDonations > 0 ? s.totalDonations : 18;
           const amount = s.totalRevenue > 0 ? s.totalRevenue : 500620790;
-          
           document.getElementById('stat-count').innerText = count;
           document.getElementById('stat-amount').innerText = formatRupiah(amount);
         }

@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="id">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,9 +8,132 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
-</head>
+  <style>
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      position: relative;
+    }
 
+    .login-page::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(99, 102, 241, 0.18) 0%, transparent 65%);
+      pointer-events: none;
+      animation: heroPulse 6s ease-in-out infinite;
+    }
+
+    @keyframes heroPulse {
+      0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+    }
+
+    .login-wrap {
+      display: grid;
+      grid-template-columns: 480px 360px;
+      gap: 28px;
+      max-width: 880px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-card {
+      background: rgba(12, 16, 28, 0.85);
+      backdrop-filter: blur(32px);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: var(--r-lg);
+      padding: 36px;
+      box-shadow: 0 32px 80px -16px rgba(0,0,0,0.85), 0 0 40px rgba(99,102,241,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent-gradient);
+    }
+
+    .login-side-card {
+      background: rgba(8, 11, 22, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--r-lg);
+      padding: 28px;
+    }
+
+    .feature-check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 13.5px;
+      color: var(--text-secondary);
+    }
+
+    .feature-check-item:last-child { border-bottom: none; }
+
+    .feature-check-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(16,185,129,0.15);
+      border: 1px solid rgba(16,185,129,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .login-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 16px;
+      transition: color 0.2s ease;
+      padding: 4px;
+    }
+
+    .password-toggle:hover { color: var(--text); }
+
+    @media (max-width: 860px) {
+      .login-wrap { grid-template-columns: 1fr; max-width: 480px; }
+      .login-side-card { display: none; }
+    }
+  </style>
+</head>
 <body>
+  <!-- Minimal header -->
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="/">
@@ -23,76 +145,107 @@
         <a class="nav-link is-active" href="/login.html">Login</a>
         <a class="btn btn-sm btn-primary" href="/register.html">Register</a>
       </nav>
-      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">
-        ☰
-      </button>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">☰</button>
     </div>
   </header>
 
   <main>
-    <div class="container page">
-      <div class="page-head">
-        <span class="badge badge-accent" style="margin-bottom: 8px;">Portal Admin</span>
-        <h1 class="h1">Masuk ke Dashboard</h1>
-        <p class="lead">Gunakan akun admin kamu untuk mengelola token lisensi, layanan game, dan donasi.</p>
-      </div>
+    <div class="login-page">
+      <div class="login-wrap">
+        <!-- Login Card -->
+        <div class="login-card">
+          <div class="login-logo">
+            <span class="brand-mark" style="width: 44px; height: 44px; font-size: 17px;">KZ</span>
+            <div>
+              <div style="font-size: 18px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.03em; font-family: var(--font-heading);">KIDZY Store</div>
+              <div style="font-size: 12px; color: var(--muted); font-weight: 500;">Admin Portal</div>
+            </div>
+          </div>
 
-      <div class="split">
-        <div class="card" style="border-color: rgba(99, 102, 241, 0.35);">
-          <div id="login-alert"></div>
+          <div style="margin-bottom: 24px;">
+            <span class="badge badge-accent" style="margin-bottom: 10px;">🔐 Login Admin</span>
+            <h1 class="h2" style="font-size: 24px; color: #FFFFFF;">Masuk ke Dashboard</h1>
+            <p class="small faint" style="margin-top: 6px;">Kelola token lisensi, layanan game, dan donasi Roblox kamu.</p>
+          </div>
 
-          <form id="login-form" class="stack" onsubmit="handleLogin(event)" style="gap: 20px;">
-            <input type="hidden" name="next" value="/admin/send.html">
+          <div id="login-alert" style="margin-bottom: 16px;"></div>
+
+          <form id="login-form" class="stack" onsubmit="handleLogin(event)" style="gap: 18px;">
+            <input type="hidden" name="next" value="/admin/index.html">
 
             <div class="field">
-              <label for="login-email" style="font-weight: 600;">Alamat Email</label>
-              <input class="input" id="login-email" name="email" type="email" required placeholder="email@gmail.com" autocomplete="email" />
+              <label for="login-email">Alamat Email</label>
+              <input class="input" id="login-email" name="email" type="email" required placeholder="admin@gmail.com" autocomplete="email" />
             </div>
 
             <div class="field">
-              <label for="login-password" style="font-weight: 600;">Password</label>
-              <div style="position: relative;">
-                <input class="input" id="login-password" name="password" type="password" required placeholder="Masukkan password" autocomplete="current-password" />
-                <button type="button" onclick="togglePasswordVisibility('login-password', this)" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 16px;">👁️</button>
+              <label for="login-password">Password</label>
+              <div class="password-wrapper">
+                <input class="input" id="login-password" name="password" type="password" required placeholder="Masukkan password" autocomplete="current-password" style="padding-right: 50px;" />
+                <button type="button" class="password-toggle" onclick="togglePasswordVisibility('login-password', this)">👁️</button>
               </div>
             </div>
 
-            <div class="form-actions" style="margin-top: 12px; display: flex; gap: 12px; align-items: center;">
-              <button class="btn btn-primary btn-block" id="login-btn" type="submit">🔐 Masuk ke Dashboard</button>
-              <a class="btn btn-ghost" href="/register.html?next=%2Fadmin%2Fsend" style="white-space: nowrap;">Buat akun</a>
+            <div style="margin-top: 8px; display: flex; gap: 12px; align-items: center;">
+              <button class="btn btn-primary btn-block" id="login-btn" type="submit" style="padding: 15px; font-size: 15px;">
+                🔐 Masuk ke Dashboard
+              </button>
+            </div>
+
+            <div style="text-align: center; padding-top: 6px; border-top: 1px solid var(--border-subtle);">
+              <p class="small faint">Belum punya akun? <a href="/register.html" style="color: #C4B5FD; font-weight: 600;">Daftar sekarang</a></p>
             </div>
           </form>
         </div>
 
-        <aside class="aside">
-          <div class="card soft" style="padding: 24px;">
-            <h2 class="h2" style="font-size: 18px; margin-bottom: 8px;">Kontrol Lengkap Platform</h2>
-            <p class="small faint">Semua kebutuhan manajemen token dan gateway Roblox ada di satu dashboard.</p>
-            <div style="height: 1px; background: var(--border); margin: 16px 0;"></div>
-            <ul class="stack" style="gap: 12px; list-style: none;">
-              <li style="display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--text-secondary);">
-                <span style="color: #10B981;">✓</span> <span>Generator Token Pembeli &amp; Free Tiket</span>
-              </li>
-              <li style="display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--text-secondary);">
-                <span style="color: #10B981;">✓</span> <span>Manajemen Webhook &amp; Polling URL</span>
-              </li>
-              <li style="display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--text-secondary);">
-                <span style="color: #10B981;">✓</span> <span>Log Donasi Realtime &amp; Simulator Uji Coba</span>
-              </li>
-              <li style="display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--text-secondary);">
-                <span style="color: #10B981;">✓</span> <span>Konfigurasi Roblox DataStore Integration</span>
-              </li>
-              <li style="display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--text-secondary);">
-                <span style="color: #10B981;">✓</span> <span>Download Script &amp; File Model Product</span>
-              </li>
-            </ul>
+        <!-- Side Info -->
+        <div class="login-side-card">
+          <h2 class="h3" style="font-size: 16px; margin-bottom: 6px;">Panel Admin Lengkap</h2>
+          <p class="small faint" style="margin-bottom: 20px;">Semua kontrol KIDZY Store ada di satu dashboard terintegrasi.</p>
+
+          <div>
+            <div class="feature-check-item">
+              <div class="feature-check-icon">✓</div>
+              <span>Generator Token Pembeli &amp; Free Tiket</span>
+            </div>
+            <div class="feature-check-item">
+              <div class="feature-check-icon">✓</div>
+              <span>Manajemen Webhook &amp; Polling URL</span>
+            </div>
+            <div class="feature-check-item">
+              <div class="feature-check-icon">✓</div>
+              <span>Log Donasi Realtime &amp; Simulator</span>
+            </div>
+            <div class="feature-check-item">
+              <div class="feature-check-icon">✓</div>
+              <span>Roblox DataStore Inspector &amp; Reset</span>
+            </div>
+            <div class="feature-check-item">
+              <div class="feature-check-icon">✓</div>
+              <span>Download Script Roblox Studio (.rbxm)</span>
+            </div>
+            <div class="feature-check-item">
+              <div class="feature-check-icon">✓</div>
+              <span>Konfigurasi Rekening &amp; Discord</span>
+            </div>
           </div>
-        </aside>
+
+          <div style="margin-top: 24px; padding: 16px; background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.2); border-radius: var(--r);">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span>💬</span>
+              <span style="font-size: 13px; font-weight: 600; color: #C4B5FD;">Butuh Bantuan?</span>
+            </div>
+            <p style="font-size: 12.5px; color: var(--muted); line-height: 1.5;">Hubungi owner via Discord untuk reset password atau masalah akses.</p>
+            <a href="https://discord.com/users/kidddzyyaj" target="_blank" class="btn btn-ghost btn-sm btn-block" style="margin-top: 10px; font-size: 12px;">
+              Buka Discord Owner
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 
-  <footer class="site-footer" style="margin-top: 80px; border-top: 1px solid var(--border); padding: 32px 0;">
+  <footer class="site-footer">
     <div class="container footer-inner">
       <span>&copy; 2026 <b>KIDZY Store</b> &bull; System Admin Portal</span>
       <a href="https://discord.com/users/kidddzyyaj" target="_blank" class="small faint nav-link">Support via Discord</a>
@@ -128,13 +281,13 @@
       const alertBox = document.getElementById('login-alert');
 
       btn.disabled = true;
-      btn.textContent = 'Memverifikasi...';
+      btn.innerHTML = '<span style="animation: spin 0.8s linear infinite; display: inline-block;">⏳</span> Memverifikasi...';
 
       try {
         const res = await API.post('/api/auth/login', { email, password });
-
         Auth.setAuth(res.token, res.user);
-        showToast('Login berhasil! Mengalihkan...', 'success');
+        alertBox.innerHTML = `<div class="alert alert-success">✅ Login berhasil! Mengalihkan ke dashboard...</div>`;
+        showToast('Login berhasil!', 'success');
 
         setTimeout(() => {
           if (res.user.role === 'admin') {
@@ -144,13 +297,12 @@
           }
         }, 600);
       } catch (err) {
-        alertBox.innerHTML = `<div class="alert alert-error">${err.message || 'Email atau password salah.'}</div>`;
+        alertBox.innerHTML = `<div class="alert alert-error">❌ ${err.message || 'Email atau password salah.'}</div>`;
         showToast(err.message || 'Login gagal', 'error');
         btn.disabled = false;
-        btn.textContent = '🔐 Masuk ke Dashboard';
+        btn.innerHTML = '🔐 Masuk ke Dashboard';
       }
     }
   </script>
 </body>
-
 </html>

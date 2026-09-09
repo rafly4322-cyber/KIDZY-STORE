@@ -1150,6 +1150,9 @@ app.get('/api/download/script', (req, res) => {
     }
 });
 
+// DJ Rekordbox 7 Service
+app.use('/api/dj', require('./dj'));
+
 // Admin Clean Route Mappings
 app.get('/admin', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/index.html')));
 app.get('/admin/send', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/send.html')));
@@ -1159,6 +1162,7 @@ app.get('/admin/tokens', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin
 app.get('/admin/services', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/services.html')));
 app.get('/admin/roblox', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/roblox.html')));
 app.get('/admin/downloads', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/downloads.html')));
+app.get('/admin/dj', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'admin/dj.html')));
 app.get('/logout', (req, res) => res.redirect('/login.html'));
 app.get('/admin/logout', (req, res) => res.redirect('/login.html'));
 

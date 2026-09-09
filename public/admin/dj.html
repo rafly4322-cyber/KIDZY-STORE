@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DJ & Rekordbox 7 Live Studio — KIDZY Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    .dj-card {
+      background: linear-gradient(135deg, rgba(16, 20, 32, 0.95), rgba(24, 29, 47, 0.85));
+      border: 1px solid rgba(0, 242, 254, 0.2);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .dj-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #00f2fe, #4facfe, #9b51e0, #ff007a);
+    }
+    .bpm-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(0, 242, 254, 0.12);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      border-radius: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #00f2fe;
+    }
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #00f2fe;
+      animation: bpmPulse 0.468s infinite ease-in-out;
+    }
+    @keyframes bpmPulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.6); opacity: 1; box-shadow: 0 0 12px #00f2fe; }
+    }
+    .visualizer-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 60px;
+      padding: 10px 0;
+    }
+    .viz-bar {
+      flex: 1;
+      background: linear-gradient(to top, #4facfe, #00f2fe);
+      border-radius: 3px;
+      min-height: 6px;
+      transition: height 0.08s ease;
+    }
+    .guide-step {
+      display: flex;
+      gap: 16px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      color: #0d1117;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/admin">
+        <span class="brand-mark">KZ</span>
+        <span>KIDZY Admin</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link is-active" href="/admin">Admin</a>
+        <button class="btn btn-sm btn-ghost" onclick="Auth.logout()">Logout</button>
+      </nav>
+      <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu">☰</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <div class="shell">
+        <aside class="side">
+          <div class="side-title">Menu Utama</div>
+          <nav class="side-nav">
+            <a class="side-link" href="/admin">📊 Dashboard</a>
+            <a class="side-link" href="/admin/tokens.html">🔑 Kelola Token</a>
+            <a class="side-link" href="/admin/send.html">⚡ Simulator Donasi</a>
+            <a class="side-link" href="/admin/logs.html">📜 Log Donasi</a>
+            <a class="side-link" href="/admin/services.html">🎮 Layanan Game</a>
+            <a class="side-link" href="/admin/roblox.html">☁️ Roblox DataStore</a>
+            <a class="side-link is-active" href="/admin/dj.html">🎧 DJ &amp; Rekordbox</a>
+            <a class="side-link" href="/admin/settings.html">⚙️ Pengaturan Toko</a>
+            <a class="side-link" href="/admin/downloads.html">⬇️ Download File</a>
+          </nav>
+        </aside>
+
+        <div>
+          <div class="page-head">
+            <div class="row" style="margin-bottom: 6px; gap: 8px;">
+              <span class="badge badge-accent">Live Music System</span>
+              <span class="badge badge-live">Roblox Audio API Online</span>
+            </div>
+            <h1 class="h1">DJ Studio &amp; Rekordbox 7 Live</h1>
+            <p class="lead">Kontrol lagu live dari Rekordbox 7 ke panggung Santa Monica Roblox melalui AudioListener, AudioEmitter, dan Bridge Metadata.</p>
+          </div>
+
+          <!-- Live On-Air Monitor -->
+          <div class="dj-card" style="margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+              <div>
+                <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #8b949e;">Live Now in Santa Monica</span>
+                <h2 id="live-title" style="margin: 4px 0 0 0; font-size: 1.8rem; color: #fff; font-weight: 800;">Loading track...</h2>
+                <div id="live-artist" style="color: #00f2fe; font-size: 1.1rem; font-weight: 600;">Artist Name</div>
+              </div>
+              <div style="display: flex; gap: 12px; align-items: center;">
+                <div class="bpm-badge">
+                  <span class="pulse-dot" id="bpm-pulse"></span>
+                  <span id="live-bpm">128 BPM</span>
+                </div>
+                <div class="badge badge-accent" id="live-deck" style="padding: 6px 12px; font-size: 0.85rem;">DECK 1</div>
+              </div>
+            </div>
+
+            <!-- Simulated Visualizer Bars -->
+            <div class="visualizer-container" id="visualizer-bars">
+              <!-- Dynamically generated bars -->
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #8b949e; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 12px; margin-top: 8px;">
+              <div>🎧 Active DJ: <strong id="live-dj" style="color: #fff;">raflykidzz</strong></div>
+              <div>Terakhir Diperbarui: <span id="live-updated">-</span></div>
+            </div>
+          </div>
+
+          <!-- Controls Grid -->
+          <div class="grid two" style="margin-bottom: 24px; gap: 20px;">
+            <!-- Manual Track Controller -->
+            <div class="card">
+              <h3 style="margin-top: 0; margin-bottom: 16px;">⚡ Ganti Lagu Manual (Override)</h3>
+              <form id="track-form" onsubmit="updateTrack(event)">
+                <div class="form-group" style="margin-bottom: 12px;">
+                  <label>Judul Lagu</label>
+                  <input type="text" id="input-title" class="form-control" placeholder="Contoh: Titanium (David Guetta Remix)" required />
+                </div>
+                <div class="form-group" style="margin-bottom: 12px;">
+                  <label>Nama Artist</label>
+                  <input type="text" id="input-artist" class="form-control" placeholder="Contoh: David Guetta ft. Sia" required />
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                  <div class="form-group">
+                    <label>Tempo (BPM)</label>
+                    <input type="number" id="input-bpm" class="form-control" value="128" min="60" max="220" />
+                  </div>
+                  <div class="form-group">
+                    <label>Deck</label>
+                    <select id="input-deck" class="form-control">
+                      <option value="1">Deck 1</option>
+                      <option value="2">Deck 2</option>
+                    </select>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                  🚀 Kirim ke Panggung Santa Monica
+                </button>
+              </form>
+            </div>
+
+            <!-- DJ Whitelist Settings -->
+            <div class="card">
+              <h3 style="margin-top: 0; margin-bottom: 16px;">👤 Username Akun DJ di Roblox</h3>
+              <p style="font-size: 0.88rem; color: #8b949e; margin-bottom: 16px;">
+                Masukkan username player Roblox yang memegang Mic/AudioDeviceInput dari Rekordbox 7.
+              </p>
+              <form id="dj-form" onsubmit="setDJUser(event)">
+                <div class="form-group" style="margin-bottom: 16px;">
+                  <label>Roblox Username</label>
+                  <input type="text" id="input-dj" class="form-control" value="raflykidzz" required />
+                </div>
+                <button type="submit" class="btn btn-secondary" style="width: 100%;">
+                  💾 Simpan Username DJ
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Step-by-Step Setup Guide -->
+          <div class="card">
+            <h3 style="margin-top: 0; margin-bottom: 16px;">📖 Panduan Menghubungkan Suara Rekordbox 7 ke Roblox</h3>
+            
+            <div class="guide-step">
+              <div class="step-num">1</div>
+              <div>
+                <strong style="color: #fff;">Install VB-Audio Virtual Cable (Gratis)</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.9rem; color: #8b949e;">
+                  Download dan pasang <code>VB-CABLE Driver</code> di Windows. Ini bertindak sebagai kabel audio virtual antara Rekordbox 7 dan Roblox.
+                </p>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="step-num">2</div>
+              <div>
+                <strong style="color: #fff;">Atur Output di Rekordbox 7</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.9rem; color: #8b949e;">
+                  Buka Rekordbox 7 &rarr; <strong>Preferences (Gerigi) &rarr; Audio</strong>. Pada bagian <strong>Master Output</strong>, pilih <code>CABLE Input (VB-Audio Virtual Cable)</code>.
+                </p>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="step-num">3</div>
+              <div>
+                <strong style="color: #fff;">Atur Input Mic di Roblox</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.9rem; color: #8b949e;">
+                  Di Roblox Player &rarr; <strong>Settings &rarr; Voice Chat / Microphone</strong>, pilih <code>CABLE Output (VB-Audio Virtual Cable)</code>. Pastikan Voice Chat aktif!
+                </p>
+              </div>
+            </div>
+
+            <div class="guide-step">
+              <div class="step-num">4</div>
+              <div>
+                <strong style="color: #fff;">Jalankan Watcher Otomatis (Opsional)</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.9rem; color: #8b949e;">
+                  Jalankan perintah <code>node rekordbox_watcher.js</code> di terminal untuk mendeteksi lagu secara otomatis saat diputar di Rekordbox 7.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/assets/auth.js"></script>
+  <script>
+    // Inisialisasi visualizer bars
+    const vizContainer = document.getElementById('visualizer-bars');
+    const barCount = 32;
+    const bars = [];
+    for (let i = 0; i < barCount; i++) {
+      const b = document.createElement('div');
+      b.className = 'viz-bar';
+      vizContainer.appendChild(b);
+      bars.push(b);
+    }
+
+    // Animasi visualizer
+    function animateBars() {
+      bars.forEach((b, idx) => {
+        const height = Math.floor(Math.sin(Date.now() / 150 + idx * 0.4) * 20 + 25 + Math.random() * 15);
+        b.style.height = `${height}px`;
+      });
+      requestAnimationFrame(animateBars);
+    }
+    animateBars();
+
+    // Fetch Current Track Status
+    async function loadDJStatus() {
+      try {
+        const res = await fetch('/api/dj/now-playing');
+        const json = await res.json();
+        if (json.success && json.data) {
+          const d = json.data;
+          document.getElementById('live-title').textContent = d.title || 'No Track Playing';
+          document.getElementById('live-artist').textContent = d.artist || 'Unknown Artist';
+          document.getElementById('live-bpm').textContent = `${d.bpm || 128} BPM`;
+          document.getElementById('live-deck').textContent = `DECK ${d.deck || 1}`;
+          document.getElementById('live-dj').textContent = d.djName || 'raflykidzz';
+          
+          if (d.updatedAt) {
+            const timeStr = new Date(d.updatedAt).toLocaleTimeString();
+            document.getElementById('live-updated').textContent = timeStr;
+          }
+
+          // Update Pulse Animation Duration based on BPM
+          const bpm = d.bpm || 128;
+          const beatDuration = 60 / bpm;
+          document.getElementById('bpm-pulse').style.animationDuration = `${beatDuration}s`;
+        }
+      } catch (err) {
+        console.warn('Gagal memuat DJ status:', err);
+      }
+    }
+
+    async function updateTrack(e) {
+      e.preventDefault();
+      const title = document.getElementById('input-title').value;
+      const artist = document.getElementById('input-artist').value;
+      const bpm = document.getElementById('input-bpm').value;
+      const deck = document.getElementById('input-deck').value;
+
+      try {
+        const res = await fetch('/api/dj/update-track', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, artist, bpm, deck })
+        });
+        const json = await res.json();
+        if (json.success) {
+          alert('✅ Lagu berhasil diupdate ke Panggung Santa Monica!');
+          loadDJStatus();
+        } else {
+          alert('❌ Gagal: ' + json.message);
+        }
+      } catch (err) {
+        alert('Gagal menghubungi server.');
+      }
+    }
+
+    async function setDJUser(e) {
+      e.preventDefault();
+      const djName = document.getElementById('input-dj').value;
+      try {
+        const res = await fetch('/api/dj/set-dj', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ djName })
+        });
+        const json = await res.json();
+        if (json.success) {
+          alert(`✅ DJ aktif diset ke: ${json.djName}`);
+          loadDJStatus();
+        }
+      } catch (err) {
+        alert('Gagal menyimpan DJ user.');
+      }
+    }
+
+    // Auto poll every 2.5 seconds
+    loadDJStatus();
+    setInterval(loadDJStatus, 2500);
+  </script>
+</body>
+</html>

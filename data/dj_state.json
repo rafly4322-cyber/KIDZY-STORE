@@ -1,0 +1,21 @@
+{
+  "title": "Animals (Martin Garrix)",
+  "artist": "Martin Garrix",
+  "album": "Summer Live Set",
+  "bpm": 128,
+  "deck": 1,
+  "genre": "House / EDM",
+  "duration": 210,
+  "elapsed": 0,
+  "isPlaying": true,
+  "djName": "raflykidzz",
+  "updatedAt": 1788978822948,
+  "history": [
+    {
+      "title": "Santa Monica Vibes",
+      "artist": "KIDZY Sound System",
+      "bpm": 128,
+      "playedAt": 1788978822467
+    }
+  ]
+}
